@@ -5,16 +5,50 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:l="clr-namespace:CV19"
         xmlns:VM="clr-namespace:CV19.ViewModels"
-        Title="{Binding Title}" Height="450" Width="800">
+        Title="{Binding Title}" Width="800" Height="450">
     <Window.DataContext>
         <VM:MainWindowViewModel/>
     </Window.DataContext>
-    <Grid>
-        <TextBox Margin="36,30" 
-                 Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}" 
-                 TextWrapping="Wrap"
-                 Width="300"
-                 HorizontalAlignment="Left"
-                 VerticalAlignment="Top"/>
-    </Grid>
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="_File">
+                <MenuItem Header="_Exit"/>
+            </MenuItem>
+            <MenuItem Header="_Help" Cursor="Help">
+                <MenuItem Header="About"/>
+            </MenuItem>
+        </Menu>
+        <StatusBar DockPanel.Dock="Bottom">
+            <StatusBarItem>
+                <TextBlock MaxWidth="350" MinWidth="150" Text="1234"/>
+            </StatusBarItem>
+            <StatusBarItem>
+                <ProgressBar Width="120" Height="14" Value="30"/>
+            </StatusBarItem>
+        </StatusBar>
+        <TabControl>
+            <TabItem Header="Tab1">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="63*"/>
+                        <RowDefinition Height="325*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="157*"/>
+                        <ColumnDefinition Width="637*"/>
+                    </Grid.ColumnDefinitions>
+                    <Rectangle Grid.Row="0" Grid.Column="0"
+                               Margin="5,7" Fill="Blue" Stroke="Red" 
+                               StrokeThickness="3" RadiusX="5" RadiusY="7"/>
+                    <Ellipse Grid.Row="0" Grid.Column="1"
+                             Margin="5,7" Fill="Red" Stroke="Blue" 
+                             StrokeThickness="3"/>
+                    <GridSplitter Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" 
+                                  HorizontalAlignment="Right" Width="4" 
+                                  BorderBrush="Black" BorderThickness="0.2"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Tab2"></TabItem>
+        </TabControl>
+    </DockPanel>
 </Window>
