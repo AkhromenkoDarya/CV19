@@ -4,14 +4,17 @@ namespace CV19.ViewModels
 {
     internal class MainWindowViewModel : ViewModel
     {
-        #region WindowTitle
-
-        private string _title = "CV-19 statistics analysis";
+        #region Title : string - Заголовок окна
 
         /// <summary>
         /// Заголовок окна.
         /// </summary>
-        public string Title
+        private string _title = "CV-19 statistics analysis";
+
+        /// <summary>
+        /// Возвращает и задает заголовок окна.
+        /// </summary>
+        public string Title 
         {
             get => _title;
 
@@ -32,6 +35,23 @@ namespace CV19.ViewModels
 
         #endregion
 
+        #region Status : string - Статус программы
 
+        /// <summary>
+        /// Статус программы.
+        /// </summary>
+        private string _status = "Ready";
+
+        /// <summary>
+        /// Возвращает и задает статус программы.
+        /// </summary>
+        public string Status 
+        { 
+            get => _status; 
+            
+            set => Set(ref _status, value);
+        }
+
+        #endregion
     }
 }
