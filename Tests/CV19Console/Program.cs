@@ -14,7 +14,9 @@ namespace CV19Console
             + @"COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/" 
             + @"time_series_covid19_confirmed_global.csv";
 
-        private static readonly int _columnCountToSkip = 4;
+        private const int _columnCountBeforeDates = 4;
+
+        private const int _headerLineNumber = 1;
 
         private static async Task<Stream> GetDataStream()
         {
@@ -37,33 +39,62 @@ namespace CV19Console
                     continue;
                 }
 
-                yield return line;
+                yield return TransformCountryName(line, "Bonaire") 
+                    ?? TransformCountryName(line, "Helena") 
+                    ?? TransformCountryName(line, "Korea")
+                    ?? line;
             }
+        }
+
+        private static string TransformCountryName(string line, string countryName)
+        {
+            return line.Contains(countryName) 
+                ? line.Replace($"{countryName},", $"{countryName} -") 
+                : null;
         }
 
         private static DateTime[] GetDates() => GetDataLines()
             .First()
             .Split(',')
-            .Skip(_columnCountToSkip)
+            .Skip(_columnCountBeforeDates)
             .Select(s => DateTime.Parse(s, CultureInfo.InvariantCulture))
             .ToArray();
 
+        private static IEnumerable<(string country, string province, int[] infectedCount)> GetData()
+        {
+            IEnumerable<string[]> lines = GetDataLines()
+                .Skip(_headerLineNumber)
+                .Select(line => line.Split(','));
+
+            var province = string.Empty;
+            var country = string.Empty;
+            var infectedCount = new int[] { 0 };
+
+            foreach (string[] row in lines)
+            {
+                province = row[0].Trim();
+                country = row[1].Trim(' ', '\'', '"');
+                infectedCount = row
+                    .Skip(_columnCountBeforeDates)
+                    .Select(s => int.Parse(s))
+                    .ToArray();
+
+                yield return (country, province, infectedCount);
+            }
+        }
+
         static void Main(string[] args)
         {
-            // var client = new WebClient();
+            //DateTime[] dates = GetDates();
+            //Console.WriteLine(string.Join("\r\n", dates));
 
-            // var client = new HttpClient();
+            var russiaData = GetData()
+                .First(data => data.country.Equals("Russia", StringComparison.OrdinalIgnoreCase));
 
-            // HttpResponseMessage responseMessage = client.GetAsync(_dataUrl).Result;
-            // string csvString = responseMessage.Content.ReadAsStringAsync().Result;
+            Console.WriteLine(string.Join("\r\n", GetDates().Zip(russiaData.infectedCount, (date, 
+                count) => $"{date:dd:MM:yyyy} - {count}")));
 
-            // foreach (string dataLine in GetDataLines())
-            // {
-            //     Console.WriteLine(dataLine);
-            // }
-
-            DateTime[] dates = GetDates();
-            Console.WriteLine(string.Join("\r\n", dates));
+            Console.ReadLine();
         }
     }
 }
