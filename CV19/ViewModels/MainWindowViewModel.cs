@@ -1,8 +1,11 @@
 ﻿using CV19.Infrastructure.Commands;
-using CV19.Models;
 using CV19.ViewModels.Base;
+using OxyPlot;
+using OxyPlot.Axes;
+using OxyPlot.Series;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Windows;
 using System.Windows.Input;
 
@@ -15,13 +18,13 @@ namespace CV19.ViewModels
         /// <summary>
         /// Тестовый набор данных для визуализации графиков.
         /// </summary>
-        private IEnumerable<DataPoint> _testsDataPoints;
+        private PlotModel _testsDataPoints;
 
         /// <summary>
         /// Тестовый набор данных для визуализации графиков.
         /// </summary>
-        public IEnumerable<DataPoint> TestDataPoints 
-        { 
+        public PlotModel TestDataPoints
+        {
             get => _testsDataPoints;
 
             set => Set(ref _testsDataPoints, value);
@@ -108,10 +111,28 @@ namespace CV19.ViewModels
             for (double x = 0d; x <= 360; x += 0.1)
             {
                 double y = Math.Sin(x * radians);
-                dataPoints.Add(new DataPoint { xValue = x, yValue = y });
+                dataPoints.Add(new DataPoint(x, y));
             }
 
-            TestDataPoints = dataPoints;
+            TestDataPoints = new PlotModel();
+
+            TestDataPoints.Axes.Add(new LinearAxis() 
+            { 
+                Title = "TestPlotXAxis", 
+                Position = AxisPosition.Left 
+            });
+
+            TestDataPoints.Axes.Add(new LinearAxis() 
+            { 
+                Title = "TestPlotYAxis", 
+                Position = AxisPosition.Bottom 
+            });
+
+            TestDataPoints.Series.Add(new LineSeries()
+            {
+                ItemsSource = dataPoints,
+                Color = OxyColors.Red
+            });
         }
     }
 }
