@@ -32,6 +32,16 @@
             <MenuItem Header="_Help" Cursor="Help">
                 <MenuItem Header="About"/>
             </MenuItem>
+            <MenuItem Command="{Binding ChangeTabIndexCommand}" CommandParameter="-1">
+                <MenuItem.Header>
+                    <fa5:ImageAwesome Height="12" Icon="Regular_ArrowAltCircleLeft"></fa5:ImageAwesome>
+                </MenuItem.Header>
+            </MenuItem>
+            <MenuItem Command="{Binding ChangeTabIndexCommand}" CommandParameter="+1">
+                <MenuItem.Header>
+                    <fa5:ImageAwesome Height="12" Icon="Regular_ArrowAltCircleRight"></fa5:ImageAwesome>
+                </MenuItem.Header>
+            </MenuItem>
         </Menu>
         <StatusBar DockPanel.Dock="Bottom">
             <StatusBarItem MaxWidth="350" MinWidth="150">
@@ -40,8 +50,9 @@
             <StatusBarItem>
                 <ProgressBar Width="120" Height="14" Value="30"/>
             </StatusBarItem>
+            <StatusBarItem Content="{Binding SelectedPageIndex}"/>
         </StatusBar>
-        <TabControl>
+        <TabControl SelectedIndex="{Binding SelectedPageIndex}">
             <TabItem Header="Plot">
                 <oxy:PlotView Model="{Binding TestDataPoints}"/>
             </TabItem>
@@ -79,6 +90,9 @@
                                   BorderBrush="Black" BorderThickness="0.2"/>
                 </Grid>
             </TabItem>
+            <TabItem Header="Tab2"/>
+            <TabItem Header="Tab3"/>
+            <TabItem Header="Tab4"/>
         </TabControl>
     </DockPanel>
 </Window>

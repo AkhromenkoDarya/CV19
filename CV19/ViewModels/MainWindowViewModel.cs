@@ -13,6 +13,25 @@ namespace CV19.ViewModels
 {
     internal class MainWindowViewModel : ViewModel
     {
+        #region SelectedPageIndex: int - Индекс выбранной вкладки
+
+        /// <summary>
+        /// Индекс выбранной вкладки.
+        /// </summary>
+        private int _selectedPageIndex;
+
+        /// <summary>
+        /// Индекс выбранной вкладки.
+        /// </summary>
+        public int SelectedPageIndex
+        {
+            get => _selectedPageIndex;
+
+            set => Set(ref _selectedPageIndex, value);
+        }
+
+        #endregion
+
         #region TestDataPoints: IEnumerable<DataPoint> - Тестовый набор данных
 
         /// <summary>
@@ -88,9 +107,27 @@ namespace CV19.ViewModels
 
         public ICommand CloseApplicationCommand { get; }
 
-        private bool CanCloseApplicationCommandExecuted(object p) => true;
+        private bool CanCloseApplicationCommandExecute(object p) => true;
 
         private void OnCloseApplicationCommandExecute(object p) => Application.Current.Shutdown();
+
+        #endregion
+
+        #region ChangeTabIndexCommand
+
+        public ICommand ChangeTabIndexCommand { get; }
+
+        private bool CanChangeTabIndexCommandExecute(object p) => _selectedPageIndex >= 0;
+
+        private void OnChangeTabIndexCommandExecute(object p)
+        {
+            if (p is null)
+            {
+                return;
+            }
+
+            SelectedPageIndex += Convert.ToInt32(p);
+        }
 
         #endregion
 
@@ -101,7 +138,9 @@ namespace CV19.ViewModels
             #region Команды
 
             CloseApplicationCommand = new RelayCommand(OnCloseApplicationCommandExecute, 
-                CanCloseApplicationCommandExecuted);
+                CanCloseApplicationCommandExecute);
+            ChangeTabIndexCommand = new RelayCommand(OnChangeTabIndexCommandExecute, 
+                CanChangeTabIndexCommandExecute);
 
             #endregion
 
