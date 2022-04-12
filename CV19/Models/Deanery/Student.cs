@@ -13,5 +13,7 @@ namespace CV19.Models.Deanery
         public DateTime Birthday { get; set; }
         
         public double Rating { get; set; }
+
+        public string Description { get; set; }
     }
 }
