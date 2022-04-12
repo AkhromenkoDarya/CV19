@@ -1,11 +1,13 @@
 ﻿using CV19.Infrastructure.Commands;
+using CV19.Models.Deanery;
 using CV19.ViewModels.Base;
 using OxyPlot;
 using OxyPlot.Axes;
 using OxyPlot.Series;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 
@@ -13,6 +15,8 @@ namespace CV19.ViewModels
 {
     internal class MainWindowViewModel : ViewModel
     {
+        public ObservableCollection<Group> Groups { get; }
+
         #region SelectedPageIndex: int - Индекс выбранной вкладки
 
         /// <summary>
@@ -172,6 +176,25 @@ namespace CV19.ViewModels
                 ItemsSource = dataPoints,
                 Color = OxyColors.Red
             });
+
+            int studentIndex = 1;
+
+            var students = Enumerable.Range(1, 10).Select(i => new Student
+            {
+                Name = $"Name {studentIndex}",
+                Surname = $"Surname {studentIndex}",
+                Patronymic = $"Patronymic {studentIndex++}",
+                Birthday = DateTime.Now,
+                Rating = 0
+            });
+
+            var groups = Enumerable.Range(1, 20).Select(i => new Group
+            {
+                Name = $"Group {i}",
+                Students = new ObservableCollection<Student>(students)
+            });
+
+            Groups = new ObservableCollection<Group>(groups);
         }
     }
 }
