@@ -9,6 +9,7 @@
         xmlns:deanery="clr-namespace:CV19.Models.Deanery"
         xmlns:VM="clr-namespace:CV19.ViewModels"
         xmlns:l="clr-namespace:CV19"
+        xmlns:sys="clr-namespace:System;assembly=System.Runtime"
         Title="{Binding Title}" Width="800" Height="450">
     <Window.Resources>
         <cmd:CloseApplicationCommand x:Key="CloseApplicationCommand"/>
@@ -54,6 +55,70 @@
             <StatusBarItem Content="{Binding SelectedPageIndex}"/>
         </StatusBar>
         <TabControl SelectedIndex="{Binding SelectedPageIndex}">
+            <TabItem Header="Composite Data">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="250"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <GroupBox>
+                        <GroupBox.Header>
+                            <TextBlock Text="Items"/>
+                        </GroupBox.Header>
+                        <GroupBox.Resources>
+                            <DataTemplate DataType="{x:Type deanery:Group}">
+                                <TextBlock Text="{Binding Name}"/>
+                            </DataTemplate>
+                            <DataTemplate DataType="{x:Type deanery:Student}">
+                                <TextBlock Text="{Binding Name, StringFormat='Student {0}'}"/>
+                            </DataTemplate>
+                            <DataTemplate DataType="{x:Type sys:String}">
+                                <TextBlock>
+                                    <Run Foreground="Red" FontWeight="Bold">Line: </Run>
+                                    <TextBlock Text="{Binding}"/>
+                                </TextBlock>
+                            </DataTemplate>
+                            <DataTemplate DataType="{x:Type sys:Int32}">
+                                <TextBlock>
+                                    Number: <TextBlock Text="{Binding}"/>
+                                </TextBlock>
+                            </DataTemplate>
+                        </GroupBox.Resources>
+                        <ListBox ItemsSource="{Binding CompositeCollection}" 
+                             SelectedItem="{Binding SelectedCompositeValue}"/>
+                    </GroupBox>
+                    <GroupBox Grid.Column="1">
+                        <GroupBox.Header>
+                            <TextBlock Text="Selected Item"/>
+                        </GroupBox.Header>
+                        <GroupBox.Resources>
+                            <DataTemplate DataType="{x:Type deanery:Group}">
+                                <TextBlock Text="{Binding Name}" HorizontalAlignment="Center"
+                                           VerticalAlignment="Center" FontSize="30"/>
+                            </DataTemplate>
+                            <DataTemplate DataType="{x:Type deanery:Student}">
+                                <TextBlock Text="{Binding Name, StringFormat='Student {0}'}"
+                                           HorizontalAlignment="Center" VerticalAlignment="Center" 
+                                           FontSize="30"/>
+                            </DataTemplate>
+                            <DataTemplate DataType="{x:Type sys:String}">
+                                <TextBlock HorizontalAlignment="Center"
+                                           VerticalAlignment="Center" FontSize="30">
+                                    <Run Foreground="Red" FontWeight="Bold">Line: </Run>
+                                    <TextBlock Text="{Binding}"/>
+                                </TextBlock>
+                            </DataTemplate>
+                            <DataTemplate DataType="{x:Type sys:Int32}">
+                                <TextBlock HorizontalAlignment="Center"
+                                           VerticalAlignment="Center" FontSize="30">
+                                    Number: <TextBlock Text="{Binding}"/>
+                                </TextBlock>
+                            </DataTemplate>
+                        </GroupBox.Resources>
+                        <ContentControl Content="{Binding SelectedCompositeValue}"/>
+                    </GroupBox>
+                </Grid>
+            </TabItem>
             <TabItem Header="Students">
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -63,8 +128,18 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <GroupBox Grid.Column="0" Header="Groups">
-                        <ListBox ItemsSource="{Binding Groups}" DisplayMemberPath="Name" 
-                                 SelectedItem="{Binding SelectedGroup}" SelectedIndex="0"/>
+                        <ListBox ItemsSource="{Binding Groups}" SelectedItem="{Binding SelectedGroup}" 
+                                 SelectedIndex="0">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate DataType="deanery:Group">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding Name}"/>
+                                        <TextBlock Text="{Binding Students.Count, 
+                                            StringFormat=' Students: [{0}]'}"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
                     </GroupBox>
                     <GroupBox Grid.Column="1" Header="{Binding SelectedGroup.Name, 
                         FallbackValue='Students', TargetNullValue='Group is not selected'}">
