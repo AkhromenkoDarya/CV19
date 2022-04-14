@@ -153,7 +153,7 @@ namespace CV19.ViewModels
 
         private bool CanCloseApplicationCommandExecute(object p) => true;
 
-        private void OnCloseApplicationCommandExecute(object p) => Application.Current.Shutdown();
+        private void OnCloseApplicationCommandExecuted(object p) => Application.Current.Shutdown();
 
         #endregion
 
@@ -163,7 +163,7 @@ namespace CV19.ViewModels
 
         private bool CanChangeTabIndexCommandExecute(object p) => _selectedPageIndex >= 0;
 
-        private void OnChangeTabIndexCommandExecute(object p)
+        private void OnChangeTabIndexCommandExecuted(object p)
         {
             if (p is null)
             {
@@ -175,16 +175,66 @@ namespace CV19.ViewModels
 
         #endregion
 
+        #region AddGroupCommand
+
+        public ICommand AddGroupCommand { get; }
+
+        private bool CanAddGroupCommandExecute(object p) => true;
+
+        private void OnAddGroupCommandExecuted(object p)
+        {
+            int groupMaxIndex = Groups.Count + 1;
+
+            var newGroup = new Group
+            {
+                Name = $"Group {groupMaxIndex}",
+                Students = new ObservableCollection<Student>()
+            };
+
+            Groups.Add(newGroup);
+        }
+
+        #endregion
+                                                                                                   
+        #region RemoveGroupCommand
+
+        public ICommand RemoveGroupCommand { get; }
+
+        private bool CanRemoveGroupCommandExecute(object p) => p is Group group
+            && Groups.Contains(group);
+
+        private void OnRemoveGroupCommandExecuted(object p)
+        {
+            if (!(p is Group group))
+            {
+                return;
+            }
+
+            int groupIndex = Groups.IndexOf(group);
+            Groups.Remove(group);
+
+            if (groupIndex < Groups.Count)
+            {
+                SelectedGroup = Groups[groupIndex];
+            }
+        }
+
+        #endregion
+
         #endregion
 
         public MainWindowViewModel()
         {
             #region Команды
 
-            CloseApplicationCommand = new RelayCommand(OnCloseApplicationCommandExecute, 
+            CloseApplicationCommand = new RelayCommand(OnCloseApplicationCommandExecuted, 
                 CanCloseApplicationCommandExecute);
-            ChangeTabIndexCommand = new RelayCommand(OnChangeTabIndexCommandExecute, 
+            ChangeTabIndexCommand = new RelayCommand(OnChangeTabIndexCommandExecuted, 
                 CanChangeTabIndexCommandExecute);
+            AddGroupCommand = new RelayCommand(OnAddGroupCommandExecuted, 
+                CanAddGroupCommandExecute);
+            RemoveGroupCommand = new RelayCommand(OnRemoveGroupCommandExecuted,
+                CanRemoveGroupCommandExecute);
 
             #endregion
 
