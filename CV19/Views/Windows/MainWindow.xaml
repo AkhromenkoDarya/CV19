@@ -13,6 +13,9 @@
         Title="{Binding Title}" Width="800" Height="450">
     <Window.Resources>
         <cmd:CloseApplicationCommand x:Key="CloseApplicationCommand"/>
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="White"/>
+        </Style>
     </Window.Resources>
     <Window.InputBindings>
         <KeyBinding Modifiers="Alt" Key="F4" Command="{Binding CloseApplicationCommand}"/>
@@ -67,16 +70,16 @@
                         <DockPanel>
                             <UniformGrid DockPanel.Dock="Bottom" Rows="1" Margin="0,3">
                                 <UniformGrid.Resources>
-                                    <Style x:Key="ButtonStyle" TargetType="Button">
+                                    <Style TargetType="Button">
                                         <Setter Property="Margin" Value="3,0"/>
                                         <Setter Property="Padding" Value="3,5"/>
                                         <Setter Property="Background" Value="AntiqueWhite"/>
                                         <Setter Property="Foreground" Value="DarkRed"/>
                                     </Style>
                                 </UniformGrid.Resources>
-                                <Button Content="Add Group" Style="{StaticResource ButtonStyle}"
+                                <Button Content="Add Group" Style="{StaticResource PrimaryButton}" 
                                         Command="{Binding AddGroupCommand}"/>
-                                <Button Content="Remove Group" Style="{StaticResource ButtonStyle}"
+                                <Button Content="Remove Group" Style="{StaticResource DangerButton}" 
                                         Command="{Binding RemoveGroupCommand}" 
                                         CommandParameter="{Binding SelectedGroup}"/>
                             </UniformGrid>
@@ -207,7 +210,10 @@
             <TabItem Header="Plot">
                 <oxy:PlotView Model="{Binding TestDataPoints}"/>
             </TabItem>
-            <TabItem Header="Tab2"/>
+            <TabItem Header="Tab2">
+                <Button HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15,5" 
+                        Padding="14,5" Content="123" Style="{StaticResource DangerButton}"/>
+            </TabItem>
             <TabItem Header="Tab3"/>
             <TabItem Header="Tab4"/>
         </TabControl>
