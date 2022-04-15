@@ -69,14 +69,14 @@
                     <GroupBox Grid.Column="0" Header="Groups">
                         <DockPanel>
                             <UniformGrid DockPanel.Dock="Bottom" Rows="1" Margin="0,3">
-                                <UniformGrid.Resources>
+                                <!--<UniformGrid.Resources>
                                     <Style TargetType="Button">
                                         <Setter Property="Margin" Value="3,0"/>
                                         <Setter Property="Padding" Value="3,5"/>
                                         <Setter Property="Background" Value="AntiqueWhite"/>
                                         <Setter Property="Foreground" Value="DarkRed"/>
                                     </Style>
-                                </UniformGrid.Resources>
+                                </UniformGrid.Resources>-->
                                 <Button Content="Add Group" Style="{StaticResource PrimaryButton}" 
                                         Command="{Binding AddGroupCommand}"/>
                                 <Button Content="Remove Group" Style="{StaticResource DangerButton}" 

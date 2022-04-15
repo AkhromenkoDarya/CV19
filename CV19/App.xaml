@@ -4,21 +4,10 @@
              xmlns:local="clr-namespace:CV19"
              StartupUri="Views/Windows/MainWindow.xaml">
     <Application.Resources>
-        <Style x:Key="ButtonBaseStyle" TargetType="ButtonBase">
-            <Setter Property="Background" Value="White"/>
-        </Style>
-
-        <Style TargetType="Button" BasedOn="{StaticResource ButtonBaseStyle}"/>
-        <Style TargetType="ToggleButton" BasedOn="{StaticResource ButtonBaseStyle}"/>
-
-        <Style x:Key="PrimaryButton" TargetType="Button" BasedOn="{StaticResource ButtonBaseStyle}">
-            <Setter Property="FontWeight" Value="Bold"/>
-        </Style>
-
-        <Style x:Key="DangerButton" TargetType="Button" BasedOn="{StaticResource ButtonBaseStyle}">
-            <Setter Property="Background" Value="Red"/>
-            <Setter Property="Foreground" Value="White"/>
-        </Style>
-        
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Resources/Styles/Buttons.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>
