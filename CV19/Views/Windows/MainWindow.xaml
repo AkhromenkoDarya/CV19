@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:oxy="http://oxyplot.org/wpf"
-        xmlns:fa5="http://schemas.fontawesome.com/icons/"
+        xmlns:fa="http://schemas.fontawesome.com/icons/"
         xmlns:cmd="clr-namespace:CV19.Infrastructure.Commands"
         xmlns:deanery="clr-namespace:CV19.Models.Deanery"
         xmlns:VM="clr-namespace:CV19.ViewModels"
@@ -39,12 +39,12 @@
             </MenuItem>
             <MenuItem Command="{Binding ChangeTabIndexCommand}" CommandParameter="-1">
                 <MenuItem.Header>
-                    <fa5:ImageAwesome Height="12" Icon="Regular_ArrowAltCircleLeft"/>
+                    <fa:ImageAwesome Height="12" Icon="Regular_ArrowAltCircleLeft"/>
                 </MenuItem.Header>
             </MenuItem>
             <MenuItem Command="{Binding ChangeTabIndexCommand}" CommandParameter="+1">
                 <MenuItem.Header>
-                    <fa5:ImageAwesome Height="12" Icon="Regular_ArrowAltCircleRight"/>
+                    <fa:ImageAwesome Height="12" Icon="Regular_ArrowAltCircleRight"/>
                 </MenuItem.Header>
             </MenuItem>
         </Menu>
@@ -77,9 +77,12 @@
                                         <Setter Property="Foreground" Value="DarkRed"/>
                                     </Style>
                                 </UniformGrid.Resources>-->
-                                <Button Content="Add Group" Style="{StaticResource PrimaryButton}" 
-                                        Command="{Binding AddGroupCommand}"/>
-                                <Button Content="Remove Group" Style="{StaticResource DangerButton}" 
+                                <Button Content="Add Group" Padding="0,7" 
+                                        Style="{StaticResource AddButtonStyle}" 
+                                        Command="{Binding AddGroupCommand}">
+                                </Button>
+                                <Button Content="Remove Group" Padding="0,7" 
+                                        Style="{StaticResource RemoveButtonStyle}" 
                                         Command="{Binding RemoveGroupCommand}" 
                                         CommandParameter="{Binding SelectedGroup}"/>
                             </UniformGrid>
@@ -184,8 +187,51 @@
                 <oxy:PlotView Model="{Binding TestDataPoints}"/>
             </TabItem>
             <TabItem Header="Tab2">
-                <Button HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15,5" 
-                        Padding="14,5" Content="123" Style="{StaticResource DangerButton}"/>
+                <Button Margin="20,40" HorizontalAlignment="Left" VerticalAlignment="Top"
+                        Padding="14,5" Content="123" Width="110" 
+                        Style="{StaticResource CustomButtonStyle}" RenderTransformOrigin="0.5,0.5">
+                    <Button.Background>
+                        <SolidColorBrush x:Name="ButtonBrush" Color="White"/>
+                    </Button.Background>
+                    <Button.RenderTransform>
+                        <RotateTransform x:Name="ButtonRotate"/>
+                    </Button.RenderTransform>
+                    <Button.Triggers>
+                        <EventTrigger RoutedEvent="Button.Click">
+                            <!--<EventTrigger.Actions>
+                                <BeginStoryboard></BeginStoryboard>
+                            </EventTrigger.Actions>-->
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Storyboard.TargetName="ButtonRotate"
+                                                     Storyboard.TargetProperty="Angle" From="0" 
+                                                     To="360" By="0.1" Duration="0:0:1" 
+                                                     AutoReverse="True"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="Button.MouseEnter">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation Storyboard.TargetName="ButtonBrush"
+                                                    Storyboard.TargetProperty="Color"
+                                                    To="Red"
+                                                    Duration="0:0:0.1"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="Button.MouseLeave">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation Storyboard.TargetName="ButtonBrush"
+                                                    Storyboard.TargetProperty="Color"
+                                                    To="White"
+                                                    Duration="0:0:3"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </Button.Triggers>
+                </Button>
             </TabItem>
             <TabItem Header="Tab3"/>
             <TabItem Header="Tab4"/>

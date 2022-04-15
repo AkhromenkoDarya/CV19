@@ -6,13 +6,15 @@
         xmlns:local="clr-namespace:CV19WPFTest"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+    <Window.Resources>
+        
+    </Window.Resources>
     <Grid>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="75,59,0,0" VerticalAlignment="Top" Height="70" Width="170"/>
-        <TextBox HorizontalAlignment="Left" Margin="325,82,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="200"/>
+        <Button Style="{DynamicResource ButtonStyle1}" Content="Button" HorizontalAlignment="Left" Margin="75,59,0,0" VerticalAlignment="Top" Height="70" Width="170"/>
+        <!--<TextBox HorizontalAlignment="Left" Margin="325,82,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="200"/>
         <RadioButton Content="RadioButton" HorizontalAlignment="Left" Margin="315,152,0,0" VerticalAlignment="Top" Height="33" Width="110"/>
         <CheckBox Content="CheckBox" Margin="515,132,-515,229"/>
         <Slider HorizontalAlignment="Center" Margin="0,259,0,0" VerticalAlignment="Top" Width="296"/>
-        <ProgressBar HorizontalAlignment="Left" Height="40" Margin="225,334,0,0" VerticalAlignment="Top" Width="300"/>
-
+        <ProgressBar HorizontalAlignment="Left" Height="40" Margin="225,334,0,0" VerticalAlignment="Top" Width="300"/>-->
     </Grid>
 </Window>
