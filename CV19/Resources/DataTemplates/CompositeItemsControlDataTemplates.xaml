@@ -1,0 +1,24 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:deanery="clr-namespace:CV19.Models.Deanery"
+                    xmlns:sys="clr-namespace:System;assembly=System.Runtime">
+    <DataTemplate DataType="{x:Type deanery:Group}">
+        <TextBlock Text="{Binding Name}" HorizontalAlignment="Center" VerticalAlignment="Center" 
+                   FontSize="30"/>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type deanery:Student}">
+        <TextBlock Text="{Binding Name, StringFormat='Student {0}'}" HorizontalAlignment="Center" 
+                   VerticalAlignment="Center" FontSize="30"/>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type sys:String}">
+        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30">
+            <Run Foreground="Red" FontWeight="Bold">Line: </Run>
+            <TextBlock Text="{Binding}"/>
+        </TextBlock>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type sys:Int32}">
+        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"> 
+            Number: <TextBlock Text="{Binding}"/>
+        </TextBlock>
+    </DataTemplate>
+</ResourceDictionary>
