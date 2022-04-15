@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-                                                                                                   
+
 namespace CV19.ViewModels.Base
 {
     internal abstract class ViewModel : INotifyPropertyChanged, IDisposable
