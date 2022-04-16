@@ -59,13 +59,15 @@
                     <GroupBox Grid.Column="0" Header="Groups">
                         <DockPanel>
                             <DockPanel.Resources>
-                                <CollectionViewSource x:Key="GroupCollection" Source="{Binding Groups}"/>
+                                <CollectionViewSource x:Key="GroupCollection" 
+                                                      Source="{Binding Groups}"
+                                                      Filter="CollectionViewSource_Filter"/>
                             </DockPanel.Resources>
                             <DockPanel DockPanel.Dock="Top" Margin="0,3">
                                 <!--<TextBlock Text="Filter:"/>-->
                                 <fa:ImageAwesome Height="12" Icon="Solid_Search" Margin="3,0,3,0"
                                                  ToolTip="Filter"/>
-                                <TextBox></TextBox>
+                                <TextBox Name="GroupNameFilterTextBox" TextChanged="GroupNameFilterTextBox_TextChanged"/>
                             </DockPanel>
                             <UniformGrid DockPanel.Dock="Bottom" Rows="1" Margin="0,3">
                                 <Button Content="Add Group" Padding="0,7" 
