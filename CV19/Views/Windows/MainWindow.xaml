@@ -58,6 +58,12 @@
                     </Grid.ColumnDefinitions>
                     <GroupBox Grid.Column="0" Header="Groups">
                         <DockPanel>
+                            <DockPanel DockPanel.Dock="Top" Margin="0,3">
+                                <!--<TextBlock Text="Filter:"/>-->
+                                <fa:ImageAwesome Height="12" Icon="Solid_Search" Margin="3,0,3,0"
+                                                 ToolTip="Filter"/>
+                                <TextBox></TextBox>
+                            </DockPanel>
                             <UniformGrid DockPanel.Dock="Bottom" Rows="1" Margin="0,3">
                                 <!--<UniformGrid.Resources>
                                     <Style TargetType="Button">
@@ -98,45 +104,52 @@
                     </GroupBox>
                     <GroupBox Grid.Column="1" Header="{Binding SelectedGroup.Name, 
                         FallbackValue='Students', TargetNullValue='Group is not selected'}">
-                        <DataGrid ItemsSource="{Binding SelectedGroup.Students}" 
+                        <DockPanel>
+                            <DockPanel DockPanel.Dock="Top" Margin="0,3">
+                                <fa:ImageAwesome Height="12" Icon="Solid_Search" Margin="3,0,3,0"
+                                                 ToolTip="Filter"/>
+                                <TextBox></TextBox>
+                             </DockPanel>
+                            <DataGrid ItemsSource="{Binding SelectedGroup.Students}" 
                                   AutoGenerateColumns="False" GridLinesVisibility="Vertical" 
                                   VerticalGridLinesBrush="DarkGray"
                                   AlternatingRowBackground="LightGray">
-                            <!--HorizontalGridLinesBrush="{x:Null}"-->
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Header="Surname" Binding="{Binding Surname}" 
+                                <!--HorizontalGridLinesBrush="{x:Null}"-->
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Surname" Binding="{Binding Surname}" 
                                                     Width="Auto"/>
-                                <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
-                                <DataGridTextColumn Header="Patronymic" Binding="{Binding Patronymic}"/>
-                                <!--<DataGridTextColumn Header="Birthday" Binding="{Binding Birthday, 
+                                    <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
+                                    <DataGridTextColumn Header="Patronymic" Binding="{Binding Patronymic}"/>
+                                    <!--<DataGridTextColumn Header="Birthday" Binding="{Binding Birthday, 
                                     StringFormat=dd.MM.yyyy}"/>-->
-                                <DataGridTemplateColumn Header="Birthday">
-                                    <!--<DataGridTemplateColumn.CellTemplate>
+                                    <DataGridTemplateColumn Header="Birthday">
+                                        <!--<DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate DataType="deanery:Student">
                                             <DatePicker SelectedDate="{Binding Birthday}"/>
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>-->
-                                    <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate DataType="deanery:Student">
-                                            <TextBlock Text="{Binding Birthday, 
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate DataType="deanery:Student">
+                                                <TextBlock Text="{Binding Birthday, 
                                                 StringFormat='dd.MM.yyyy'}"/>
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
-                                    <DataGridTemplateColumn.CellEditingTemplate>
-                                        <DataTemplate DataType="deanery:Student">
-                                            <DatePicker SelectedDate="{Binding Birthday}"/>
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellEditingTemplate>
-                                </DataGridTemplateColumn>
-                                <DataGridTextColumn Header="Rating" Binding="{Binding Rating}" 
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                        <DataGridTemplateColumn.CellEditingTemplate>
+                                            <DataTemplate DataType="deanery:Student">
+                                                <DatePicker SelectedDate="{Binding Birthday}"/>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellEditingTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTextColumn Header="Rating" Binding="{Binding Rating}" 
                                                     IsReadOnly="True"/>
-                                <!--<DataGridTextColumn Header="Group" 
+                                    <!--<DataGridTextColumn Header="Group" 
                                                     Binding="{Binding DataContext.SelectedGroup.Name, 
                                     RelativeSource={RelativeSource AncestorType=DataGrid}}"/>-->
-                                <DataGridTextColumn Header="Notes" Binding="{Binding Description}" 
+                                    <DataGridTextColumn Header="Notes" Binding="{Binding Description}" 
                                                     Width="*"/>
-                            </DataGrid.Columns>
-                        </DataGrid>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </DockPanel>
                     </GroupBox>
                 </Grid>
             </TabItem>
