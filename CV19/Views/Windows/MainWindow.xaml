@@ -37,16 +37,6 @@
             <MenuItem Header="_Help" Cursor="Help">
                 <MenuItem Header="About"/>
             </MenuItem>
-            <MenuItem Command="{Binding ChangeTabIndexCommand}" CommandParameter="-1">
-                <MenuItem.Header>
-                    <fa:ImageAwesome Height="12" Icon="Regular_ArrowAltCircleLeft"/>
-                </MenuItem.Header>
-            </MenuItem>
-            <MenuItem Command="{Binding ChangeTabIndexCommand}" CommandParameter="+1">
-                <MenuItem.Header>
-                    <fa:ImageAwesome Height="12" Icon="Regular_ArrowAltCircleRight"/>
-                </MenuItem.Header>
-            </MenuItem>
         </Menu>
         <StatusBar DockPanel.Dock="Bottom">
             <StatusBarItem MaxWidth="350" MinWidth="150">
@@ -150,95 +140,9 @@
                     </GroupBox>
                 </Grid>
             </TabItem>
-            <TabItem Header="Composite Data">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="250"/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                    <GroupBox>
-                        <GroupBox.Header>
-                            <TextBlock Text="Items"/>
-                        </GroupBox.Header>
-                        <GroupBox.Resources>
-                            <ResourceDictionary>
-                                <ResourceDictionary.MergedDictionaries>
-                                    <ResourceDictionary 
-                                        Source="../../Resources/DataTemplates/CompositeListItemsDataTemplates.xaml"/>
-                                </ResourceDictionary.MergedDictionaries>
-                            </ResourceDictionary>
-                        </GroupBox.Resources>
-                        <ListBox ItemsSource="{Binding CompositeCollection}" 
-                             SelectedItem="{Binding SelectedCompositeValue}"/>
-                    </GroupBox>
-                    <GroupBox Grid.Column="1">
-                        <GroupBox.Header>
-                            <TextBlock Text="Selected Item"/>
-                        </GroupBox.Header>
-                        <GroupBox.Resources>
-                            <ResourceDictionary>
-                                <ResourceDictionary.MergedDictionaries>
-                                    <ResourceDictionary 
-                                        Source="../../Resources/DataTemplates/CompositeItemsControlDataTemplates.xaml"/>
-                                </ResourceDictionary.MergedDictionaries>
-                            </ResourceDictionary>
-                        </GroupBox.Resources>
-                        <ContentControl Content="{Binding SelectedCompositeValue}"/>
-                    </GroupBox>
-                </Grid>
-            </TabItem>
-            <TabItem Header="Plot">
+            <TabItem Header="Plot" Visibility="Collapsed">
                 <oxy:PlotView Model="{Binding TestDataPoints}"/>
             </TabItem>
-            <TabItem Header="Tab2">
-                <Button Margin="20,40" HorizontalAlignment="Left" VerticalAlignment="Top"
-                        Padding="14,5" Content="123" Width="110" 
-                        Style="{StaticResource CustomButtonStyle}" RenderTransformOrigin="0.5,0.5">
-                    <Button.Background>
-                        <SolidColorBrush x:Name="ButtonBrush" Color="White"/>
-                    </Button.Background>
-                    <Button.RenderTransform>
-                        <RotateTransform x:Name="ButtonRotate"/>
-                    </Button.RenderTransform>
-                    <Button.Triggers>
-                        <EventTrigger RoutedEvent="Button.Click">
-                            <!--<EventTrigger.Actions>
-                                <BeginStoryboard></BeginStoryboard>
-                            </EventTrigger.Actions>-->
-                            <BeginStoryboard>
-                                <Storyboard>
-                                    <DoubleAnimation Storyboard.TargetName="ButtonRotate"
-                                                     Storyboard.TargetProperty="Angle" From="0" 
-                                                     To="360" By="0.1" Duration="0:0:1" 
-                                                     AutoReverse="True"/>
-                                </Storyboard>
-                            </BeginStoryboard>
-                        </EventTrigger>
-                        <EventTrigger RoutedEvent="Button.MouseEnter">
-                            <BeginStoryboard>
-                                <Storyboard>
-                                    <ColorAnimation Storyboard.TargetName="ButtonBrush"
-                                                    Storyboard.TargetProperty="Color"
-                                                    To="Red"
-                                                    Duration="0:0:0.1"/>
-                                </Storyboard>
-                            </BeginStoryboard>
-                        </EventTrigger>
-                        <EventTrigger RoutedEvent="Button.MouseLeave">
-                            <BeginStoryboard>
-                                <Storyboard>
-                                    <ColorAnimation Storyboard.TargetName="ButtonBrush"
-                                                    Storyboard.TargetProperty="Color"
-                                                    To="White"
-                                                    Duration="0:0:3"/>
-                                </Storyboard>
-                            </BeginStoryboard>
-                        </EventTrigger>
-                    </Button.Triggers>
-                </Button>
-            </TabItem>
-            <TabItem Header="Tab3"/>
-            <TabItem Header="Tab4"/>
         </TabControl>
     </DockPanel>
 </Window>
