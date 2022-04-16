@@ -4,13 +4,18 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:oxy="http://oxyplot.org/wpf"
-        xmlns:fa5="http://schemas.fontawesome.com/icons/"
+        xmlns:fa="http://schemas.fontawesome.com/icons/"
         xmlns:cmd="clr-namespace:CV19.Infrastructure.Commands"
+        xmlns:deanery="clr-namespace:CV19.Models.Deanery"
         xmlns:VM="clr-namespace:CV19.ViewModels"
         xmlns:l="clr-namespace:CV19"
+        xmlns:sys="clr-namespace:System;assembly=System.Runtime"
         Title="{Binding Title}" Width="800" Height="450">
     <Window.Resources>
         <cmd:CloseApplicationCommand x:Key="CloseApplicationCommand"/>
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="White"/>
+        </Style>
     </Window.Resources>
     <Window.InputBindings>
         <KeyBinding Modifiers="Alt" Key="F4" Command="{Binding CloseApplicationCommand}"/>
@@ -34,12 +39,12 @@
             </MenuItem>
             <MenuItem Command="{Binding ChangeTabIndexCommand}" CommandParameter="-1">
                 <MenuItem.Header>
-                    <fa5:ImageAwesome Height="12" Icon="Regular_ArrowAltCircleLeft"></fa5:ImageAwesome>
+                    <fa:ImageAwesome Height="12" Icon="Regular_ArrowAltCircleLeft"/>
                 </MenuItem.Header>
             </MenuItem>
             <MenuItem Command="{Binding ChangeTabIndexCommand}" CommandParameter="+1">
                 <MenuItem.Header>
-                    <fa5:ImageAwesome Height="12" Icon="Regular_ArrowAltCircleRight"></fa5:ImageAwesome>
+                    <fa:ImageAwesome Height="12" Icon="Regular_ArrowAltCircleRight"/>
                 </MenuItem.Header>
             </MenuItem>
         </Menu>
@@ -53,44 +58,185 @@
             <StatusBarItem Content="{Binding SelectedPageIndex}"/>
         </StatusBar>
         <TabControl SelectedIndex="{Binding SelectedPageIndex}">
+            <TabItem Header="Students">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <!--<ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="7*"/>-->
+                        <ColumnDefinition Width="250"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <GroupBox Grid.Column="0" Header="Groups">
+                        <DockPanel>
+                            <UniformGrid DockPanel.Dock="Bottom" Rows="1" Margin="0,3">
+                                <!--<UniformGrid.Resources>
+                                    <Style TargetType="Button">
+                                        <Setter Property="Margin" Value="3,0"/>
+                                        <Setter Property="Padding" Value="3,5"/>
+                                        <Setter Property="Background" Value="AntiqueWhite"/>
+                                        <Setter Property="Foreground" Value="DarkRed"/>
+                                    </Style>
+                                </UniformGrid.Resources>-->
+                                <Button Content="Add Group" Padding="0,7" 
+                                        Style="{StaticResource AddButtonStyle}" 
+                                        Command="{Binding AddGroupCommand}">
+                                </Button>
+                                <Button Content="Remove Group" Padding="0,7" 
+                                        Style="{StaticResource RemoveButtonStyle}" 
+                                        Command="{Binding RemoveGroupCommand}" 
+                                        CommandParameter="{Binding SelectedGroup}"/>
+                            </UniformGrid>
+                            <ListBox ItemsSource="{Binding Groups}" SelectedIndex="0" 
+                                     SelectedItem="{Binding SelectedGroup}">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate DataType="deanery:Group">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Name="TextView" Text="{Binding Name}"/>
+                                            <TextBlock Text="{Binding Students.Count, 
+                                            StringFormat=' Students: [{0}]'}"/>
+                                        </StackPanel>
+                                        <DataTemplate.Triggers>
+                                            <DataTrigger Binding="{Binding Students.Count}" Value="0">
+                                                <Setter TargetName="TextView" Property="Foreground"
+                                                        Value="Green"/>
+                                            </DataTrigger>
+                                        </DataTemplate.Triggers>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </DockPanel>
+                    </GroupBox>
+                    <GroupBox Grid.Column="1" Header="{Binding SelectedGroup.Name, 
+                        FallbackValue='Students', TargetNullValue='Group is not selected'}">
+                        <DataGrid ItemsSource="{Binding SelectedGroup.Students}" 
+                                  AutoGenerateColumns="False" GridLinesVisibility="Vertical" 
+                                  VerticalGridLinesBrush="DarkGray"
+                                  AlternatingRowBackground="LightGray">
+                            <!--HorizontalGridLinesBrush="{x:Null}"-->
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Surname" Binding="{Binding Surname}" 
+                                                    Width="Auto"/>
+                                <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
+                                <DataGridTextColumn Header="Patronymic" Binding="{Binding Patronymic}"/>
+                                <!--<DataGridTextColumn Header="Birthday" Binding="{Binding Birthday, 
+                                    StringFormat=dd.MM.yyyy}"/>-->
+                                <DataGridTemplateColumn Header="Birthday">
+                                    <!--<DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate DataType="deanery:Student">
+                                            <DatePicker SelectedDate="{Binding Birthday}"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>-->
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate DataType="deanery:Student">
+                                            <TextBlock Text="{Binding Birthday, 
+                                                StringFormat='dd.MM.yyyy'}"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                    <DataGridTemplateColumn.CellEditingTemplate>
+                                        <DataTemplate DataType="deanery:Student">
+                                            <DatePicker SelectedDate="{Binding Birthday}"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellEditingTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTextColumn Header="Rating" Binding="{Binding Rating}" 
+                                                    IsReadOnly="True"/>
+                                <!--<DataGridTextColumn Header="Group" 
+                                                    Binding="{Binding DataContext.SelectedGroup.Name, 
+                                    RelativeSource={RelativeSource AncestorType=DataGrid}}"/>-->
+                                <DataGridTextColumn Header="Notes" Binding="{Binding Description}" 
+                                                    Width="*"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </GroupBox>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Composite Data">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="250"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <GroupBox>
+                        <GroupBox.Header>
+                            <TextBlock Text="Items"/>
+                        </GroupBox.Header>
+                        <GroupBox.Resources>
+                            <ResourceDictionary>
+                                <ResourceDictionary.MergedDictionaries>
+                                    <ResourceDictionary 
+                                        Source="../../Resources/DataTemplates/CompositeListItemsDataTemplates.xaml"/>
+                                </ResourceDictionary.MergedDictionaries>
+                            </ResourceDictionary>
+                        </GroupBox.Resources>
+                        <ListBox ItemsSource="{Binding CompositeCollection}" 
+                             SelectedItem="{Binding SelectedCompositeValue}"/>
+                    </GroupBox>
+                    <GroupBox Grid.Column="1">
+                        <GroupBox.Header>
+                            <TextBlock Text="Selected Item"/>
+                        </GroupBox.Header>
+                        <GroupBox.Resources>
+                            <ResourceDictionary>
+                                <ResourceDictionary.MergedDictionaries>
+                                    <ResourceDictionary 
+                                        Source="../../Resources/DataTemplates/CompositeItemsControlDataTemplates.xaml"/>
+                                </ResourceDictionary.MergedDictionaries>
+                            </ResourceDictionary>
+                        </GroupBox.Resources>
+                        <ContentControl Content="{Binding SelectedCompositeValue}"/>
+                    </GroupBox>
+                </Grid>
+            </TabItem>
             <TabItem Header="Plot">
                 <oxy:PlotView Model="{Binding TestDataPoints}"/>
             </TabItem>
-            <TabItem Visibility="Collapsed">
-                <TabItem.Header>
-                    <StackPanel Orientation="Horizontal">
-                        <fa5:ImageAwesome Icon="Regular_File" Height="12" Margin="0,0,5,0" 
-                                          Foreground="Red"/>
-                        <TextBlock Text="Tab 1"/>
-                        <!--<Image Source=""></Image>-->
-                    </StackPanel>
-                </TabItem.Header>
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="63*"/>
-                        <RowDefinition Height="325*"/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="157*"/>
-                        <ColumnDefinition Width="637*"/>
-                    </Grid.ColumnDefinitions>
-                    <Rectangle Grid.Row="0" Grid.Column="0"
-                               Margin="5,7" Fill="Blue" Stroke="Red" 
-                               StrokeThickness="3" RadiusX="5" RadiusY="7"/>
-                    <Ellipse Grid.Row="0" Grid.Column="1"
-                             Margin="5,7" Fill="Red" Stroke="Blue" 
-                             StrokeThickness="3">
-                        <Ellipse.InputBindings>
-                            <MouseBinding Command="{Binding CloseApplicationCommand}"
-                                          MouseAction="LeftDoubleClick"/>
-                        </Ellipse.InputBindings>
-                    </Ellipse>
-                    <GridSplitter Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" 
-                                  HorizontalAlignment="Right" Width="4" 
-                                  BorderBrush="Black" BorderThickness="0.2"/>
-                </Grid>
+            <TabItem Header="Tab2">
+                <Button Margin="20,40" HorizontalAlignment="Left" VerticalAlignment="Top"
+                        Padding="14,5" Content="123" Width="110" 
+                        Style="{StaticResource CustomButtonStyle}" RenderTransformOrigin="0.5,0.5">
+                    <Button.Background>
+                        <SolidColorBrush x:Name="ButtonBrush" Color="White"/>
+                    </Button.Background>
+                    <Button.RenderTransform>
+                        <RotateTransform x:Name="ButtonRotate"/>
+                    </Button.RenderTransform>
+                    <Button.Triggers>
+                        <EventTrigger RoutedEvent="Button.Click">
+                            <!--<EventTrigger.Actions>
+                                <BeginStoryboard></BeginStoryboard>
+                            </EventTrigger.Actions>-->
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Storyboard.TargetName="ButtonRotate"
+                                                     Storyboard.TargetProperty="Angle" From="0" 
+                                                     To="360" By="0.1" Duration="0:0:1" 
+                                                     AutoReverse="True"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="Button.MouseEnter">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation Storyboard.TargetName="ButtonBrush"
+                                                    Storyboard.TargetProperty="Color"
+                                                    To="Red"
+                                                    Duration="0:0:0.1"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="Button.MouseLeave">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation Storyboard.TargetName="ButtonBrush"
+                                                    Storyboard.TargetProperty="Color"
+                                                    To="White"
+                                                    Duration="0:0:3"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </Button.Triggers>
+                </Button>
             </TabItem>
-            <TabItem Header="Tab2"/>
             <TabItem Header="Tab3"/>
             <TabItem Header="Tab4"/>
         </TabControl>

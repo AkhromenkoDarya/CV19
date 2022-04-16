@@ -1,11 +1,13 @@
 ﻿using CV19.Infrastructure.Commands;
+using CV19.Models.Deanery;
 using CV19.ViewModels.Base;
 using OxyPlot;
 using OxyPlot.Axes;
 using OxyPlot.Series;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 
@@ -13,6 +15,48 @@ namespace CV19.ViewModels
 {
     internal class MainWindowViewModel : ViewModel
     {
+        public ObservableCollection<Group> Groups { get; }
+
+        public object[] CompositeCollection { get; }
+
+        #region SelectedCompositeValue: object - Выбранный непонятный элемент
+
+        /// <summary>
+        /// Выбранный непонятный элемент.
+        /// </summary>
+        private object _selectedCompositeValue;
+
+        /// <summary>
+        /// Выбранный непонятный элемент.
+        /// </summary>
+        public object SelectedCompositeValue
+        {
+            get => _selectedCompositeValue;
+
+            set => Set(ref _selectedCompositeValue, value);
+        }
+
+        #endregion
+
+        #region SelectedGroup: Group - Выбранная группа
+
+        /// <summary>
+        /// Выбранная группа.
+        /// </summary>
+        private Group _selectedGroup;
+
+        /// <summary>
+        /// Выбранная группа.
+        /// </summary>
+        public Group SelectedGroup
+        {
+            get => _selectedGroup;
+
+            set => Set(ref _selectedGroup, value);
+        }
+
+        #endregion
+
         #region SelectedPageIndex: int - Индекс выбранной вкладки
 
         /// <summary>
@@ -109,7 +153,7 @@ namespace CV19.ViewModels
 
         private bool CanCloseApplicationCommandExecute(object p) => true;
 
-        private void OnCloseApplicationCommandExecute(object p) => Application.Current.Shutdown();
+        private void OnCloseApplicationCommandExecuted(object p) => Application.Current.Shutdown();
 
         #endregion
 
@@ -119,7 +163,7 @@ namespace CV19.ViewModels
 
         private bool CanChangeTabIndexCommandExecute(object p) => _selectedPageIndex >= 0;
 
-        private void OnChangeTabIndexCommandExecute(object p)
+        private void OnChangeTabIndexCommandExecuted(object p)
         {
             if (p is null)
             {
@@ -131,16 +175,66 @@ namespace CV19.ViewModels
 
         #endregion
 
+        #region AddGroupCommand
+
+        public ICommand AddGroupCommand { get; }
+
+        private bool CanAddGroupCommandExecute(object p) => true;
+
+        private void OnAddGroupCommandExecuted(object p)
+        {
+            int groupMaxIndex = Groups.Count + 1;
+
+            var newGroup = new Group
+            {
+                Name = $"Group {groupMaxIndex}",
+                Students = new ObservableCollection<Student>()
+            };
+
+            Groups.Add(newGroup);
+        }
+
+        #endregion
+                                                                                                   
+        #region RemoveGroupCommand
+
+        public ICommand RemoveGroupCommand { get; }
+
+        private bool CanRemoveGroupCommandExecute(object p) => p is Group group
+            && Groups.Contains(group);
+
+        private void OnRemoveGroupCommandExecuted(object p)
+        {
+            if (!(p is Group group))
+            {
+                return;
+            }
+
+            int groupIndex = Groups.IndexOf(group);
+            Groups.Remove(group);
+
+            if (groupIndex < Groups.Count)
+            {
+                SelectedGroup = Groups[groupIndex];
+            }
+        }
+
+        #endregion
+
         #endregion
 
         public MainWindowViewModel()
         {
             #region Команды
 
-            CloseApplicationCommand = new RelayCommand(OnCloseApplicationCommandExecute, 
+            CloseApplicationCommand = new RelayCommand(OnCloseApplicationCommandExecuted, 
                 CanCloseApplicationCommandExecute);
-            ChangeTabIndexCommand = new RelayCommand(OnChangeTabIndexCommandExecute, 
+            ChangeTabIndexCommand = new RelayCommand(OnChangeTabIndexCommandExecuted, 
                 CanChangeTabIndexCommandExecute);
+            AddGroupCommand = new RelayCommand(OnAddGroupCommandExecuted, 
+                CanAddGroupCommandExecute);
+            RemoveGroupCommand = new RelayCommand(OnRemoveGroupCommandExecuted,
+                CanRemoveGroupCommandExecute);
 
             #endregion
 
@@ -172,6 +266,33 @@ namespace CV19.ViewModels
                 ItemsSource = dataPoints,
                 Color = OxyColors.Red
             });
+
+            int studentIndex = 1;
+
+            var students = Enumerable.Range(1, 10).Select(i => new Student
+            {
+                Name = $"Name {studentIndex}",
+                Surname = $"Surname {studentIndex}",
+                Patronymic = $"Patronymic {studentIndex++}",
+                Birthday = DateTime.Now,
+                Rating = 0
+            });
+
+            var groups = Enumerable.Range(1, 20).Select(i => new Group
+            {
+                Name = $"Group {i}",
+                Students = new ObservableCollection<Student>(students)
+            });
+
+            Groups = new ObservableCollection<Group>(groups);
+
+            var dataList = new List<object>();
+            dataList.Add("Hello World!");
+            dataList.Add(42);
+            dataList.Add(Groups[1]);
+            dataList.Add(Groups[1].Students[0]);
+
+            CompositeCollection = dataList.ToArray();
         }
     }
 }
