@@ -76,7 +76,15 @@
                                         CommandParameter="{Binding SelectedGroup}"/>
                             </UniformGrid>
                             <ListBox ItemsSource="{Binding GroupView}"
-                                     SelectedIndex="0" SelectedItem="{Binding SelectedGroup}">
+                                     SelectedIndex="0" SelectedItem="{Binding SelectedGroup}"
+                                     VirtualizingPanel.IsContainerVirtualizable="True"
+                                     VirtualizingPanel.IsVirtualizing="True"
+                                     VirtualizingPanel.VirtualizationMode="Recycling">
+                                <ListBox.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <VirtualizingStackPanel/>
+                                    </ItemsPanelTemplate>
+                                </ListBox.ItemsPanel>
                                 <ListBox.ItemTemplate>
                                     <DataTemplate DataType="deanery:Group">
                                         <StackPanel Orientation="Horizontal">

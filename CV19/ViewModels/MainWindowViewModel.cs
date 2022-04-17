@@ -19,11 +19,9 @@ namespace CV19.ViewModels
     {
         public ObservableCollection<Group> Groups { get; }
 
+        public ICollectionView GroupView { get; }
+
         public object[] CompositeCollection { get; }
-
-        private ICollectionView _groupView;
-
-        public ICollectionView GroupView { get => _groupView; }
 
         #region FilterString: string - Строка фильтрации групп студентов
 
@@ -42,7 +40,7 @@ namespace CV19.ViewModels
             set
             {
                 Set(ref _filterString, value);
-                _groupView.Refresh();
+                GroupView.Refresh();
             }
         }
 
@@ -323,8 +321,8 @@ namespace CV19.ViewModels
 
             CompositeCollection = dataList.ToArray();
 
-            _groupView = CollectionViewSource.GetDefaultView(Groups);
-            _groupView.Filter = GroupFilter;
+            GroupView = CollectionViewSource.GetDefaultView(Groups);
+            GroupView.Filter = GroupFilter;
         }
 
         private bool GroupFilter(object item)
