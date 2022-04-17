@@ -7,8 +7,10 @@ using OxyPlot.Series;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows;
+using System.Windows.Data;
 using System.Windows.Input;
 
 namespace CV19.ViewModels
@@ -18,6 +20,33 @@ namespace CV19.ViewModels
         public ObservableCollection<Group> Groups { get; }
 
         public object[] CompositeCollection { get; }
+
+        private ICollectionView _groupView;
+
+        public ICollectionView GroupView { get => _groupView; }
+
+        #region FilterString: string - Строка фильтрации групп студентов
+
+        /// <summary>
+        /// Строка фильтрации групп студентов.
+        /// </summary>
+        private string _filterString = string.Empty;
+
+        /// <summary>
+        /// Строка фильтрации групп студентов.
+        /// </summary>
+        public string FilterString
+        {
+            get => _filterString;
+
+            set
+            {
+                Set(ref _filterString, value);
+                _groupView.Refresh();
+            }
+        }
+
+        #endregion
 
         #region SelectedCompositeValue: object - Выбранный непонятный элемент
 
@@ -293,6 +322,24 @@ namespace CV19.ViewModels
             dataList.Add(Groups[1].Students[0]);
 
             CompositeCollection = dataList.ToArray();
+
+            _groupView = CollectionViewSource.GetDefaultView(Groups);
+            _groupView.Filter = GroupFilter;
+        }
+
+        private bool GroupFilter(object item)
+        {
+            if (!(item is Group group))
+            {
+                return false;
+            }
+
+            if (group.Name is null)
+            {
+                return false;
+            }
+
+            return group.Name.Contains(_filterString, StringComparison.OrdinalIgnoreCase);
         }
     }
 }
