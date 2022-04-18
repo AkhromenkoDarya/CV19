@@ -62,6 +62,33 @@ namespace CV19.ViewModels
 
         #endregion
 
+        #region StudentFilterText: string - Текст фильтра студентов
+
+        /// <summary>
+        /// Текст фильтра студентов.
+        /// </summary>
+        private string _studentFilterText;
+
+        /// <summary>
+        /// Текст фильтра студентов.
+        /// </summary>
+        public string StudentFilterText
+        {
+            get => _studentFilterText;
+
+            set
+            {
+                if (!Set(ref _studentFilterText, value))
+                {
+                    return;
+                }
+
+                _selectedGroupStudents.View.Refresh();
+            }
+        }
+
+        #endregion
+
         #region SelectedCompositeValue: object - Выбранный непонятный элемент
 
         /// <summary>
@@ -104,6 +131,7 @@ namespace CV19.ViewModels
 
                 _selectedGroupStudents.Source = value?.Students;
                 _selectedGroupStudents.View.Refresh();
+                OnPropertyChanged(nameof(StudentView));
             }
         }
 
@@ -349,6 +377,7 @@ namespace CV19.ViewModels
             });
 
             Groups = new ObservableCollection<Group>(groups);
+            SelectedGroup = Groups[0];
 
             var dataList = new List<object>();
             dataList.Add("Hello World!");
@@ -359,7 +388,13 @@ namespace CV19.ViewModels
             CompositeCollection = dataList.ToArray();
 
             GroupView = CollectionViewSource.GetDefaultView(Groups);
+            
             GroupView.Filter = GroupFilter;
+            _selectedGroupStudents.Filter += SelectedGroupStudents_Filter;
+
+            //_selectedGroupStudents.SortDescriptions.Add(new SortDescription("Name", 
+            //    ListSortDirection.Descending));
+            //_selectedGroupStudents.GroupDescriptions.Add(new PropertyGroupDescription("Name"));
         }
 
         private bool GroupFilter(object item)
@@ -380,6 +415,35 @@ namespace CV19.ViewModels
             }
 
             return group.Name.Contains(_groupFilterText, StringComparison.OrdinalIgnoreCase);
+        }
+
+        private void SelectedGroupStudents_Filter(object sender, FilterEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(_studentFilterText))
+            {
+                return;
+            }
+
+            if (!(e.Item is Student student))
+            {
+                e.Accepted = false;
+                return;
+            }
+
+            if (student.Name is null || student.Surname is null)
+            {
+                e.Accepted = false;
+                return;
+            }
+
+            if (student.Name.Contains(_studentFilterText, StringComparison.OrdinalIgnoreCase) 
+                || student.Surname.Contains(_studentFilterText, StringComparison.OrdinalIgnoreCase)
+                || student.Patronymic.Contains(_studentFilterText, StringComparison.OrdinalIgnoreCase))
+            {
+                return;
+            }
+
+            e.Accepted = false;
         }
     }
 }

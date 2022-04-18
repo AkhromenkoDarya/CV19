@@ -76,7 +76,7 @@
                                         CommandParameter="{Binding SelectedGroup}"/>
                             </UniformGrid>
                             <ListBox ItemsSource="{Binding GroupView}"
-                                     SelectedIndex="0" SelectedItem="{Binding SelectedGroup}"
+                                     SelectedItem="{Binding SelectedGroup, TargetNullValue=GroupView[0]}"
                                      VirtualizingPanel.IsContainerVirtualizable="True"
                                      VirtualizingPanel.IsVirtualizing="True"
                                      VirtualizingPanel.VirtualizationMode="Recycling">
@@ -109,12 +109,17 @@
                             <DockPanel DockPanel.Dock="Top" Margin="0,3">
                                 <fa:ImageAwesome Height="12" Icon="Solid_Search" Margin="3,0,3,0"
                                                  ToolTip="Filter"/>
-                                <TextBox/>
+                                <TextBox Text="{Binding StudentFilterText, 
+                                    UpdateSourceTrigger=PropertyChanged}"/>
                             </DockPanel>
-                            <DataGrid ItemsSource="{Binding SelectedGroup.Students}" 
-                                  AutoGenerateColumns="False" GridLinesVisibility="Vertical" 
-                                  VerticalGridLinesBrush="DarkGray"
-                                  AlternatingRowBackground="LightGray">
+                            <DataGrid ItemsSource="{Binding StudentView}" 
+                                      AutoGenerateColumns="False" GridLinesVisibility="Vertical" 
+                                      VerticalGridLinesBrush="DarkGray" 
+                                      AlternatingRowBackground="LightGray"
+                                      EnableRowVirtualization="True">
+                                <!--<DataGrid.GroupStyle>
+                                    <GroupStyle/>
+                                </DataGrid.GroupStyle>-->
                                 <!--HorizontalGridLinesBrush="{x:Null}"-->
                                 <!--<DataGrid.ItemsPanel>
                                     <ItemsPanelTemplate>
