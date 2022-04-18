@@ -62,7 +62,7 @@
                                 <!--<TextBlock Text="Filter:"/>-->
                                 <fa:ImageAwesome Height="12" Icon="Solid_Search" Margin="3,0,3,0"
                                                  ToolTip="Filter"/>
-                                <TextBox Text="{Binding FilterString, 
+                                <TextBox Text="{Binding GroupFilterText, 
                                     UpdateSourceTrigger=PropertyChanged}"/>
                             </DockPanel>
                             <UniformGrid DockPanel.Dock="Bottom" Rows="1" Margin="0,3">
@@ -109,8 +109,8 @@
                             <DockPanel DockPanel.Dock="Top" Margin="0,3">
                                 <fa:ImageAwesome Height="12" Icon="Solid_Search" Margin="3,0,3,0"
                                                  ToolTip="Filter"/>
-                                <TextBox></TextBox>
-                             </DockPanel>
+                                <TextBox/>
+                            </DockPanel>
                             <DataGrid ItemsSource="{Binding SelectedGroup.Students}" 
                                   AutoGenerateColumns="False" GridLinesVisibility="Vertical" 
                                   VerticalGridLinesBrush="DarkGray"
@@ -159,7 +159,7 @@
                     </GroupBox>
                 </Grid>
             </TabItem>
-            <TabItem Header="Virtualization Testing">
+            <TabItem Header="Virtualization Testing" Visibility="Collapsed">
                 <Grid>
                     <!--<TextBlock Text="{Binding Source={x:Static l:App.IsDesignMode}}"/>-->
                     <ListBox HorizontalAlignment="Left" Width="200" Margin="30"

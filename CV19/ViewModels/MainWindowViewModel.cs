@@ -19,27 +19,43 @@ namespace CV19.ViewModels
     {
         public ObservableCollection<Group> Groups { get; }
 
+        #region GroupView
+
         public ICollectionView GroupView { get; }
+
+        #endregion
+
+        #region StudentView
+
+        private readonly CollectionViewSource _selectedGroupStudents = new CollectionViewSource();
+
+        public ICollectionView StudentView => _selectedGroupStudents?.View;
+
+        #endregion
 
         public object[] CompositeCollection { get; }
 
-        #region FilterString: string - Строка фильтрации групп студентов
+        #region GroupFilterText: string - Текст фильтра групп студентов
 
         /// <summary>
-        /// Строка фильтрации групп студентов.
+        /// Текст фильтра групп студентов.
         /// </summary>
-        private string _filterString = string.Empty;
+        private string _groupFilterText;
 
         /// <summary>
-        /// Строка фильтрации групп студентов.
+        /// Текст фильтра групп студентов.
         /// </summary>
-        public string FilterString
+        public string GroupFilterText
         {
-            get => _filterString;
+            get => _groupFilterText;
 
             set
             {
-                Set(ref _filterString, value);
+                if (!Set(ref _groupFilterText, value))
+                {
+                    return;
+                }
+
                 GroupView.Refresh();
             }
         }
@@ -79,7 +95,16 @@ namespace CV19.ViewModels
         {
             get => _selectedGroup;
 
-            set => Set(ref _selectedGroup, value);
+            set
+            {
+                if (!Set(ref _selectedGroup, value))
+                {
+                    return;
+                }
+
+                _selectedGroupStudents.Source = value?.Students;
+                _selectedGroupStudents.View.Refresh();
+            }
         }
 
         #endregion
@@ -273,6 +298,8 @@ namespace CV19.ViewModels
 
             #endregion
 
+            /*------------------------------- Plot ----------------------------------------------*/
+
             const double radians = Math.PI / 180;
             var dataPoints = new List<DataPoint>((int)(360 / 0.1));
 
@@ -301,6 +328,8 @@ namespace CV19.ViewModels
                 ItemsSource = dataPoints,
                 Color = OxyColors.Red
             });
+
+            /*------------------------------- Students ------------------------------------------*/
 
             int studentIndex = 1;
 
@@ -335,6 +364,11 @@ namespace CV19.ViewModels
 
         private bool GroupFilter(object item)
         {
+            if (string.IsNullOrWhiteSpace(_groupFilterText))
+            {
+                return true;
+            }
+
             if (!(item is Group group))
             {
                 return false;
@@ -345,7 +379,7 @@ namespace CV19.ViewModels
                 return false;
             }
 
-            return group.Name.Contains(_filterString, StringComparison.OrdinalIgnoreCase);
+            return group.Name.Contains(_groupFilterText, StringComparison.OrdinalIgnoreCase);
         }
     }
 }
