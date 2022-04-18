@@ -116,6 +116,11 @@
                                   VerticalGridLinesBrush="DarkGray"
                                   AlternatingRowBackground="LightGray">
                                 <!--HorizontalGridLinesBrush="{x:Null}"-->
+                                <!--<DataGrid.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <VirtualizingStackPanel/>
+                                    </ItemsPanelTemplate>
+                                </DataGrid.ItemsPanel>-->
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="Surname" Binding="{Binding Surname}" 
                                                     Width="Auto"/>
@@ -158,7 +163,15 @@
                 <Grid>
                     <!--<TextBlock Text="{Binding Source={x:Static l:App.IsDesignMode}}"/>-->
                     <ListBox HorizontalAlignment="Left" Width="200" Margin="30"
-                             ItemsSource="{Binding TestStudents}">
+                             ItemsSource="{Binding TestStudents}" 
+                             VirtualizingPanel.IsVirtualizing="True"
+                             VirtualizingPanel.VirtualizationMode="Recycling"
+                             VirtualizingPanel.IsContainerVirtualizable="True">
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <VirtualizingStackPanel/>
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
                         <ListBox.ItemContainerStyle>
                             <Style TargetType="ListBoxItem">
                                 <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
