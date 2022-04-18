@@ -137,6 +137,25 @@ namespace CV19.ViewModels
 
         #endregion
 
+        #region SelectedDirectory: DirectoryViewModel - Выбранная папка
+
+        /// <summary>
+        /// Выбранная папка.
+        /// </summary>
+        private DirectoryViewModel _selectedDirectory;
+
+        /// <summary>
+        /// Выбранная папка.
+        /// </summary>
+        public DirectoryViewModel SelectedDirectory
+        {
+            get => _selectedDirectory;
+
+            set => Set(ref _selectedDirectory, value);
+        }
+
+        #endregion
+
         #region SelectedPageIndex: int - Индекс выбранной вкладки
 
         /// <summary>
@@ -232,6 +251,8 @@ namespace CV19.ViewModels
                 Name = $"Name {i}",
                 Surname = $"Surname {i}"
             });
+
+        public DirectoryViewModel DiskRootDirectory => new DirectoryViewModel(@"C:\");
 
         #region Команды
 
