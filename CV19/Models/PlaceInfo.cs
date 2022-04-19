@@ -9,6 +9,6 @@ namespace CV19.Models
 
         public Point Location { get; set; }
 
-        public IEnumerable<ConfirmedCount> InfectedCount;
+        public IEnumerable<ConfirmedCase> ConfirmedCases;
     }
 }

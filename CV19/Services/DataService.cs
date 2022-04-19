@@ -1,12 +1,13 @@
 ﻿using CV19.Models;
 using System;
 using System.Collections.Generic;
-using System.Windows;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace CV19.Services
 {
@@ -16,8 +17,6 @@ namespace CV19.Services
             + @"CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/"
             + @"time_series_covid19_confirmed_global.csv";
 
-        private static string[] _incorrectPlaceNames = { "Bonaire", "Helena", "Korea" };
-
         private const int _columnCountBeforeDates = 4;
 
         private const int _headerLineNumber = 1;
@@ -25,8 +24,8 @@ namespace CV19.Services
         private static async Task<Stream> GetDataStream()
         {
             var client = new HttpClient();
-            var response = await client.GetAsync(_dataSourceAddress, 
-                HttpCompletionOption.ResponseHeadersRead);
+            var response = await client.GetAsync(_dataSourceAddress, HttpCompletionOption
+                .ResponseHeadersRead);
             return await response.Content.ReadAsStreamAsync();
         }
 
@@ -44,32 +43,29 @@ namespace CV19.Services
                     continue;
                 }
 
-                yield return FixPlaceName(line);
-            }
-        }
+                var regex = new Regex("\\\"(.*?)\\\"");
 
-        private static string FixPlaceName(string line)
-        {
-            foreach (string incorrectCountryName in _incorrectPlaceNames)
-            {
-                if (line.Contains(incorrectCountryName))
+                if (regex.IsMatch(line))
                 {
-                    return line.Replace($"{incorrectCountryName},", $"{incorrectCountryName} -");
+                    line = regex.Replace(line, x => x.Value.Replace(",", "(").Replace("( ", " (")
+                        .Insert(x.Value.LastIndexOf("\""), ")"));
                 }
-            }
 
-            return line;
+                yield return line;
+            }
         }
 
         private static DateTime[] GetDates() => GetDataLines()
             .First()
             .Split(',')
             .Skip(_columnCountBeforeDates)
-            .Select(s => DateTime.Parse(s, CultureInfo.InvariantCulture))
+            .Select(s => DateTime.TryParse(s, out DateTime convertedToDateTime) 
+                ? convertedToDateTime 
+                : DateTime.MinValue)
             .ToArray();
 
-        private static IEnumerable<(string country, string province, (double latitdue, 
-            double longitude) place, int[] infectedCount)> GetCountryData()
+        public static IEnumerable<(string country, string province, (double latitdue, 
+            double longitude) location, int[] confirmedCases)> GetCountryData()
         {
             IEnumerable<string[]> lines = GetDataLines()
                 .Skip(_headerLineNumber)
@@ -77,16 +73,22 @@ namespace CV19.Services
 
             foreach (string[] row in lines)
             {
-                string province = row[0].Trim();
-                string country = row[1].Trim(' ', '\'', '"');
-                double latitude = double.Parse(row[2]);
-                double longitude = double.Parse(row[3]);
-                int[] infectedCount = row
+                string province = row[0].Trim(' ', '"');
+                string country = row[1].Trim(' ', '"');
+                double latitude = row[2] != string.Empty
+                    ? double.Parse(row[2].Trim().Replace(",", CultureInfo.InvariantCulture
+                        .NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture)
+                    : 0;
+                double longitude = row[3] != string.Empty
+                    ? double.Parse(row[3].Trim().Replace(",", CultureInfo.InvariantCulture
+                        .NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture)
+                    : 0;
+                int[] confirmedCases = row
                     .Skip(_columnCountBeforeDates)
-                    .Select(s => int.Parse(s))
+                    .Select(s => int.TryParse(s, out int convertedToInt) ? convertedToInt : 0)
                     .ToArray();
 
-                yield return (country, province, (latitude, longitude), infectedCount);
+                yield return (country, province, (latitude, longitude), confirmedCases);
             }
         }
 
@@ -104,9 +106,9 @@ namespace CV19.Services
                     ProvinceCount = countryInfo.Select(x => new PlaceInfo
                     {
                         Name = x.province,
-                        Location = new Point(x.place.latitdue, x.place.longitude),
-                        InfectedCount = dates.Zip(x.infectedCount, (date, count) 
-                            => new ConfirmedCount
+                        Location = new Point(x.location.latitdue, x.location.longitude),
+                        ConfirmedCases = dates.Zip(x.confirmedCases, (date, count) 
+                            => new ConfirmedCase
                             {
                                 Date = date,
                                 Count = count
