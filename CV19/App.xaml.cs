@@ -1,6 +1,4 @@
-﻿using CV19.Services;
-using System.Linq;
-using System.Windows;
+﻿using System.Windows;
 
 namespace CV19
 {
@@ -12,8 +10,6 @@ namespace CV19
         {
             IsDesignMode = false;
             base.OnStartup(e);
-
-            var countries = DataService.GetData().ToArray();
         }
     }
 }

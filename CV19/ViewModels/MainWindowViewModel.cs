@@ -17,48 +17,11 @@ namespace CV19.ViewModels
 {
     internal class MainWindowViewModel : ViewModel
     {
-        public ObservableCollection<Group> Groups { get; }
-
-        #region GroupView
-
-        public ICollectionView GroupView { get; }
-
-        #endregion
-
         #region StudentView
 
         private readonly CollectionViewSource _selectedGroupStudents = new CollectionViewSource();
 
         public ICollectionView StudentView => _selectedGroupStudents?.View;
-
-        #endregion
-
-        public object[] CompositeCollection { get; }
-
-        #region GroupFilterText: string - Текст фильтра групп студентов
-
-        /// <summary>
-        /// Текст фильтра групп студентов.
-        /// </summary>
-        private string _groupFilterText;
-
-        /// <summary>
-        /// Текст фильтра групп студентов.
-        /// </summary>
-        public string GroupFilterText
-        {
-            get => _groupFilterText;
-
-            set
-            {
-                if (!Set(ref _groupFilterText, value))
-                {
-                    return;
-                }
-
-                GroupView.Refresh();
-            }
-        }
 
         #endregion
 
@@ -85,73 +48,6 @@ namespace CV19.ViewModels
 
                 _selectedGroupStudents.View.Refresh();
             }
-        }
-
-        #endregion
-
-        #region SelectedCompositeValue: object - Выбранный непонятный элемент
-
-        /// <summary>
-        /// Выбранный непонятный элемент.
-        /// </summary>
-        private object _selectedCompositeValue;
-
-        /// <summary>
-        /// Выбранный непонятный элемент.
-        /// </summary>
-        public object SelectedCompositeValue
-        {
-            get => _selectedCompositeValue;
-
-            set => Set(ref _selectedCompositeValue, value);
-        }
-
-        #endregion
-
-        #region SelectedGroup: Group - Выбранная группа
-
-        /// <summary>
-        /// Выбранная группа.
-        /// </summary>
-        private Group _selectedGroup;
-
-        /// <summary>
-        /// Выбранная группа.
-        /// </summary>
-        public Group SelectedGroup
-        {
-            get => _selectedGroup;
-
-            set
-            {
-                if (!Set(ref _selectedGroup, value))
-                {
-                    return;
-                }
-
-                _selectedGroupStudents.Source = value?.Students;
-                _selectedGroupStudents.View.Refresh();
-                OnPropertyChanged(nameof(StudentView));
-            }
-        }
-
-        #endregion
-
-        #region SelectedDirectory: DirectoryViewModel - Выбранная папка
-
-        /// <summary>
-        /// Выбранная папка.
-        /// </summary>
-        private DirectoryViewModel _selectedDirectory;
-
-        /// <summary>
-        /// Выбранная папка.
-        /// </summary>
-        public DirectoryViewModel SelectedDirectory
-        {
-            get => _selectedDirectory;
-
-            set => Set(ref _selectedDirectory, value);
         }
 
         #endregion
@@ -252,8 +148,6 @@ namespace CV19.ViewModels
                 Surname = $"Surname {i}"
             });
 
-        public DirectoryViewModel DiskRootDirectory => new DirectoryViewModel(@"C:\");
-
         #region Команды
 
         #region CloseApplicationCommand
@@ -284,66 +178,16 @@ namespace CV19.ViewModels
 
         #endregion
 
-        #region AddGroupCommand
-
-        public ICommand AddGroupCommand { get; }
-
-        private bool CanAddGroupCommandExecute(object p) => true;
-
-        private void OnAddGroupCommandExecuted(object p)
-        {
-            int groupMaxIndex = Groups.Count + 1;
-
-            var newGroup = new Group
-            {
-                Name = $"Group {groupMaxIndex}",
-                Students = new ObservableCollection<Student>()
-            };
-
-            Groups.Add(newGroup);
-        }
-
-        #endregion
-                                                                                                   
-        #region RemoveGroupCommand
-
-        public ICommand RemoveGroupCommand { get; }
-
-        private bool CanRemoveGroupCommandExecute(object p) => p is Group group
-            && Groups.Contains(group);
-
-        private void OnRemoveGroupCommandExecuted(object p)
-        {
-            if (!(p is Group group))
-            {
-                return;
-            }
-
-            int groupIndex = Groups.IndexOf(group);
-            Groups.Remove(group);
-
-            if (groupIndex < Groups.Count)
-            {
-                SelectedGroup = Groups[groupIndex];
-            }
-        }
-
-        #endregion
-
         #endregion
 
         public MainWindowViewModel()
         {
             #region Команды
 
-            CloseApplicationCommand = new RelayCommand(OnCloseApplicationCommandExecuted, 
+            CloseApplicationCommand = new RelayCommand(OnCloseApplicationCommandExecuted,
                 CanCloseApplicationCommandExecute);
-            ChangeTabIndexCommand = new RelayCommand(OnChangeTabIndexCommandExecuted, 
+            ChangeTabIndexCommand = new RelayCommand(OnChangeTabIndexCommandExecuted,
                 CanChangeTabIndexCommandExecute);
-            AddGroupCommand = new RelayCommand(OnAddGroupCommandExecuted, 
-                CanAddGroupCommandExecute);
-            RemoveGroupCommand = new RelayCommand(OnRemoveGroupCommandExecuted,
-                CanRemoveGroupCommandExecute);
 
             #endregion
 
@@ -360,16 +204,16 @@ namespace CV19.ViewModels
 
             TestDataPoints = new PlotModel();
 
-            TestDataPoints.Axes.Add(new LinearAxis() 
-            { 
-                Title = "TestPlotXAxis", 
-                Position = AxisPosition.Left 
+            TestDataPoints.Axes.Add(new LinearAxis()
+            {
+                Title = "TestPlotXAxis",
+                Position = AxisPosition.Left
             });
 
-            TestDataPoints.Axes.Add(new LinearAxis() 
-            { 
-                Title = "TestPlotYAxis", 
-                Position = AxisPosition.Bottom 
+            TestDataPoints.Axes.Add(new LinearAxis()
+            {
+                Title = "TestPlotYAxis",
+                Position = AxisPosition.Bottom
             });
 
             TestDataPoints.Series.Add(new LineSeries()
@@ -377,65 +221,6 @@ namespace CV19.ViewModels
                 ItemsSource = dataPoints,
                 Color = OxyColors.Red
             });
-
-            /*------------------------------- Students ------------------------------------------*/
-
-            int studentIndex = 1;
-
-            var students = Enumerable.Range(1, 10).Select(i => new Student
-            {
-                Name = $"Name {studentIndex}",
-                Surname = $"Surname {studentIndex}",
-                Patronymic = $"Patronymic {studentIndex++}",
-                Birthday = DateTime.Now,
-                Rating = 0
-            });
-
-            var groups = Enumerable.Range(1, 20).Select(i => new Group
-            {
-                Name = $"Group {i}",
-                Students = new ObservableCollection<Student>(students)
-            });
-
-            Groups = new ObservableCollection<Group>(groups);
-            SelectedGroup = Groups[0];
-
-            var dataList = new List<object>();
-            dataList.Add("Hello World!");
-            dataList.Add(42);
-            dataList.Add(Groups[1]);
-            dataList.Add(Groups[1].Students[0]);
-
-            CompositeCollection = dataList.ToArray();
-
-            GroupView = CollectionViewSource.GetDefaultView(Groups);
-            
-            GroupView.Filter = GroupFilter;
-            _selectedGroupStudents.Filter += SelectedGroupStudents_Filter;
-
-            //_selectedGroupStudents.SortDescriptions.Add(new SortDescription("Name", 
-            //    ListSortDirection.Descending));
-            //_selectedGroupStudents.GroupDescriptions.Add(new PropertyGroupDescription("Name"));
-        }
-
-        private bool GroupFilter(object item)
-        {
-            if (string.IsNullOrWhiteSpace(_groupFilterText))
-            {
-                return true;
-            }
-
-            if (!(item is Group group))
-            {
-                return false;
-            }
-
-            if (group.Name is null)
-            {
-                return false;
-            }
-
-            return group.Name.Contains(_groupFilterText, StringComparison.OrdinalIgnoreCase);
         }
 
         private void SelectedGroupStudents_Filter(object sender, FilterEventArgs e)

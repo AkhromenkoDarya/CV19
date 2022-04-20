@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -31,7 +32,11 @@ namespace CV19.Services
 
         private static IEnumerable<string> GetDataLines()
         {
-            using Stream dataStream = GetDataStream().Result;
+            using Stream dataStream = (SynchronizationContext.Current is null 
+                ? GetDataStream() 
+                : Task.Run(GetDataStream))
+                .Result;
+
             using var dataReader = new StreamReader(dataStream);
 
             while (!dataReader.EndOfStream)
