@@ -6,7 +6,6 @@ using OxyPlot.Axes;
 using OxyPlot.Series;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
@@ -17,6 +16,8 @@ namespace CV19.ViewModels
 {
     internal class MainWindowViewModel : ViewModel
     {
+        private readonly CountryStatisticsViewModel _countryStatisticsViewModel;
+
         #region StudentView
 
         private readonly CollectionViewSource _selectedGroupStudents = new CollectionViewSource();
@@ -182,6 +183,8 @@ namespace CV19.ViewModels
 
         public MainWindowViewModel()
         {
+            _countryStatisticsViewModel = new CountryStatisticsViewModel(this);
+
             #region Команды
 
             CloseApplicationCommand = new RelayCommand(OnCloseApplicationCommandExecuted,
