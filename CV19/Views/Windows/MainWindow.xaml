@@ -9,6 +9,7 @@
         xmlns:deanery="clr-namespace:CV19.Models.Deanery"
         xmlns:VM="clr-namespace:CV19.ViewModels"
         xmlns:l="clr-namespace:CV19"
+        xmlns:userCtrls="clr-namespace:CV19.Views.UserControls"
         xmlns:sys="clr-namespace:System;assembly=System.Runtime"
         Title="{Binding Title}" Width="800" Height="450">
     <Window.Resources>
@@ -49,7 +50,7 @@
         </StatusBar>
         <TabControl>
             <TabItem Header="Statistics">
-                
+                <userCtrls:CountryStatisticsView/>
             </TabItem>
             <TabItem Header="Students">
                 <Grid>

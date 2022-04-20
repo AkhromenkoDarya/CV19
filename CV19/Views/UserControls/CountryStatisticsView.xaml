@@ -1,0 +1,27 @@
+﻿<UserControl x:Class="CV19.Views.UserControls.CountryStatisticsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" mc:Ignorable="d" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:l="clr-namespace:CV19.Views.UserControls"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="230"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <GridSplitter/>
+        <GroupBox Grid.Column="0" Header="Country List">
+            <ListBox></ListBox>
+        </GroupBox>
+        <GroupBox Grid.Column="1" Header="Information">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <GridSplitter HorizontalAlignment="Stretch" VerticalAlignment="Bottom"/>
+            </Grid>
+        </GroupBox>
+    </Grid>
+</UserControl>
