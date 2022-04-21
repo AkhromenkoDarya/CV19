@@ -3,7 +3,7 @@
                     xmlns:fa="http://schemas.fontawesome.com/icons/">
     
     <Style x:Key="ButtonBaseStyle" TargetType="ButtonBase">
-        <Setter Property="Background" Value="White"/>
+        <Setter Property="Background" Value="{StaticResource WhiteSolidBrush}"/>
     </Style>
 
     <Style TargetType="Button" BasedOn="{StaticResource ButtonBaseStyle}"/>
@@ -14,8 +14,8 @@
     </Style>
 
     <Style x:Key="DangerButton" TargetType="Button" BasedOn="{StaticResource ButtonBaseStyle}">
-        <Setter Property="Background" Value="Red"/>
-        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="Background" Value="{StaticResource RedSolidBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource WhiteSolidBrush}"/>
     </Style>
     
     <ControlTemplate x:Key="CustomButtonTemplate" TargetType="{x:Type Button}">
@@ -35,26 +35,25 @@
         </Border>
         <ControlTemplate.Triggers>
             <Trigger Property="IsDefaulted" Value="true">
-                <Setter Property="BorderBrush" TargetName="border" 
-                                        Value="{DynamicResource {x:Static 
-                                            SystemColors.HighlightBrushKey}}"/>
+                <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static 
+                    SystemColors.HighlightBrushKey}}"/>
                 <Setter Property="FontWeight" Value="Bold"/>
             </Trigger>
             <Trigger Property="IsMouseOver" Value="true">
                 <!--<Setter Property="Background" TargetName="border" Value="Blue"/>-->
-                <Setter Property="BorderBrush" TargetName="border" Value="White"/>
-                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="BorderBrush" TargetName="border" 
+                        Value="{StaticResource WhiteSolidBrush}"/>
+                <Setter Property="Foreground" Value="{StaticResource WhiteSolidBrush}"/>
             </Trigger>
             <Trigger Property="IsPressed" Value="true">
-                <Setter Property="Background" TargetName="border" 
-                                        Value="DarkBlue"/>
+                <Setter Property="Background" TargetName="border" Value="DarkBlue"/>
             </Trigger>
             <Trigger Property="IsEnabled" Value="false">
                 <!--<Setter Property="Background" TargetName="border" 
                                         Value="{StaticResource Button.Disabled.Background}"/>-->
                 <Setter Property="BorderBrush" TargetName="border" Value="DarkGray"/>
-                <Setter Property="TextElement.Foreground" 
-                                        TargetName="contentPresenter" Value="DarkGray"/>
+                <Setter Property="TextElement.Foreground" TargetName="contentPresenter" 
+                        Value="DarkGray"/>
             </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
@@ -161,7 +160,7 @@
     <Style x:Key="CustomButtonStyle" TargetType="{x:Type Button}">
         <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
         <Setter Property="Background" Value="White"/>
-        <Setter Property="BorderBrush" Value="Black"/>
+        <Setter Property="BorderBrush" Value="White"/>
         <Setter Property="Foreground" Value="Black"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
@@ -173,7 +172,7 @@
     <Style x:Key="AddButtonStyle" TargetType="{x:Type Button}">
         <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
         <Setter Property="Background" Value="White"/>
-        <Setter Property="BorderBrush" Value="Black"/>
+        <Setter Property="BorderBrush" Value="White"/>
         <Setter Property="Foreground" Value="Black"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>

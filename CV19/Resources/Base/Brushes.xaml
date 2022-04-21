@@ -1,0 +1,9 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:o="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options">
+
+    <SolidColorBrush x:Key="WhiteSolidBrush" Color="White" o:Freeze="True"/>
+    <SolidColorBrush x:Key="RedSolidBrush" Color="Red" o:Freeze="True"/>
+    <SolidColorBrush x:Key="TransparentSolidBrush" Color="Transparent" o:Freeze="True"/>
+
+</ResourceDictionary>
