@@ -22,6 +22,8 @@ namespace CV19.Services
 
         private const int _headerLineNumber = 1;
 
+        private const string _regexPattern = "\\\"(.*?)\\\"";
+
         private static async Task<Stream> GetDataStream()
         {
             var client = new HttpClient();
@@ -48,12 +50,10 @@ namespace CV19.Services
                     continue;
                 }
 
-                var regex = new Regex("\\\"(.*?)\\\"");
-
-                if (regex.IsMatch(line))
+                if (Regex.IsMatch(line, _regexPattern))
                 {
-                    line = regex.Replace(line, x => x.Value.Replace(",", "(").Replace("( ", " (")
-                        .Insert(x.Value.LastIndexOf("\""), ")"));
+                    line = Regex.Replace(line, _regexPattern, x => x.Value.Replace(",", "(")
+                        .Replace("( ", " (").Insert(x.Value.LastIndexOf("\""), ")"));
                 }
 
                 yield return line;
