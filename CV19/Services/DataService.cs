@@ -24,6 +24,13 @@ namespace CV19.Services
 
         private const string _regexPattern = "\\\"(.*?)\\\"";
 
+        private static readonly NumberStyles _style = NumberStyles.AllowDecimalPoint;
+
+        private static IFormatProvider _formatter = new NumberFormatInfo
+        {
+            NumberDecimalSeparator = "."
+        };
+
         private static async Task<Stream> GetDataStream()
         {
             var client = new HttpClient();
@@ -80,14 +87,10 @@ namespace CV19.Services
             {
                 string province = row[0].Trim(' ', '"');
                 string country = row[1].Trim(' ', '"');
-                double latitude = row[2] != string.Empty
-                    ? double.Parse(row[2].Trim().Replace(",", CultureInfo.InvariantCulture
-                        .NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture)
-                    : 0;
-                double longitude = row[3] != string.Empty
-                    ? double.Parse(row[3].Trim().Replace(",", CultureInfo.InvariantCulture
-                        .NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture)
-                    : 0;
+
+                double.TryParse(row[2], _style, _formatter, out double latitude);
+                double.TryParse(row[3], _style, _formatter, out double longitude);
+
                 int[] confirmedCases = row
                     .Skip(_columnCountBeforeDates)
                     .Select(s => int.TryParse(s, out int convertedToInt) ? convertedToInt : 0)
