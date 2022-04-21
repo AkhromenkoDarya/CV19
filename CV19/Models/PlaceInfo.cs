@@ -10,5 +10,7 @@ namespace CV19.Models
         public virtual Point Location { get; set; }
 
         public IEnumerable<ConfirmedCase> ConfirmedCases;
+
+        public override string ToString() => $"{Name} ({Location})";
     }
 }
