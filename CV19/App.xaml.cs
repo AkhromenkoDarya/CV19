@@ -1,6 +1,4 @@
-﻿using CV19.Services;
-using System.Linq;
-using System.Windows;
+﻿using System.Windows;
 
 namespace CV19
 {

@@ -7,7 +7,7 @@
         xmlns:fa="http://schemas.fontawesome.com/icons/"
         xmlns:cmd="clr-namespace:CV19.Infrastructure.Commands"
         xmlns:deanery="clr-namespace:CV19.Models.Deanery"
-        xmlns:VM="clr-namespace:CV19.ViewModels"
+        xmlns:vm="clr-namespace:CV19.ViewModels"
         xmlns:l="clr-namespace:CV19"
         xmlns:userCtrls="clr-namespace:CV19.Views.UserControls"
         xmlns:sys="clr-namespace:System;assembly=System.Runtime"
@@ -22,7 +22,7 @@
         <KeyBinding Modifiers="Alt" Key="F4" Command="{Binding CloseApplicationCommand}"/>
     </Window.InputBindings>
     <Window.DataContext>
-        <VM:MainWindowViewModel/>
+        <vm:MainWindowViewModel/>
     </Window.DataContext>
     <DockPanel>
         <Menu DockPanel.Dock="Top">
@@ -50,7 +50,7 @@
         </StatusBar>
         <TabControl>
             <TabItem Header="Statistics">
-                <userCtrls:CountryStatisticsView/>
+                <userCtrls:CountryStatisticsView DataContext="{Binding CountryStatistics}"/>
             </TabItem>
             <TabItem Header="Students">
                 <Grid>

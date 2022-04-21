@@ -16,7 +16,7 @@ namespace CV19.ViewModels
 {
     internal class MainWindowViewModel : ViewModel
     {
-        private readonly CountryStatisticsViewModel _countryStatisticsViewModel;
+        public CountryStatisticsViewModel CountryStatistics { get; }
 
         #region StudentView
 
@@ -183,7 +183,7 @@ namespace CV19.ViewModels
 
         public MainWindowViewModel()
         {
-            _countryStatisticsViewModel = new CountryStatisticsViewModel(this);
+            CountryStatistics = new CountryStatisticsViewModel(this);
 
             #region Команды
 
@@ -196,34 +196,34 @@ namespace CV19.ViewModels
 
             /*------------------------------- Plot ----------------------------------------------*/
 
-            const double radians = Math.PI / 180;
-            var dataPoints = new List<DataPoint>((int)(360 / 0.1));
+            //const double radians = Math.PI / 180;
+            //var dataPoints = new List<DataPoint>((int)(360 / 0.1));
 
-            for (double x = 0d; x <= 360; x += 0.1)
-            {
-                double y = Math.Sin(x * radians);
-                dataPoints.Add(new DataPoint(x, y));
-            }
+            //for (double x = 0d; x <= 360; x += 0.1)
+            //{
+            //    double y = Math.Sin(x * radians);
+            //    dataPoints.Add(new DataPoint(x, y));
+            //}
 
-            TestDataPoints = new PlotModel();
+            //TestDataPoints = new PlotModel();
 
-            TestDataPoints.Axes.Add(new LinearAxis()
-            {
-                Title = "TestPlotXAxis",
-                Position = AxisPosition.Left
-            });
+            //TestDataPoints.Axes.Add(new LinearAxis()
+            //{
+            //    Title = "TestPlotXAxis",
+            //    Position = AxisPosition.Left
+            //});
 
-            TestDataPoints.Axes.Add(new LinearAxis()
-            {
-                Title = "TestPlotYAxis",
-                Position = AxisPosition.Bottom
-            });
+            //TestDataPoints.Axes.Add(new LinearAxis()
+            //{
+            //    Title = "TestPlotYAxis",
+            //    Position = AxisPosition.Bottom
+            //});
 
-            TestDataPoints.Series.Add(new LineSeries()
-            {
-                ItemsSource = dataPoints,
-                Color = OxyColors.Red
-            });
+            //TestDataPoints.Series.Add(new LineSeries()
+            //{
+            //    ItemsSource = dataPoints,
+            //    Color = OxyColors.Red
+            //});
         }
 
         private void SelectedGroupStudents_Filter(object sender, FilterEventArgs e)

@@ -2,7 +2,10 @@
 using CV19.Models;
 using CV19.Services;
 using CV19.ViewModels.Base;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Windows;
 using System.Windows.Input;
 
 namespace CV19.ViewModels
@@ -36,19 +39,43 @@ namespace CV19.ViewModels
 
         public ICommand RefreshDataCommand { get; }
 
-        //private bool CanRefreshDataCommandExecute(object p)
-        //{
-        //    return true;
-        //}
+        //private bool CanRefreshDataCommandExecute(object p) => true;
 
-        private void OnRefreshDataCommandExecuted(object p)
+        private void OnRefreshDataCommandExecuted(object p) => Countries = DataService.GetData();
+
+        #endregion
+
+        #endregion
+
+        #region Конструкторы
+
+        /// <summary>
+        /// Отладочный конструктор, используемый в процессе разработки в визуальном дизайнере.
+        /// </summary>
+        public CountryStatisticsViewModel() : this(null)
         {
-            Countries = DataService.GetData();
+            if (!App.IsDesignMode)
+            {
+                throw new InvalidOperationException("Calling a constructor not intended to work " 
+                    + "in a design mode.");
+            }
+
+            _countries = Enumerable.Range(1, 10)
+                .Select(i => new CountryInfo
+                {
+                    Name = $"Country {i}",
+                    ProvinceCount = Enumerable.Range(1, 10).Select(j => new PlaceInfo
+                    {
+                        Name = $"Province {j}",
+                        Location = new Point(i, j),
+                        ConfirmedCases = Enumerable.Range(1, 10).Select(k => new ConfirmedCase
+                        {
+                            Date = DateTime.Now.Subtract(TimeSpan.FromDays(100 - k)),
+                            Count = k
+                        }).ToArray()
+                    }).ToArray()
+                }).ToArray();
         }
-
-        #endregion
-
-        #endregion
 
         public CountryStatisticsViewModel(MainWindowViewModel mainWindowViewModel)
         {
@@ -60,5 +87,7 @@ namespace CV19.ViewModels
 
             #endregion
         }
+
+        #endregion
     }
 }
