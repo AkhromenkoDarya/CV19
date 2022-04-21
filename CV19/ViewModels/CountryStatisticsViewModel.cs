@@ -33,6 +33,25 @@ namespace CV19.ViewModels
 
         #endregion
 
+        #region SelectedCountry : CountryInfo - Выбранная страна
+
+        /// <summary>
+        /// Выбранная страна.
+        /// </summary>
+        private CountryInfo _selectedCountry;
+
+        /// <summary>
+        /// Выбранная страна.
+        /// </summary>
+        public CountryInfo SelectedCountry
+        {
+            get => _selectedCountry;
+
+            set => Set(ref _selectedCountry, value);
+        }
+
+        #endregion
+
         #region Команды
 
         #region RefreshDataCommand
