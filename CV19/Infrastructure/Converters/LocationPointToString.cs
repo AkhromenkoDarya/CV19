@@ -2,9 +2,11 @@
 using System;
 using System.Globalization;
 using System.Windows;
+using System.Windows.Data;
 
 namespace CV19.Infrastructure.Converters
 {
+    [ValueConversion(typeof(Point), typeof(string))]
     internal class LocationPointToString : Converter
     {
         public override object Convert(object value, Type targetType, object parameter, 
