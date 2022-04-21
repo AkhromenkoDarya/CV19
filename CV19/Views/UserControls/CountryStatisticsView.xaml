@@ -7,9 +7,13 @@
              xmlns:l="clr-namespace:CV19.Views.UserControls"
              xmlns:vm="clr-namespace:CV19.ViewModels"
              xmlns:m="clr-namespace:CV19.Models"
+             xmlns:conv="clr-namespace:CV19.Infrastructure.Converters"
              d:DataContext="{d:DesignInstance vm:CountryStatisticsViewModel, 
                 IsDesignTimeCreatable=True}"
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <conv:LocationPointToString x:Key="LocationConverter"/>
+    </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="230"/>
@@ -29,7 +33,17 @@
                         <DataTemplate DataType="m:CountryInfo}">
                             <TextBlock>
                                 <TextBlock Text="{Binding Name}"/>
-                                <TextBlock Text="{Binding Location}"/>
+                                <!--<TextBlock>
+                                    <TextBlock.Text>
+                                        <Binding Path="Location" StringFormat="({0})">
+                                            <Binding.Converter>
+                                                <c:LocationPointToString/>
+                                            </Binding.Converter>
+                                        </Binding>
+                                    </TextBlock.Text>
+                                </TextBlock>-->
+                                <TextBlock Text="{Binding Location, Converter={StaticResource 
+                                    LocationConverter}, StringFormat=({0})}"/>
                             </TextBlock>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
@@ -38,11 +52,21 @@
         </GroupBox>
         <GroupBox Grid.Column="1" Header="Information">
             <Grid>
+                <Grid.Resources>
+                    <conv:Ratio Coefficient="2" x:Key="Ratio_2"/>
+                    <conv:Linear K="5" B="3" x:Key="Linear_K5_B3"/>
+                </Grid.Resources>
                 <Grid.RowDefinitions>
                     <RowDefinition/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
                 <GridSplitter HorizontalAlignment="Stretch" VerticalAlignment="Bottom"/>
+                <Slider Grid.Row="0" Name="ValueSlider" Maximum="100" ToolTip="{Binding Value, 
+                    RelativeSource={RelativeSource Self}}"/>
+                <TextBox Grid.Row="0" Margin="0,30,0,0" HorizontalAlignment="Left" 
+                         VerticalAlignment="Top" Width="200" Text="{Binding Value, 
+                            ElementName=ValueSlider, Converter={StaticResource Ratio_2}, 
+                            UpdateSourceTrigger=PropertyChanged}"/>
             </Grid>
         </GroupBox>
     </Grid>
