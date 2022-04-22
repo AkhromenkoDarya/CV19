@@ -10,8 +10,13 @@
         xmlns:vm="clr-namespace:CV19.ViewModels"
         xmlns:l="clr-namespace:CV19"
         xmlns:userCtrls="clr-namespace:CV19.Views.UserControls"
-        xmlns:sys="clr-namespace:System;assembly=System.Runtime"
-        Title="{Binding Title}" Width="800" Height="450">
+        xmlns:sys="clr-namespace:System;assembly=System.Runtime" 
+        d:DataContext="{d:DesignInstance Type=vm:MainWindowViewModel}"
+        Title="{Binding Title}" Width="800" Height="450"
+        DataContext="{vm:MainWindowViewModel}">
+    <!--<Window.DataContext>
+        <vm:MainWindowViewModel/>
+    </Window.DataContext>-->
     <Window.Resources>
         <cmd:CloseApplicationCommand x:Key="CloseApplicationCommand"/>
         <Style TargetType="Button">
@@ -21,9 +26,6 @@
     <Window.InputBindings>
         <KeyBinding Modifiers="Alt" Key="F4" Command="{Binding CloseApplicationCommand}"/>
     </Window.InputBindings>
-    <Window.DataContext>
-        <vm:MainWindowViewModel/>
-    </Window.DataContext>
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="_File">

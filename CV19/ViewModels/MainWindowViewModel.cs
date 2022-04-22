@@ -2,8 +2,6 @@
 using CV19.Models.Deanery;
 using CV19.ViewModels.Base;
 using OxyPlot;
-using OxyPlot.Axes;
-using OxyPlot.Series;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,9 +9,11 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Markup;
 
 namespace CV19.ViewModels
 {
+    [MarkupExtensionReturnType(typeof(MainWindowViewModel))]
     internal class MainWindowViewModel : ViewModel
     {
         public CountryStatisticsViewModel CountryStatistics { get; }
@@ -157,7 +157,13 @@ namespace CV19.ViewModels
 
         private bool CanCloseApplicationCommandExecute(object p) => true;
 
-        private void OnCloseApplicationCommandExecuted(object p) => Application.Current.Shutdown();
+        private void OnCloseApplicationCommandExecuted(object p)
+        {
+            // Возможно получить доступ к представлению из модели представления, но это не очень
+            // хорошо с точки зрения архитектуры.
+            // (RootObject as Window)?.Close();
+            Application.Current.Shutdown();
+        }
 
         #endregion
 

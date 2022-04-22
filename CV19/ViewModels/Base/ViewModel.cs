@@ -1,12 +1,22 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-                                                                                                   
+using System.Windows.Markup;
+using System.Xaml;
+
 namespace CV19.ViewModels.Base
 {
-    internal abstract class ViewModel : INotifyPropertyChanged, IDisposable
+    internal abstract class ViewModel : MarkupExtension, INotifyPropertyChanged, IDisposable
     {
+        private WeakReference _targetObjectReference;
+
+        private WeakReference _rootObjectReference;
+
         private bool _disposed;
+
+        public object TargetObject => _targetObjectReference;
+
+        public object RootObject => _rootObjectReference;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -26,6 +36,25 @@ namespace CV19.ViewModels.Base
             field = value;
             OnPropertyChanged(propertyName);
             return true;
+        }
+
+        public override object ProvideValue(IServiceProvider serviceProvider)
+        {
+            var targetValueService = serviceProvider.GetService(typeof(IProvideValueTarget))
+                as IProvideValueTarget;
+            var rootObjectService = serviceProvider.GetService(typeof(IRootObjectProvider))
+                as IRootObjectProvider;
+
+            OnInitialized(targetValueService?.TargetObject, targetValueService?.TargetProperty,
+                rootObjectService?.RootObject);
+
+            return this;
+        }
+
+        protected virtual void OnInitialized(object target, object property, object root)
+        {
+            _targetObjectReference = new WeakReference(target);
+            _rootObjectReference = new WeakReference(root);
         }
 
         //~ViewModel()
