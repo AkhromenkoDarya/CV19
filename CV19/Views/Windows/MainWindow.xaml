@@ -7,10 +7,16 @@
         xmlns:fa="http://schemas.fontawesome.com/icons/"
         xmlns:cmd="clr-namespace:CV19.Infrastructure.Commands"
         xmlns:deanery="clr-namespace:CV19.Models.Deanery"
-        xmlns:VM="clr-namespace:CV19.ViewModels"
+        xmlns:vm="clr-namespace:CV19.ViewModels"
         xmlns:l="clr-namespace:CV19"
-        xmlns:sys="clr-namespace:System;assembly=System.Runtime"
-        Title="{Binding Title}" Width="800" Height="450">
+        xmlns:userCtrls="clr-namespace:CV19.Views.UserControls"
+        xmlns:sys="clr-namespace:System;assembly=System.Runtime" 
+        d:DataContext="{d:DesignInstance Type=vm:MainWindowViewModel}"
+        Title="{Binding Title}" Width="800" Height="450"
+        DataContext="{vm:MainWindowViewModel}">
+    <!--<Window.DataContext>
+        <vm:MainWindowViewModel/>
+    </Window.DataContext>-->
     <Window.Resources>
         <cmd:CloseApplicationCommand x:Key="CloseApplicationCommand"/>
         <Style TargetType="Button">
@@ -20,9 +26,6 @@
     <Window.InputBindings>
         <KeyBinding Modifiers="Alt" Key="F4" Command="{Binding CloseApplicationCommand}"/>
     </Window.InputBindings>
-    <Window.DataContext>
-        <VM:MainWindowViewModel/>
-    </Window.DataContext>
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="_File">
@@ -47,48 +50,11 @@
             </StatusBarItem>
             <StatusBarItem Content="{Binding SelectedPageIndex}"/>
         </StatusBar>
-        <TabControl SelectedIndex="{Binding SelectedPageIndex}">
-            <TabItem Header="File System">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="250"/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                    <GroupBox Grid.Column="0" Header="Directories">
-                        <!--<ListBox ItemsSource="{Binding DiskRootDirectory.DirectoryItems}" 
-                                 SelectedItem="{Binding SelectedDirectory}" SelectedIndex="0">
-                            <ListBox.ItemTemplate>
-                                <DataTemplate DataType="VM:DirectoryViewModel">
-                                    <TextBlock Text="{Binding Name}" ToolTip="{Binding CreationTime}"/>
-                                </DataTemplate>
-                            </ListBox.ItemTemplate>
-                        </ListBox>-->
-                        <GroupBox.Resources>
-                            <HierarchicalDataTemplate DataType="{x:Type VM:DirectoryViewModel}"
-                                                          ItemsSource="{Binding DirectoryItems}">
-                                <StackPanel Orientation="Horizontal">
-                                    <fa:ImageAwesome Height="12" Icon="Regular_Folder" 
-                                                         Margin="0,0,3,0" Foreground="Orange"/>
-                                    <TextBlock Text="{Binding Name}"/>
-                                </StackPanel>
-                            </HierarchicalDataTemplate>
-                            <DataTemplate DataType="{x:Type VM:FileViewModel}">
-                                <StackPanel Orientation="Horizontal" ToolTip="{Binding CreationTime}">
-                                    <fa:ImageAwesome Height="12" Icon="Regular_File" 
-                                                     Foreground="Blue" Margin="0,0,3,0"/>
-                                    <TextBlock Text="{Binding Name}"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </GroupBox.Resources>
-                        <TreeView ItemsSource="{Binding DiskRootDirectory.DirectoryItems}"/>
-                    </GroupBox>
-                    <!--<GroupBox Grid.Column="1" Header="Files">
-                        <ListBox ItemsSource="{Binding SelectedDirectory.Files}" 
-                                 DisplayMemberPath="Name"/>
-                    </GroupBox>-->
-                </Grid>
+        <TabControl>
+            <TabItem Header="Statistics">
+                <userCtrls:CountryStatisticsView DataContext="{Binding CountryStatistics}"/>
             </TabItem>
-            <TabItem Header="Students" Visibility="Collapsed">
+            <TabItem Header="Students">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <!--<ColumnDefinition Width="3*"/>
@@ -102,22 +68,15 @@
                                 <!--<TextBlock Text="Filter:"/>-->
                                 <fa:ImageAwesome Height="12" Icon="Solid_Search" Margin="3,0,3,0"
                                                  ToolTip="Filter"/>
-                                <TextBox Text="{Binding GroupFilterText, 
-                                    UpdateSourceTrigger=PropertyChanged}"/>
+                                <TextBox/>
                             </DockPanel>
                             <UniformGrid DockPanel.Dock="Bottom" Rows="1" Margin="0,3">
                                 <Button Content="Add Group" Padding="0,7" 
-                                        Style="{StaticResource AddButtonStyle}" 
-                                        Command="{Binding AddGroupCommand}">
-                                </Button>
+                                        Style="{StaticResource AddButtonStyle}"/>
                                 <Button Content="Remove Group" Padding="0,7" 
-                                        Style="{StaticResource RemoveButtonStyle}" 
-                                        Command="{Binding RemoveGroupCommand}" 
-                                        CommandParameter="{Binding SelectedGroup}"/>
+                                        Style="{StaticResource RemoveButtonStyle}"/>
                             </UniformGrid>
-                            <ListBox ItemsSource="{Binding GroupView}"
-                                     SelectedItem="{Binding SelectedGroup, TargetNullValue=GroupView[0]}"
-                                     VirtualizingPanel.IsContainerVirtualizable="True"
+                            <ListBox VirtualizingPanel.IsContainerVirtualizable="True"
                                      VirtualizingPanel.IsVirtualizing="True"
                                      VirtualizingPanel.VirtualizationMode="Recycling">
                                 <ListBox.ItemsPanel>
@@ -143,8 +102,7 @@
                             </ListBox>
                         </DockPanel>
                     </GroupBox>
-                    <GroupBox Grid.Column="1" Header="{Binding SelectedGroup.Name, 
-                        FallbackValue='Students', TargetNullValue='Group is not selected'}">
+                    <GroupBox Grid.Column="1">
                         <DockPanel>
                             <DockPanel DockPanel.Dock="Top" Margin="0,3">
                                 <fa:ImageAwesome Height="12" Icon="Solid_Search" Margin="3,0,3,0"
@@ -204,44 +162,15 @@
                     </GroupBox>
                 </Grid>
             </TabItem>
-            <TabItem Header="Virtualization Testing" Visibility="Collapsed">
-                <Grid>
-                    <!--<TextBlock Text="{Binding Source={x:Static l:App.IsDesignMode}}"/>-->
-                    <ListBox HorizontalAlignment="Left" Width="200" Margin="30"
-                             ItemsSource="{Binding TestStudents}" 
-                             VirtualizingPanel.IsVirtualizing="True"
-                             VirtualizingPanel.VirtualizationMode="Recycling"
-                             VirtualizingPanel.IsContainerVirtualizable="True">
-                        <ListBox.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <VirtualizingStackPanel/>
-                            </ItemsPanelTemplate>
-                        </ListBox.ItemsPanel>
-                        <ListBox.ItemContainerStyle>
-                            <Style TargetType="ListBoxItem">
-                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                            </Style>
-                        </ListBox.ItemContainerStyle>
-                        <ListBox.ItemTemplate>
-                            <DataTemplate DataType="deanery:Student">
-                                <Border BorderBrush="Blue" BorderThickness="1" CornerRadius="3" 
-                                        Padding="3">
-                                    <Border.CacheMode>
-                                        <BitmapCache/>
-                                    </Border.CacheMode>
-                                    <StackPanel>
-                                        <TextBlock Text="{Binding Surname}"/>
-                                        <TextBlock Text="{Binding Name}"/>
-                                        <TextBlock Text="{Binding Patronymic, TargetNullValue=--}"/>
-                                    </StackPanel>
-                                </Border>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
-                </Grid>
-            </TabItem>
-            <TabItem Header="Plot" Visibility="Collapsed">
-                <oxy:PlotView Model="{Binding TestDataPoints}"/>
+            <TabItem Header="Plot">
+                <oxy:Plot>
+                    <oxy:Plot.Axes>
+                        <oxy:LinearAxis Position="Left"/>
+                        <oxy:LinearAxis Position="Bottom"/>
+                    </oxy:Plot.Axes>
+                    <oxy:LineSeries Color="Red" ItemsSource="{Binding TestDataPoints}" 
+                                    DataFieldX="X" DataFieldY="Y"/>
+                </oxy:Plot>
             </TabItem>
         </TabControl>
     </DockPanel>
