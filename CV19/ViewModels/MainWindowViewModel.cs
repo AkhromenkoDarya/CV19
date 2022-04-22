@@ -1,7 +1,6 @@
 ﻿using CV19.Infrastructure.Commands;
 using CV19.Models.Deanery;
 using CV19.ViewModels.Base;
-using OxyPlot;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -77,12 +76,12 @@ namespace CV19.ViewModels
         /// <summary>
         /// Тестовый набор данных для визуализации графиков.
         /// </summary>
-        private PlotModel _testsDataPoints;
+        private IEnumerable<DataPoint> _testsDataPoints;
 
         /// <summary>
         /// Тестовый набор данных для визуализации графиков.
         /// </summary>
-        public PlotModel TestDataPoints
+        public IEnumerable<DataPoint> TestDataPoints
         {
             get => _testsDataPoints;
 
@@ -202,34 +201,16 @@ namespace CV19.ViewModels
 
             /*------------------------------- Plot ----------------------------------------------*/
 
-            //const double radians = Math.PI / 180;
-            //var dataPoints = new List<DataPoint>((int)(360 / 0.1));
+            const double radians = Math.PI / 180;
+            var dataPoints = new List<DataPoint>((int)(360 / 0.1));
 
-            //for (double x = 0d; x <= 360; x += 0.1)
-            //{
-            //    double y = Math.Sin(x * radians);
-            //    dataPoints.Add(new DataPoint(x, y));
-            //}
+            for (double x = 0d; x <= 360; x += 0.1)
+            {
+                double y = Math.Sin(x * radians);
+                dataPoints.Add(new DataPoint { XValue = x, YValue = y });
+            }
 
-            //TestDataPoints = new PlotModel();
-
-            //TestDataPoints.Axes.Add(new LinearAxis()
-            //{
-            //    Title = "TestPlotXAxis",
-            //    Position = AxisPosition.Left
-            //});
-
-            //TestDataPoints.Axes.Add(new LinearAxis()
-            //{
-            //    Title = "TestPlotYAxis",
-            //    Position = AxisPosition.Bottom
-            //});
-
-            //TestDataPoints.Series.Add(new LineSeries()
-            //{
-            //    ItemsSource = dataPoints,
-            //    Color = OxyColors.Red
-            //});
+            TestDataPoints = dataPoints;
         }
 
         private void SelectedGroupStudents_Filter(object sender, FilterEventArgs e)
