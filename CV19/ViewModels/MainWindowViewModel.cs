@@ -76,12 +76,12 @@ namespace CV19.ViewModels
         /// <summary>
         /// Тестовый набор данных для визуализации графиков.
         /// </summary>
-        private IEnumerable<DataPoint> _testsDataPoints;
+        private IEnumerable<Point> _testsDataPoints;
 
         /// <summary>
         /// Тестовый набор данных для визуализации графиков.
         /// </summary>
-        public IEnumerable<DataPoint> TestDataPoints
+        public IEnumerable<Point> TestDataPoints
         {
             get => _testsDataPoints;
 
@@ -202,12 +202,12 @@ namespace CV19.ViewModels
             /*------------------------------- Plot ----------------------------------------------*/
 
             const double radians = Math.PI / 180;
-            var dataPoints = new List<DataPoint>((int)(360 / 0.1));
+            var dataPoints = new List<Point>((int)(360 / 0.1));
 
             for (double x = 0d; x <= 360; x += 0.1)
             {
                 double y = Math.Sin(x * radians);
-                dataPoints.Add(new DataPoint { XValue = x, YValue = y });
+                dataPoints.Add(new Point { X = x, Y = y });
             }
 
             TestDataPoints = dataPoints;

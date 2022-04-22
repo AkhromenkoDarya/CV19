@@ -162,14 +162,14 @@
                     </GroupBox>
                 </Grid>
             </TabItem>
-            <TabItem Header="Plot" Visibility="Collapsed">
+            <TabItem Header="Plot">
                 <oxy:Plot>
                     <oxy:Plot.Axes>
                         <oxy:LinearAxis Position="Left"/>
                         <oxy:LinearAxis Position="Bottom"/>
                     </oxy:Plot.Axes>
                     <oxy:LineSeries Color="Red" ItemsSource="{Binding TestDataPoints}" 
-                                    DataFieldX="XValue" DataFieldY="YValue"/>
+                                    DataFieldX="X" DataFieldY="Y"/>
                 </oxy:Plot>
             </TabItem>
         </TabControl>
