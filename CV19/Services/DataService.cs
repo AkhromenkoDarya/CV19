@@ -67,13 +67,11 @@ namespace CV19.Services
             }
         }
 
-        private static DateTime[] GetDates() => GetDataLines()
+        public static DateTime[] GetDates() => GetDataLines()
             .First()
             .Split(',')
             .Skip(_columnCountBeforeDates)
-            .Select(s => DateTime.TryParse(s, out DateTime convertedToDateTime) 
-                ? convertedToDateTime 
-                : DateTime.MinValue)
+            .Select(s => DateTime.Parse(s, CultureInfo.InvariantCulture))
             .ToArray();
 
         public static IEnumerable<(string country, string province, (double latitdue, 
@@ -111,7 +109,7 @@ namespace CV19.Services
                 var country = new CountryInfo
                 {
                     Name = countryInfo.Key,
-                    ProvinceCount = countryInfo.Select(x => new PlaceInfo
+                    Provinces = countryInfo.Select(x => new PlaceInfo
                     {
                         Name = x.province,
                         Location = new Point(x.location.latitdue, x.location.longitude),
