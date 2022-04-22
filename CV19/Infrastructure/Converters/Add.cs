@@ -5,12 +5,19 @@ using System.Windows.Markup;
 
 namespace CV19.Infrastructure.Converters
 {
-    [MarkupExtensionReturnType(typeof(Ratio))]
-    internal class Ratio : Converter
+    [MarkupExtensionReturnType(typeof(Add))]
+    internal class Add : Converter
     {
+        [ConstructorArgument(nameof(Coefficient))]
         public double Coefficient { get; set; } = 1;
 
-        public override object Convert(object value, Type targetType, object parameter, 
+        public Add()
+        {
+        }
+
+        public Add(double coefficient) => Coefficient = coefficient;
+
+        public override object Convert(object value, Type targetType, object parameter,
             CultureInfo culture)
         {
             if (value is null)
@@ -20,16 +27,10 @@ namespace CV19.Infrastructure.Converters
 
             var x = System.Convert.ToDouble(value, culture);
 
-            return x * Coefficient;
+            return x + Coefficient;
         }
 
-        public Ratio()
-        {
-        }
-
-        public Ratio(double coefficient) => Coefficient = coefficient;
-
-        public override object ConvertBack(object value, Type targetType, object parameter, 
+        public override object ConvertBack(object value, Type targetType, object parameter,
             CultureInfo culture)
         {
             if (value is null)
@@ -44,7 +45,7 @@ namespace CV19.Infrastructure.Converters
 
             var x = System.Convert.ToDouble(value, culture);
 
-            return x / Coefficient;
+            return x - Coefficient;
         }
     }
 }
