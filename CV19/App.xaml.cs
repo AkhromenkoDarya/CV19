@@ -1,4 +1,7 @@
-﻿using System.Windows;
+﻿using CV19.Models;
+using CV19.Services;
+using System.Linq;
+using System.Windows;
 
 namespace CV19
 {
@@ -10,6 +13,13 @@ namespace CV19
         {
             IsDesignMode = false;
             base.OnStartup(e);
+
+            //var countries = DataService.GetData().ToArray();
+            
+            //foreach (CountryInfo country in countries)
+            //{
+            //    var r = country.ConfirmedCases;
+            //}
         }
     }
 }

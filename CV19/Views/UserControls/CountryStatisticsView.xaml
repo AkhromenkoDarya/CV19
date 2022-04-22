@@ -10,6 +10,7 @@
              xmlns:conv="clr-namespace:CV19.Infrastructure.Converters"
              xmlns:cmn="clr-namespace:CV19.Infrastructure.Common"
              xmlns:sys="clr-namespace:System;assembly=System.Runtime"
+             xmlns:oxy="http://oxyplot.org/wpf"
              d:DataContext="{d:DesignInstance vm:CountryStatisticsViewModel, 
                 IsDesignTimeCreatable=True}"
              d:DesignHeight="450" d:DesignWidth="800">
@@ -75,35 +76,19 @@
                     <RowDefinition/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                <GridSplitter HorizontalAlignment="Stretch" VerticalAlignment="Bottom"/>
-                <StackPanel Grid.Row="0">
-                    <Slider Grid.Row="0" Name="Value1" Maximum="100" ToolTip="{Binding Value, 
-                        RelativeSource={RelativeSource Self}, Converter={conv:Linear 5}}"/>
-                    <Slider Grid.Row="0" Name="Value2" Maximum="100" ToolTip="{Binding Value, 
-                        RelativeSource={RelativeSource Self}, Converter={conv:CompositeConverter
-                        FirstConverter={conv:Add 5}, SecondConverter={conv:Ratio 7}}}"/>
-                    <Slider Grid.Row="0" Name="Value3" Maximum="100" ToolTip="{Binding Value, 
-                        RelativeSource={RelativeSource Self}, Converter={conv:CompositeConverter 
-                        {conv:Linear 5, 7}, SecondConverter={conv:CompositeConverter {conv:Ratio 6}, 
-                        {conv:Add 10}}}}"/>
-                    <Slider Grid.Row="0" Name="Value4" Maximum="100" ToolTip="{Binding Value, 
-                        RelativeSource={RelativeSource Self}}"/>
-                </StackPanel>
-                <Border Grid.Row="1" DataContext="{cmn:StringToIntArray InputString='1;2;3;4;5'}">
-                    <!--<Border.DataContext>
-                        <cmn:StringToIntArray InputString="1;2;3;4;5"/>
-                    </Border.DataContext>-->
-                    <ListBox ItemsSource="{Binding}">
-                        <!--<ListBox.ItemsSource>
-                        <MultiBinding Converter="{StaticResource ToArray}">
-                            <Binding ElementName="Value1" Path="Value"/>
-                            <Binding ElementName="Value2" Path="Value"/>
-                            <Binding ElementName="Value3" Path="Value"/>
-                            <Binding ElementName="Value4" Path="Value"/>
-                        </MultiBinding>
-                    </ListBox.ItemsSource>-->
-                    </ListBox>
-                </Border>
+                <GridSplitter HorizontalAlignment="Stretch" VerticalAlignment="Bottom" 
+                              Panel.ZIndex="1000"/>
+                <oxy:Plot Grid.Row="0">
+                    <oxy:Plot.Axes>
+                        <oxy:LinearAxis Position="Left" Title="Count" MajorGridlineStyle="Solid" 
+                                        MinorGridlineStyle="Dash"/>
+                        <oxy:DateTimeAxis Position="Bottom" Title="Date" MajorGridlineStyle="Solid"
+                                        MinorGridlineStyle="Dash"/>
+                    </oxy:Plot.Axes>
+                    <oxy:LineSeries StrokeThickness="2" Color="Red" 
+                                    ItemsSource="{Binding SelectedCountry.ConfirmedCases}" 
+                                    DataFieldX="Date" DataFieldY="Count"/>
+                </oxy:Plot>
             </Grid>
         </GroupBox>
     </Grid>
