@@ -90,7 +90,7 @@
                                     ItemsSource="{Binding SelectedCountry.ConfirmedCases}" 
                                     DataFieldX="Date" DataFieldY="Count"/>
                 </oxy:Plot>
-                <map:Map Grid.Row="1" ZoomLevel="3" MaxZoomLevel="21" 
+                <map:Map Grid.Row="1" ZoomLevel="3" MaxZoomLevel="21" Cursor="Hand"
                          Center="{Binding SelectedCountry.Location, Converter={conv:PointToMapLocation}}">
                     <map:MapScale Margin="5" Opacity="1" Background="Transparent" 
                                   VerticalAlignment="Bottom"/>
