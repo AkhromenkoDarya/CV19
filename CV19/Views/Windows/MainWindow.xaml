@@ -11,6 +11,7 @@
         xmlns:l="clr-namespace:CV19"
         xmlns:userCtrls="clr-namespace:CV19.Views.UserControls"
         xmlns:sys="clr-namespace:System;assembly=System.Runtime" 
+        xmlns:system="clr-namespace:System;assembly=System.Runtime.Extensions"
         d:DataContext="{d:DesignInstance Type=vm:MainWindowViewModel}"
         Title="{Binding Title}" Width="800" Height="450"
         DataContext="{vm:MainWindowViewModel}">
@@ -54,115 +55,10 @@
             <TabItem Header="Statistics">
                 <userCtrls:CountryStatisticsView DataContext="{Binding CountryStatistics}"/>
             </TabItem>
-            <TabItem Header="Students">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <!--<ColumnDefinition Width="3*"/>
-                        <ColumnDefinition Width="7*"/>-->
-                        <ColumnDefinition Width="250"/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                    <GroupBox Grid.Column="0" Header="Groups">
-                        <DockPanel>
-                            <DockPanel DockPanel.Dock="Top" Margin="0,3">
-                                <!--<TextBlock Text="Filter:"/>-->
-                                <fa:ImageAwesome Height="12" Icon="Solid_Search" Margin="3,0,3,0"
-                                                 ToolTip="Filter"/>
-                                <TextBox/>
-                            </DockPanel>
-                            <UniformGrid DockPanel.Dock="Bottom" Rows="1" Margin="0,3">
-                                <Button Content="Add Group" Padding="0,7" 
-                                        Style="{StaticResource AddButtonStyle}"/>
-                                <Button Content="Remove Group" Padding="0,7" 
-                                        Style="{StaticResource RemoveButtonStyle}"/>
-                            </UniformGrid>
-                            <ListBox VirtualizingPanel.IsContainerVirtualizable="True"
-                                     VirtualizingPanel.IsVirtualizing="True"
-                                     VirtualizingPanel.VirtualizationMode="Recycling">
-                                <ListBox.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <VirtualizingStackPanel/>
-                                    </ItemsPanelTemplate>
-                                </ListBox.ItemsPanel>
-                                <ListBox.ItemTemplate>
-                                    <DataTemplate DataType="deanery:Group">
-                                        <StackPanel Orientation="Horizontal">
-                                            <TextBlock Name="TextView" Text="{Binding Name}"/>
-                                            <TextBlock Text="{Binding Students.Count, 
-                                            StringFormat=' Students: [{0}]'}"/>
-                                        </StackPanel>
-                                        <DataTemplate.Triggers>
-                                            <DataTrigger Binding="{Binding Students.Count}" Value="0">
-                                                <Setter TargetName="TextView" Property="Foreground"
-                                                        Value="Green"/>
-                                            </DataTrigger>
-                                        </DataTemplate.Triggers>
-                                    </DataTemplate>
-                                </ListBox.ItemTemplate>
-                            </ListBox>
-                        </DockPanel>
-                    </GroupBox>
-                    <GroupBox Grid.Column="1">
-                        <DockPanel>
-                            <DockPanel DockPanel.Dock="Top" Margin="0,3">
-                                <fa:ImageAwesome Height="12" Icon="Solid_Search" Margin="3,0,3,0"
-                                                 ToolTip="Filter"/>
-                                <TextBox Text="{Binding StudentFilterText, 
-                                    UpdateSourceTrigger=PropertyChanged}"/>
-                            </DockPanel>
-                            <DataGrid ItemsSource="{Binding StudentView}" 
-                                      AutoGenerateColumns="False" GridLinesVisibility="Vertical" 
-                                      VerticalGridLinesBrush="DarkGray" 
-                                      AlternatingRowBackground="LightGray"
-                                      EnableRowVirtualization="True">
-                                <!--<DataGrid.GroupStyle>
-                                    <GroupStyle/>
-                                </DataGrid.GroupStyle>-->
-                                <!--HorizontalGridLinesBrush="{x:Null}"-->
-                                <!--<DataGrid.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <VirtualizingStackPanel/>
-                                    </ItemsPanelTemplate>
-                                </DataGrid.ItemsPanel>-->
-                                <DataGrid.Columns>
-                                    <DataGridTextColumn Header="Surname" Binding="{Binding Surname}" 
-                                                    Width="Auto"/>
-                                    <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
-                                    <DataGridTextColumn Header="Patronymic" Binding="{Binding Patronymic}"/>
-                                    <!--<DataGridTextColumn Header="Birthday" Binding="{Binding Birthday, 
-                                    StringFormat=dd.MM.yyyy}"/>-->
-                                    <DataGridTemplateColumn Header="Birthday">
-                                        <!--<DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate DataType="deanery:Student">
-                                            <DatePicker SelectedDate="{Binding Birthday}"/>
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>-->
-                                        <DataGridTemplateColumn.CellTemplate>
-                                            <DataTemplate DataType="deanery:Student">
-                                                <TextBlock Text="{Binding Birthday, 
-                                                StringFormat='dd.MM.yyyy'}"/>
-                                            </DataTemplate>
-                                        </DataGridTemplateColumn.CellTemplate>
-                                        <DataGridTemplateColumn.CellEditingTemplate>
-                                            <DataTemplate DataType="deanery:Student">
-                                                <DatePicker SelectedDate="{Binding Birthday}"/>
-                                            </DataTemplate>
-                                        </DataGridTemplateColumn.CellEditingTemplate>
-                                    </DataGridTemplateColumn>
-                                    <DataGridTextColumn Header="Rating" Binding="{Binding Rating}" 
-                                                    IsReadOnly="True"/>
-                                    <!--<DataGridTextColumn Header="Group" 
-                                                    Binding="{Binding DataContext.SelectedGroup.Name, 
-                                    RelativeSource={RelativeSource AncestorType=DataGrid}}"/>-->
-                                    <DataGridTextColumn Header="Notes" Binding="{Binding Description}" 
-                                                    Width="*"/>
-                                </DataGrid.Columns>
-                            </DataGrid>
-                        </DockPanel>
-                    </GroupBox>
-                </Grid>
+            <TabItem Header="Debugging">
+                <!--<TextBlock Text="{x:Static system:Environment.CurrentDirectory}"/>-->
             </TabItem>
-            <TabItem Header="Plot">
+            <TabItem Header="Plot" Visibility="Collapsed">
                 <oxy:Plot>
                     <oxy:Plot.Axes>
                         <oxy:LinearAxis Position="Left"/>
