@@ -186,9 +186,10 @@ namespace CV19.ViewModels
 
         #endregion
 
-        public MainWindowViewModel()
+        public MainWindowViewModel(CountryStatisticsViewModel countryStatistics)
         {
-            CountryStatistics = new CountryStatisticsViewModel(this);
+            CountryStatistics = countryStatistics;
+            CountryStatistics.MainWindowViewModel = this;
 
             #region Команды
 

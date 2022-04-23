@@ -12,7 +12,7 @@ namespace CV19.ViewModels
 {
     internal class CountryStatisticsViewModel : ViewModel
     {
-        private MainWindowViewModel MainWindowViewModel { get; }
+        public MainWindowViewModel MainWindowViewModel { get; internal set; }
 
         private DataService DataService { get; }
 
@@ -71,36 +71,34 @@ namespace CV19.ViewModels
         /// <summary>
         /// Отладочный конструктор, используемый в процессе разработки в визуальном дизайнере.
         /// </summary>
-        public CountryStatisticsViewModel() : this(null)
+        //public CountryStatisticsViewModel() : this(null)
+        //{
+        //    if (!App.IsDesignMode)
+        //    {
+        //        throw new InvalidOperationException("Calling a constructor not intended to work " 
+        //            + "in a design mode.");
+        //    }
+
+        //    _countries = Enumerable.Range(1, 10)
+        //        .Select(i => new CountryInfo
+        //        {
+        //            Name = $"Country {i}",
+        //            Provinces = Enumerable.Range(1, 10).Select(j => new PlaceInfo
+        //            {
+        //                Name = $"Province {j}",
+        //                Location = new Point(i, j),
+        //                ConfirmedCases = Enumerable.Range(1, 10).Select(k => new ConfirmedCase
+        //                {
+        //                    Date = DateTime.Now.Subtract(TimeSpan.FromDays(100 - k)),
+        //                    Count = k
+        //                }).ToArray()
+        //            }).ToArray()
+        //        }).ToArray();
+        //}
+
+        public CountryStatisticsViewModel(DataService dataService)
         {
-            if (!App.IsDesignMode)
-            {
-                throw new InvalidOperationException("Calling a constructor not intended to work " 
-                    + "in a design mode.");
-            }
-
-            _countries = Enumerable.Range(1, 10)
-                .Select(i => new CountryInfo
-                {
-                    Name = $"Country {i}",
-                    Provinces = Enumerable.Range(1, 10).Select(j => new PlaceInfo
-                    {
-                        Name = $"Province {j}",
-                        Location = new Point(i, j),
-                        ConfirmedCases = Enumerable.Range(1, 10).Select(k => new ConfirmedCase
-                        {
-                            Date = DateTime.Now.Subtract(TimeSpan.FromDays(100 - k)),
-                            Count = k
-                        }).ToArray()
-                    }).ToArray()
-                }).ToArray();
-        }
-
-        public CountryStatisticsViewModel(MainWindowViewModel mainWindowViewModel)
-        {
-            DataService = new DataService();
-
-            MainWindowViewModel = mainWindowViewModel;
+            DataService = dataService;
 
             #region Команды
 
