@@ -46,7 +46,12 @@ namespace CV19.Models
                     return _confirmedCases;
                 }
 
-                DateTime[] dates = DataService.GetDates();
+                DateTime[] dates = Provinces
+                    .Select(x => x.ConfirmedCases)
+                    .First()
+                    .Select(x => x.Date)
+                    .ToArray();
+
                 int dateCount = dates.Count();
                 var sumByDate = new int[dates.Count()];
                 PlaceInfo[] provinceArray = Provinces.ToArray();
