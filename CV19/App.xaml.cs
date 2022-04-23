@@ -1,6 +1,7 @@
-﻿using CV19.Models;
-using CV19.Services;
-using System.Linq;
+﻿using CV19.Services;
+using CV19.ViewModels;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using System.Windows;
 
 namespace CV19
@@ -13,13 +14,12 @@ namespace CV19
         {
             IsDesignMode = false;
             base.OnStartup(e);
+        }
 
-            //var countries = DataService.GetData().ToArray();
-            
-            //foreach (CountryInfo country in countries)
-            //{
-            //    var r = country.ConfirmedCases;
-            //}
+        public static void ConfigureServices(HostBuilderContext host, IServiceCollection services)
+        {
+            services.AddSingleton<DataService>();
+            services.AddSingleton<CountryStatisticsViewModel>();
         }
     }
 }
