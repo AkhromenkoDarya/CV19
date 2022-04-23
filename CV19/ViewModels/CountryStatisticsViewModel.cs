@@ -14,6 +14,8 @@ namespace CV19.ViewModels
     {
         private MainWindowViewModel MainWindowViewModel { get; }
 
+        private DataService DataService { get; }
+
         #region Countries : IEnumerable<CountryInfo> - Статистика по странам
 
         /// <summary>
@@ -58,8 +60,6 @@ namespace CV19.ViewModels
 
         public ICommand RefreshDataCommand { get; }
 
-        //private bool CanRefreshDataCommandExecute(object p) => true;
-
         private void OnRefreshDataCommandExecuted(object p) => Countries = DataService.GetData();
 
         #endregion
@@ -98,6 +98,8 @@ namespace CV19.ViewModels
 
         public CountryStatisticsViewModel(MainWindowViewModel mainWindowViewModel)
         {
+            DataService = new DataService();
+
             MainWindowViewModel = mainWindowViewModel;
 
             #region Команды

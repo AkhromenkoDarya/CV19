@@ -12,7 +12,7 @@ using System.Windows;
 
 namespace CV19.Services
 {
-    internal static class DataService
+    internal class DataService
     {
         private const string _dataSourceAddress = @"https://raw.githubusercontent.com/"
             + @"CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/"
@@ -98,7 +98,7 @@ namespace CV19.Services
             }
         }
 
-        public static IEnumerable<CountryInfo> GetData()
+        public IEnumerable<CountryInfo> GetData()
         {
             DateTime[] dates = GetDates();
 
