@@ -71,25 +71,6 @@ namespace CV19.ViewModels
 
         #endregion
 
-        #region TestDataPoints: IEnumerable<DataPoint> - Тестовый набор данных
-
-        /// <summary>
-        /// Тестовый набор данных для визуализации графиков.
-        /// </summary>
-        private IEnumerable<Point> _testsDataPoints;
-
-        /// <summary>
-        /// Тестовый набор данных для визуализации графиков.
-        /// </summary>
-        public IEnumerable<Point> TestDataPoints
-        {
-            get => _testsDataPoints;
-
-            set => Set(ref _testsDataPoints, value);
-        }
-
-        #endregion
-
         #region Title : string - Заголовок окна
 
         /// <summary>
@@ -199,19 +180,6 @@ namespace CV19.ViewModels
                 CanChangeTabIndexCommandExecute);
 
             #endregion
-
-            /*------------------------------- Plot ----------------------------------------------*/
-
-            const double radians = Math.PI / 180;
-            var dataPoints = new List<Point>((int)(360 / 0.1));
-
-            for (double x = 0d; x <= 360; x += 0.1)
-            {
-                double y = Math.Sin(x * radians);
-                dataPoints.Add(new Point { X = x, Y = y });
-            }
-
-            TestDataPoints = dataPoints;
         }
 
         private void SelectedGroupStudents_Filter(object sender, FilterEventArgs e)

@@ -1,4 +1,5 @@
 ﻿using CV19.Models;
+using CV19.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -12,7 +13,7 @@ using System.Windows;
 
 namespace CV19.Services
 {
-    internal class DataService
+    internal class DataService : IDataService
     {
         private const string _dataSourceAddress = @"https://raw.githubusercontent.com/"
             + @"CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/"

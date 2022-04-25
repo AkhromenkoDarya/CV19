@@ -1,11 +1,9 @@
 ﻿using CV19.Infrastructure.Commands;
 using CV19.Models;
-using CV19.Services;
+using CV19.Services.Interfaces;
 using CV19.ViewModels.Base;
-using System;
+using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;
-using System.Linq;
-using System.Windows;
 using System.Windows.Input;
 
 namespace CV19.ViewModels
@@ -14,7 +12,7 @@ namespace CV19.ViewModels
     {
         public MainWindowViewModel MainWindowViewModel { get; internal set; }
 
-        private DataService DataService { get; }
+        private IDataService DataService { get; }
 
         #region Countries : IEnumerable<CountryInfo> - Статистика по странам
 
@@ -96,9 +94,19 @@ namespace CV19.ViewModels
         //        }).ToArray();
         //}
 
-        public CountryStatisticsViewModel(DataService dataService)
+        public CountryStatisticsViewModel(IDataService dataService)
         {
             DataService = dataService;
+
+            //var data = App.Host.Services.GetRequiredService<IDataService>();
+            //var areReferencesEqual = ReferenceEquals(dataService, data);
+
+            //using (var scope = App.Host.Services.CreateScope())
+            //{
+            //    var data2 = scope.ServiceProvider.GetRequiredService<IDataService>();
+            //    var areReferencesEqual2 = ReferenceEquals(dataService, data2);
+            //    var areReferencesEqual3 = ReferenceEquals(data, data2);
+            //}
 
             #region Команды
 
