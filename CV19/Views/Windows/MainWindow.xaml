@@ -8,9 +8,9 @@
         xmlns:cmd="clr-namespace:CV19.Infrastructure.Commands"
         xmlns:deanery="clr-namespace:CV19.Models.Deanery"
         xmlns:vm="clr-namespace:CV19.ViewModels"
+        xmlns:wndws="clr-namespace:CV19.Views.Windows"
         xmlns:l="clr-namespace:CV19"
         xmlns:loc="clr-namespace:CV19.ViewModels.Locator"
-        xmlns:userCtrls="clr-namespace:CV19.Views.UserControls"
         xmlns:sys="clr-namespace:System;assembly=System.Runtime" 
         xmlns:system="clr-namespace:System;assembly=System.Runtime.Extensions" 
         Title="{Binding Title}" Width="800" Height="450"
@@ -53,7 +53,7 @@
         </StatusBar>
         <TabControl>
             <TabItem Header="Statistics">
-                <userCtrls:CountryStatisticsView DataContext="{Binding CountryStatistics}"/>
+                <wndws:CountryStatisticsView DataContext="{Binding CountryStatistics}"/>
             </TabItem>
             <TabItem Header="Debugging">
                 <!--<TextBlock Text="{x:Static system:Environment.CurrentDirectory}"/>-->
