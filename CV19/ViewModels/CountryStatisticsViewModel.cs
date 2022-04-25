@@ -1,18 +1,18 @@
 ﻿using CV19.Infrastructure.Commands;
 using CV19.Models;
-using CV19.Services;
+using CV19.Services.Interfaces;
 using CV19.ViewModels.Base;
-using System;
+using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;
-using System.Linq;
-using System.Windows;
 using System.Windows.Input;
 
 namespace CV19.ViewModels
 {
     internal class CountryStatisticsViewModel : ViewModel
     {
-        private MainWindowViewModel MainWindowViewModel { get; }
+        public MainWindowViewModel MainWindowViewModel { get; internal set; }
+
+        private IDataService DataService { get; }
 
         #region Countries : IEnumerable<CountryInfo> - Статистика по странам
 
@@ -58,8 +58,6 @@ namespace CV19.ViewModels
 
         public ICommand RefreshDataCommand { get; }
 
-        //private bool CanRefreshDataCommandExecute(object p) => true;
-
         private void OnRefreshDataCommandExecuted(object p) => Countries = DataService.GetData();
 
         #endregion
@@ -71,34 +69,44 @@ namespace CV19.ViewModels
         /// <summary>
         /// Отладочный конструктор, используемый в процессе разработки в визуальном дизайнере.
         /// </summary>
-        public CountryStatisticsViewModel() : this(null)
-        {
-            if (!App.IsDesignMode)
-            {
-                throw new InvalidOperationException("Calling a constructor not intended to work " 
-                    + "in a design mode.");
-            }
+        //public CountryStatisticsViewModel() : this(null)
+        //{
+        //    if (!App.IsDesignMode)
+        //    {
+        //        throw new InvalidOperationException("Calling a constructor not intended to work " 
+        //            + "in a design mode.");
+        //    }
 
-            _countries = Enumerable.Range(1, 10)
-                .Select(i => new CountryInfo
-                {
-                    Name = $"Country {i}",
-                    Provinces = Enumerable.Range(1, 10).Select(j => new PlaceInfo
-                    {
-                        Name = $"Province {j}",
-                        Location = new Point(i, j),
-                        ConfirmedCases = Enumerable.Range(1, 10).Select(k => new ConfirmedCase
-                        {
-                            Date = DateTime.Now.Subtract(TimeSpan.FromDays(100 - k)),
-                            Count = k
-                        }).ToArray()
-                    }).ToArray()
-                }).ToArray();
-        }
+        //    _countries = Enumerable.Range(1, 10)
+        //        .Select(i => new CountryInfo
+        //        {
+        //            Name = $"Country {i}",
+        //            Provinces = Enumerable.Range(1, 10).Select(j => new PlaceInfo
+        //            {
+        //                Name = $"Province {j}",
+        //                Location = new Point(i, j),
+        //                ConfirmedCases = Enumerable.Range(1, 10).Select(k => new ConfirmedCase
+        //                {
+        //                    Date = DateTime.Now.Subtract(TimeSpan.FromDays(100 - k)),
+        //                    Count = k
+        //                }).ToArray()
+        //            }).ToArray()
+        //        }).ToArray();
+        //}
 
-        public CountryStatisticsViewModel(MainWindowViewModel mainWindowViewModel)
+        public CountryStatisticsViewModel(IDataService dataService)
         {
-            MainWindowViewModel = mainWindowViewModel;
+            DataService = dataService;
+
+            //var data = App.Host.Services.GetRequiredService<IDataService>();
+            //var areReferencesEqual = ReferenceEquals(dataService, data);
+
+            //using (var scope = App.Host.Services.CreateScope())
+            //{
+            //    var data2 = scope.ServiceProvider.GetRequiredService<IDataService>();
+            //    var areReferencesEqual2 = ReferenceEquals(dataService, data2);
+            //    var areReferencesEqual3 = ReferenceEquals(data, data2);
+            //}
 
             #region Команды
 
