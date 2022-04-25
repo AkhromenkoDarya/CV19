@@ -188,8 +188,8 @@ namespace CV19.ViewModels
 
         public MainWindowViewModel(CountryStatisticsViewModel countryStatistics)
         {
+            countryStatistics.MainWindowViewModel = this;
             CountryStatistics = countryStatistics;
-            CountryStatistics.MainWindowViewModel = this;
 
             #region Команды
 
