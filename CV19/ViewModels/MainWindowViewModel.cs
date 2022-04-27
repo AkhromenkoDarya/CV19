@@ -137,8 +137,27 @@ namespace CV19.ViewModels
 
         #endregion
 
-        public IEnumerable<Student> TestStudents => Enumerable.Range(1, App.IsDesignMode ? 10 
-            : 100000)
+        #region Coefficient : double - Коэффициент
+
+        /// <summary>
+        /// Коэффициент.
+        /// </summary>
+        private double _coefficient = 1;
+
+        /// <summary>
+        /// Коэффициент.
+        /// </summary>
+        public double Coefficient
+        {
+            get => _coefficient;
+
+            set => Set(ref _coefficient, value);
+        }
+
+        #endregion
+
+        public IEnumerable<Student> TestStudents => Enumerable.Range(1, App.IsDesignMode 
+                ? 10 : 100000)
             .Select(i => new Student
             {
                 Name = $"Name {i}",
