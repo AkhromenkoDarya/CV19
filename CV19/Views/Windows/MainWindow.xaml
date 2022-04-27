@@ -9,6 +9,7 @@
         xmlns:deanery="clr-namespace:CV19.Models.Deanery"
         xmlns:vm="clr-namespace:CV19.ViewModels"
         xmlns:wndws="clr-namespace:CV19.Views.Windows"
+        xmlns:cmps="clr-namespace:CV19.Components"
         xmlns:l="clr-namespace:CV19"
         xmlns:loc="clr-namespace:CV19.ViewModels.Locator"
         xmlns:sys="clr-namespace:System;assembly=System.Runtime" 
@@ -49,14 +50,19 @@
             <StatusBarItem>
                 <ProgressBar Width="120" Height="14" Value="30"/>
             </StatusBarItem>
-            <StatusBarItem Content="{Binding SelectedPageIndex}"/>
         </StatusBar>
         <TabControl>
             <TabItem Header="Statistics">
                 <wndws:CountryStatisticsView DataContext="{Binding CountryStatistics}"/>
             </TabItem>
             <TabItem Header="Debugging">
-                <!--<TextBlock Text="{x:Static system:Environment.CurrentDirectory}"/>-->
+                <Grid>
+                    <cmps:DialGauge Width="80" Height="80" HorizontalAlignment="Left" 
+                                    VerticalAlignment="Top" Value="{Binding FuelCount}"/>
+                    <Slider HorizontalAlignment="Stretch" VerticalAlignment="Top" 
+                            Margin="90,0,0,0" Height="30" Minimum="0" Maximum="100" 
+                            Value="{Binding FuelCount}"/>
+                </Grid>
             </TabItem>
         </TabControl>
     </DockPanel>
