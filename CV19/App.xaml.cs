@@ -1,6 +1,8 @@
 ﻿using CV19.Services;
 using CV19.Services.Interfaces;
+using CV19.Services.Interfaces.Registration;
 using CV19.ViewModels;
+using CV19.ViewModels.Registration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
@@ -10,11 +12,11 @@ using System.Windows;
 
 namespace CV19
 {
-    public partial class App : Application
+    public partial class App
     {
         public static bool IsDesignMode { get; private set; } = true;
 
-        public static string CurrentDiectory => IsDesignMode 
+        public static string CurrentDirectory => IsDesignMode 
             ? Path.GetDirectoryName(GetSourceCodePath()) 
             : Environment.CurrentDirectory;
 
@@ -42,20 +44,10 @@ namespace CV19
             _host = null;
         }
 
-        public static void ConfigureServices(HostBuilderContext host, IServiceCollection services)
-        {
-            // Одиночная регистрация - объект создается один раз при его первом запросе.
-            services.AddSingleton<IDataService, DataService>();
-
-            // Временная регистрация - на каждый последующий запрос создается новый объект.
-            //services.AddTransient<IDataService, DataService>();
-
-            // Регистрация в режиме области видимости.
-            //services.AddScoped<IDataService, DataService>();
-
-            services.AddSingleton<MainWindowViewModel>();
-            services.AddSingleton<CountryStatisticsViewModel>();
-        }
+        public static void ConfigureServices(HostBuilderContext host, IServiceCollection services) 
+            => services
+                .RegisterServices()
+                .RegisterViewModels();
 
         private static string GetSourceCodePath([CallerFilePath] string path = null) => path;
     }

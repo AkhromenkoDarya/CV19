@@ -1,5 +1,6 @@
 ﻿using CV19.Infrastructure.Commands;
 using CV19.Models.Deanery;
+using CV19.Services.Interfaces;
 using CV19.ViewModels.Base;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,8 @@ namespace CV19.ViewModels
     [MarkupExtensionReturnType(typeof(MainWindowViewModel))]
     internal class MainWindowViewModel : ViewModel
     {
+        private readonly IAsyncDataService _asyncDataService;
+
         public CountryStatisticsViewModel CountryStatistics { get; }
 
         #region StudentView
@@ -121,8 +124,9 @@ namespace CV19.ViewModels
 
         #endregion
 
-        public IEnumerable<Student> TestStudents => Enumerable.Range(1, App.IsDesignMode ? 10 
-            : 100000)
+        public IEnumerable<Student> TestStudents => Enumerable.Range(1, App.IsDesignMode 
+                ? 10 
+                : 100000)
             .Select(i => new Student
             {
                 Name = $"Name {i}",
@@ -167,8 +171,10 @@ namespace CV19.ViewModels
 
         #endregion
 
-        public MainWindowViewModel(CountryStatisticsViewModel countryStatistics)
+        public MainWindowViewModel(CountryStatisticsViewModel countryStatistics, 
+            IAsyncDataService asyncDataService)
         {
+            _asyncDataService = asyncDataService;
             countryStatistics.MainWindowViewModel = this;
             CountryStatistics = countryStatistics;
 
