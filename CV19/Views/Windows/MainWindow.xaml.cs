@@ -1,4 +1,4 @@
-﻿namespace CV19
+﻿namespace CV19.Views.Windows
 {
     public partial class MainWindow
     {

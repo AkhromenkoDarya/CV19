@@ -6,7 +6,7 @@ namespace CV19
 {
     public static class Program
     {
-        [STAThreadAttribute()]
+        [STAThread()]
         public static void Main()
         {
             var app = new App();
@@ -16,7 +16,7 @@ namespace CV19
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .UseContentRoot(App.CurrentDiectory)
+                .UseContentRoot(App.CurrentDirectory)
                 .ConfigureAppConfiguration((host, configuration) => configuration
                     .SetBasePath(Environment.CurrentDirectory)
                     .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true))

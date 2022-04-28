@@ -1,8 +1,10 @@
 ﻿using CV19.Infrastructure.Commands;
 using CV19.Models.Deanery;
+using CV19.Services.Interfaces;
 using CV19.ViewModels.Base;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Markup;
@@ -12,6 +14,8 @@ namespace CV19.ViewModels
     [MarkupExtensionReturnType(typeof(MainWindowViewModel))]
     internal class MainWindowViewModel : ViewModel
     {
+        private readonly IAsyncDataService _asyncDataService;
+
         public CountryStatisticsViewModel CountryStatistics { get; }
 
         #region StudentView
@@ -118,46 +122,28 @@ namespace CV19.ViewModels
 
         #endregion
 
-        #region FuelCount : double - Количество топлива
+        #region DataValue : string - Результат длительной асинхронной операции
 
         /// <summary>
-        /// Количество топлива.
+        /// Результат длительной асинхронной операции.
         /// </summary>
-        private double _fuelCount;
+        private string _dataValue;
 
         /// <summary>
-        /// Количество топлива.
+        /// Результат длительной асинхронной операции.
         /// </summary>
-        public double FuelCount
+        public string DataValue
         {
-            get => _fuelCount;
-
-            set => Set(ref _fuelCount, value);
+            get => _dataValue; 
+            
+            private set => Set(ref _dataValue, value);
         }
 
         #endregion
-
-        #region Coefficient : double - Коэффициент
-
-        /// <summary>
-        /// Коэффициент.
-        /// </summary>
-        private double _coefficient = 1;
-
-        /// <summary>
-        /// Коэффициент.
-        /// </summary>
-        public double Coefficient
-        {
-            get => _coefficient;
-
-            set => Set(ref _coefficient, value);
-        }
-
-        #endregion
-
+        
         public IEnumerable<Student> TestStudents => Enumerable.Range(1, App.IsDesignMode 
-                ? 10 : 100000)
+                ? 10 
+                : 100000)
             .Select(i => new Student
             {
                 Name = $"Name {i}",
@@ -200,10 +186,55 @@ namespace CV19.ViewModels
 
         #endregion
 
+        #region Command StartProcessCommand - Запуск процесса
+
+        /// <summary>
+        /// Запуск процесса.
+        /// </summary>
+        public ICommand StartProcessCommand { get; }
+
+        /// <summary>
+        /// Проверка возможности выполнения - Запуск процесса.
+        /// </summary>
+        private bool CanStartProcessCommandExecute(object p) => true;
+
+        /// <summary>
+        /// Логика выполнения - Запуск процесса.
+        /// </summary>
+        private void OnStartProcessCommandExecuted(object p) => new Thread(ComputeValue).Start();
+
+        private void ComputeValue() => DataValue = _asyncDataService.GetResult(DateTime.Now);
+
         #endregion
 
-        public MainWindowViewModel(CountryStatisticsViewModel countryStatistics)
+        #region Command StopProcessCommand - Остановка процесса
+
+        /// <summary>
+        /// Остановка процесса.
+        /// </summary>
+        public ICommand StopProcessCommand { get; }
+
+        /// <summary>
+        /// Проверка возможности выполнения - Остановка процесса.
+        /// </summary>
+        private bool CanStopProcessCommandExecute(object p) => true;
+
+        /// <summary>
+        /// Логика выполнения - Остановка процесса.
+        /// </summary>
+        private void OnStopProcessCommandExecuted(object p)
         {
+
+        }
+
+        #endregion
+
+        #endregion
+
+        public MainWindowViewModel(CountryStatisticsViewModel countryStatistics, 
+            IAsyncDataService asyncDataService)
+        {
+            _asyncDataService = asyncDataService;
             countryStatistics.MainWindowViewModel = this;
             CountryStatistics = countryStatistics;
 
@@ -213,6 +244,11 @@ namespace CV19.ViewModels
                 CanCloseApplicationCommandExecute);
             //ChangeTabIndexCommand = new RelayCommand(OnChangeTabIndexCommandExecuted,
             //    CanChangeTabIndexCommandExecute);
+
+            StartProcessCommand = new RelayCommand(OnStartProcessCommandExecuted, 
+                CanStartProcessCommandExecute);
+            StopProcessCommand = new RelayCommand(OnStopProcessCommandExecuted, 
+                CanStopProcessCommandExecute);
 
             #endregion
         }

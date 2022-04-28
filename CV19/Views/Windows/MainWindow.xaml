@@ -1,4 +1,4 @@
-﻿<Window x:Class="CV19.MainWindow"
+﻿<Window x:Class="CV19.Views.Windows.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" mc:Ignorable="d"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -57,24 +57,19 @@
                 <wndws:CountryStatisticsView DataContext="{Binding CountryStatistics}"/>
             </TabItem>
             <TabItem Header="Debugging">
-                <Grid>
-                    <Grid.Resources>
-                        <converters:ParametricMultiplyValueConverter x:Key="MultiplyValueConverter" 
-                                                                     Value="{Binding Coefficient}"/>
-                    </Grid.Resources>
-                    <cmps:DialGauge Width="80" Height="80" HorizontalAlignment="Left" 
-                                    VerticalAlignment="Top">
-                        <cmps:DialGauge.Value>
-                            <Binding Path="FuelCount" Converter="{StaticResource MultiplyValueConverter}"/>
-                        </cmps:DialGauge.Value>
-                    </cmps:DialGauge>
-                    <Slider HorizontalAlignment="Stretch" VerticalAlignment="Top" 
-                            Margin="90,0,0,0" Minimum="0" Maximum="100" Value="{Binding FuelCount}"
-                            ToolTip="{Binding FuelCount}"/>
-                    <Slider HorizontalAlignment="Stretch" VerticalAlignment="Top" 
-                            Margin="90,40,0,0" Minimum="-10" Maximum="10" SmallChange="0.1"
-                            Value="{Binding Coefficient}" ToolTip="{Binding Coefficient}"/>
-                </Grid>
+                <DockPanel>
+                    <DockPanel DockPanel.Dock="Top" Margin="5,5,5,0">
+                        <UniformGrid DockPanel.Dock="Left" HorizontalAlignment="Left" Rows="1">
+                            <Button Margin="5" Padding="20,5" Content="Start" 
+                                    Command="{Binding StartProcessCommand}"/>
+                            <Button Margin="5" Padding="20,5" Content="Stop" 
+                                    Command="{Binding StopProcessCommand}"/>
+                        </UniformGrid>
+                        <ProgressBar DockPanel.Dock="Top" Margin="10"/>
+                    </DockPanel>
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" 
+                               Text="{Binding DataValue}" FontSize="30"/>
+                </DockPanel>
             </TabItem>
         </TabControl>
     </DockPanel>
