@@ -18,6 +18,13 @@ namespace CV19Console
 
             secondThread.Start(42);
 
+            var count = 5;
+            var message = "Hello World!";
+            var timeout = 150;
+
+            new Thread(() => PrintMethod(message, count, timeout)) { IsBackground = true }
+                .Start();
+
             CheckThread();
 
             for (var i = 0; i < 5; i++)
@@ -27,6 +34,15 @@ namespace CV19Console
             }
 
             Console.ReadLine();
+        }
+
+        private static void PrintMethod(string message, int count, int timeout)
+        {
+            for (var i = 0; i < count; i++)
+            {
+                Console.WriteLine(message);
+                Thread.Sleep(timeout);
+            }
         }
 
         private static void ThreadMethod(object parameter)
