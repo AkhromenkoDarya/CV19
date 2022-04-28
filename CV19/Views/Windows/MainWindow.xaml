@@ -8,11 +8,13 @@
         xmlns:cmd="clr-namespace:CV19.Infrastructure.Commands"
         xmlns:deanery="clr-namespace:CV19.Models.Deanery"
         xmlns:vm="clr-namespace:CV19.ViewModels"
+        xmlns:wndws="clr-namespace:CV19.Views.Windows"
+        xmlns:cmps="clr-namespace:CV19.Components"
         xmlns:l="clr-namespace:CV19"
         xmlns:loc="clr-namespace:CV19.ViewModels.Locator"
-        xmlns:userCtrls="clr-namespace:CV19.Views.UserControls"
         xmlns:sys="clr-namespace:System;assembly=System.Runtime" 
-        xmlns:system="clr-namespace:System;assembly=System.Runtime.Extensions" 
+        xmlns:system="clr-namespace:System;assembly=System.Runtime.Extensions"
+        xmlns:converters="clr-namespace:CV19.Infrastructure.Converters"
         Title="{Binding Title}" Width="800" Height="450"
         DataContext="{Binding MainWindowVM, Source={StaticResource Locator}}">
     <!--<Window.DataContext>
@@ -49,14 +51,30 @@
             <StatusBarItem>
                 <ProgressBar Width="120" Height="14" Value="30"/>
             </StatusBarItem>
-            <StatusBarItem Content="{Binding SelectedPageIndex}"/>
         </StatusBar>
         <TabControl>
             <TabItem Header="Statistics">
-                <userCtrls:CountryStatisticsView DataContext="{Binding CountryStatistics}"/>
+                <wndws:CountryStatisticsView DataContext="{Binding CountryStatistics}"/>
             </TabItem>
             <TabItem Header="Debugging">
-                <!--<TextBlock Text="{x:Static system:Environment.CurrentDirectory}"/>-->
+                <Grid>
+                    <Grid.Resources>
+                        <converters:ParametricMultiplyValueConverter x:Key="MultiplyValueConverter" 
+                                                                     Value="{Binding Coefficient}"/>
+                    </Grid.Resources>
+                    <cmps:DialGauge Width="80" Height="80" HorizontalAlignment="Left" 
+                                    VerticalAlignment="Top">
+                        <cmps:DialGauge.Value>
+                            <Binding Path="FuelCount" Converter="{StaticResource MultiplyValueConverter}"/>
+                        </cmps:DialGauge.Value>
+                    </cmps:DialGauge>
+                    <Slider HorizontalAlignment="Stretch" VerticalAlignment="Top" 
+                            Margin="90,0,0,0" Minimum="0" Maximum="100" Value="{Binding FuelCount}"
+                            ToolTip="{Binding FuelCount}"/>
+                    <Slider HorizontalAlignment="Stretch" VerticalAlignment="Top" 
+                            Margin="90,40,0,0" Minimum="-10" Maximum="10" SmallChange="0.1"
+                            Value="{Binding Coefficient}" ToolTip="{Binding Coefficient}"/>
+                </Grid>
             </TabItem>
         </TabControl>
     </DockPanel>

@@ -2,7 +2,6 @@
 using CV19.Models;
 using CV19.Services.Interfaces;
 using CV19.ViewModels.Base;
-using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;
 using System.Windows.Input;
 

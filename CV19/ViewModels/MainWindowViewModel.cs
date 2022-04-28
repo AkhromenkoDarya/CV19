@@ -1,12 +1,9 @@
 ﻿using CV19.Infrastructure.Commands;
 using CV19.Models.Deanery;
 using CV19.ViewModels.Base;
-using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Windows;
-using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Markup;
 
@@ -19,55 +16,55 @@ namespace CV19.ViewModels
 
         #region StudentView
 
-        private readonly CollectionViewSource _selectedGroupStudents = new CollectionViewSource();
+        //private readonly CollectionViewSource _selectedGroupStudents = new CollectionViewSource();
 
-        public ICollectionView StudentView => _selectedGroupStudents?.View;
+        //public ICollectionView StudentView => _selectedGroupStudents?.View;
 
         #endregion
 
         #region StudentFilterText: string - Текст фильтра студентов
+       
+        ///// <summary>
+        ///// Текст фильтра студентов.
+        ///// </summary>
+        //private string _studentFilterText;
 
-        /// <summary>
-        /// Текст фильтра студентов.
-        /// </summary>
-        private string _studentFilterText;
+        ///// <summary>
+        ///// Текст фильтра студентов.
+        ///// </summary>
+        //public string StudentFilterText
+        //{
+        //    get => _studentFilterText;
 
-        /// <summary>
-        /// Текст фильтра студентов.
-        /// </summary>
-        public string StudentFilterText
-        {
-            get => _studentFilterText;
+        //    set
+        //    {
+        //        if (!Set(ref _studentFilterText, value))
+        //        {
+        //            return;
+        //        }
 
-            set
-            {
-                if (!Set(ref _studentFilterText, value))
-                {
-                    return;
-                }
-
-                _selectedGroupStudents.View.Refresh();
-            }
-        }
-
+        //        _selectedGroupStudents.View.Refresh();
+        //    }
+        //}
+        //
         #endregion
 
         #region SelectedPageIndex: int - Индекс выбранной вкладки
 
-        /// <summary>
-        /// Индекс выбранной вкладки.
-        /// </summary>
-        private int _selectedPageIndex;
+        ///// <summary>
+        ///// Индекс выбранной вкладки.
+        ///// </summary>
+        //private int _selectedPageIndex;
 
-        /// <summary>
-        /// Индекс выбранной вкладки.
-        /// </summary>
-        public int SelectedPageIndex
-        {
-            get => _selectedPageIndex;
+        ///// <summary>
+        ///// Индекс выбранной вкладки.
+        ///// </summary>
+        //public int SelectedPageIndex
+        //{
+        //    get => _selectedPageIndex;
 
-            set => Set(ref _selectedPageIndex, value);
-        }
+        //    set => Set(ref _selectedPageIndex, value);
+        //}
 
         #endregion
 
@@ -121,8 +118,46 @@ namespace CV19.ViewModels
 
         #endregion
 
-        public IEnumerable<Student> TestStudents => Enumerable.Range(1, App.IsDesignMode ? 10 
-            : 100000)
+        #region FuelCount : double - Количество топлива
+
+        /// <summary>
+        /// Количество топлива.
+        /// </summary>
+        private double _fuelCount;
+
+        /// <summary>
+        /// Количество топлива.
+        /// </summary>
+        public double FuelCount
+        {
+            get => _fuelCount;
+
+            set => Set(ref _fuelCount, value);
+        }
+
+        #endregion
+
+        #region Coefficient : double - Коэффициент
+
+        /// <summary>
+        /// Коэффициент.
+        /// </summary>
+        private double _coefficient = 1;
+
+        /// <summary>
+        /// Коэффициент.
+        /// </summary>
+        public double Coefficient
+        {
+            get => _coefficient;
+
+            set => Set(ref _coefficient, value);
+        }
+
+        #endregion
+
+        public IEnumerable<Student> TestStudents => Enumerable.Range(1, App.IsDesignMode 
+                ? 10 : 100000)
             .Select(i => new Student
             {
                 Name = $"Name {i}",
@@ -149,19 +184,19 @@ namespace CV19.ViewModels
 
         #region ChangeTabIndexCommand
 
-        public ICommand ChangeTabIndexCommand { get; }
+        //public ICommand ChangeTabIndexCommand { get; }
 
-        private bool CanChangeTabIndexCommandExecute(object p) => _selectedPageIndex >= 0;
+        //private bool CanChangeTabIndexCommandExecute(object p) => _selectedPageIndex >= 0;
 
-        private void OnChangeTabIndexCommandExecuted(object p)
-        {
-            if (p is null)
-            {
-                return;
-            }
+        //private void OnChangeTabIndexCommandExecuted(object p)
+        //{
+        //    if (p is null)
+        //    {
+        //        return;
+        //    }
 
-            SelectedPageIndex += Convert.ToInt32(p);
-        }
+        //    SelectedPageIndex += Convert.ToInt32(p);
+        //}
 
         #endregion
 
@@ -176,39 +211,39 @@ namespace CV19.ViewModels
 
             CloseApplicationCommand = new RelayCommand(OnCloseApplicationCommandExecuted,
                 CanCloseApplicationCommandExecute);
-            ChangeTabIndexCommand = new RelayCommand(OnChangeTabIndexCommandExecuted,
-                CanChangeTabIndexCommandExecute);
+            //ChangeTabIndexCommand = new RelayCommand(OnChangeTabIndexCommandExecuted,
+            //    CanChangeTabIndexCommandExecute);
 
             #endregion
         }
 
-        private void SelectedGroupStudents_Filter(object sender, FilterEventArgs e)
-        {
-            if (string.IsNullOrWhiteSpace(_studentFilterText))
-            {
-                return;
-            }
+        //private void SelectedGroupStudents_Filter(object sender, FilterEventArgs e)
+        //{
+        //    if (string.IsNullOrWhiteSpace(_studentFilterText))
+        //    {
+        //        return;
+        //    }
 
-            if (!(e.Item is Student student))
-            {
-                e.Accepted = false;
-                return;
-            }
+        //    if (!(e.Item is Student student))
+        //    {
+        //        e.Accepted = false;
+        //        return;
+        //    }
 
-            if (student.Name is null || student.Surname is null)
-            {
-                e.Accepted = false;
-                return;
-            }
+        //    if (student.Name is null || student.Surname is null)
+        //    {
+        //        e.Accepted = false;
+        //        return;
+        //    }
 
-            if (student.Name.Contains(_studentFilterText, StringComparison.OrdinalIgnoreCase) 
-                || student.Surname.Contains(_studentFilterText, StringComparison.OrdinalIgnoreCase)
-                || student.Patronymic.Contains(_studentFilterText, StringComparison.OrdinalIgnoreCase))
-            {
-                return;
-            }
+        //    if (student.Name.Contains(_studentFilterText, StringComparison.OrdinalIgnoreCase) 
+        //        || student.Surname.Contains(_studentFilterText, StringComparison.OrdinalIgnoreCase)
+        //        || student.Patronymic.Contains(_studentFilterText, StringComparison.OrdinalIgnoreCase))
+        //    {
+        //        return;
+        //    }
 
-            e.Accepted = false;
-        }
+        //    e.Accepted = false;
+        //}
     }
 }
