@@ -124,6 +124,25 @@ namespace CV19.ViewModels
 
         #endregion
 
+        #region DataValue : string - Результат длительной асинхронной операции
+
+        /// <summary>
+        /// Результат длительной асинхронной операции.
+        /// </summary>
+        private string _dataValue;
+
+        /// <summary>
+        /// Результат длительной асинхронной операции.
+        /// </summary>
+        public string DataValue
+        {
+            get => _dataValue; 
+            
+            private set => Set(ref _dataValue, value);
+        }
+
+        #endregion
+
         public IEnumerable<Student> TestStudents => Enumerable.Range(1, App.IsDesignMode 
                 ? 10 
                 : 100000)

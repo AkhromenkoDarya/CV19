@@ -1,4 +1,4 @@
-﻿<Window x:Class="CV19.MainWindow"
+﻿<Window x:Class="CV19.Views.Windows.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" mc:Ignorable="d"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -56,7 +56,17 @@
                 <userCtrls:CountryStatisticsView DataContext="{Binding CountryStatistics}"/>
             </TabItem>
             <TabItem Header="Debugging">
-                <!--<TextBlock Text="{x:Static system:Environment.CurrentDirectory}"/>-->
+                <DockPanel>
+                    <DockPanel DockPanel.Dock="Top" Margin="5,5,5,0">
+                        <UniformGrid DockPanel.Dock="Left" HorizontalAlignment="Left" Rows="1">
+                            <Button Margin="5" Padding="20,5" Content="Start"></Button>
+                            <Button Margin="5" Padding="20,5" Content="Stop"></Button>
+                        </UniformGrid>
+                        <ProgressBar DockPanel.Dock="Top" Margin="10"/>
+                    </DockPanel>
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" 
+                               Text="{Binding DataValue}" FontSize="30"/>
+                </DockPanel>
             </TabItem>
         </TabControl>
     </DockPanel>
