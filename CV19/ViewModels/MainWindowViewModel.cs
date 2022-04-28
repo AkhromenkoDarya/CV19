@@ -188,6 +188,50 @@ namespace CV19.ViewModels
 
         #endregion
 
+        #region Command StartProcessCommand - Запуск процесса
+
+        /// <summary>
+        /// Запуск процесса.
+        /// </summary>
+        public ICommand StartProcessCommand { get; }
+
+        /// <summary>
+        /// Проверка возможности выполнения - Запуск процесса.
+        /// </summary>
+        private bool CanStartProcessCommandExecute(object p) => true;
+
+        /// <summary>
+        /// Логика выполнения - Запуск процесса.
+        /// </summary>
+        private void OnStartProcessCommandExecuted(object p)
+        {
+            DataValue = _asyncDataService.GetResult(DateTime.Now);
+        }
+
+        #endregion
+
+        #region Command StopProcessCommand - Остановка процесса
+
+        /// <summary>
+        /// Остановка процесса.
+        /// </summary>
+        public ICommand StopProcessCommand { get; }
+
+        /// <summary>
+        /// Проверка возможности выполнения - Остановка процесса.
+        /// </summary>
+        private bool CanStopProcessCommandExecute(object p) => true;
+
+        /// <summary>
+        /// Логика выполнения - Остановка процесса.
+        /// </summary>
+        private void OnStopProcessCommandExecuted(object p)
+        {
+
+        }
+
+        #endregion
+
         #endregion
 
         public MainWindowViewModel(CountryStatisticsViewModel countryStatistics, 
@@ -203,6 +247,11 @@ namespace CV19.ViewModels
                 CanCloseApplicationCommandExecute);
             ChangeTabIndexCommand = new RelayCommand(OnChangeTabIndexCommandExecuted,
                 CanChangeTabIndexCommandExecute);
+
+            StartProcessCommand = new RelayCommand(OnStartProcessCommandExecuted, 
+                CanStartProcessCommandExecute);
+            StopProcessCommand = new RelayCommand(OnStopProcessCommandExecuted, 
+                CanStopProcessCommandExecute);
 
             #endregion
         }

@@ -59,8 +59,10 @@
                 <DockPanel>
                     <DockPanel DockPanel.Dock="Top" Margin="5,5,5,0">
                         <UniformGrid DockPanel.Dock="Left" HorizontalAlignment="Left" Rows="1">
-                            <Button Margin="5" Padding="20,5" Content="Start"></Button>
-                            <Button Margin="5" Padding="20,5" Content="Stop"></Button>
+                            <Button Margin="5" Padding="20,5" Content="Start" 
+                                    Command="{Binding StartProcessCommand}"/>
+                            <Button Margin="5" Padding="20,5" Content="Stop" 
+                                    Command="{Binding StopProcessCommand}"/>
                         </UniformGrid>
                         <ProgressBar DockPanel.Dock="Top" Margin="10"/>
                     </DockPanel>
