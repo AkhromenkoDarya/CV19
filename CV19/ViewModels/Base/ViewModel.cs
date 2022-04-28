@@ -15,9 +15,9 @@ namespace CV19.ViewModels.Base
 
         private bool _disposed;
 
-        public object TargetObject => _targetObjectReference;
+        public object TargetObject => _targetObjectReference?.Target;
 
-        public object RootObject => _rootObjectReference;
+        public object RootObject => _rootObjectReference?.Target;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
