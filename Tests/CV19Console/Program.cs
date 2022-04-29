@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Threading;
 
 namespace CV19Console
@@ -168,6 +170,7 @@ namespace CV19Console
             //Console.ReadLine();
         }
 
+        [MethodImpl((MethodImplOptions)MethodImplAttributes.Synchronized)]
         private static void PrintMethod(string message, int count, int timeout)
         {
             for (var i = 0; i < count; i++)
