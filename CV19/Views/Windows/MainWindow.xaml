@@ -5,6 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:cmd="clr-namespace:CV19.Infrastructure.Commands"
         xmlns:wndws="clr-namespace:CV19.Views.Windows"
+        xmlns:fa="http://schemas.fontawesome.io/icons/"
+        xmlns:controls="clr-namespace:System.Windows.Controls;assembly=PresentationFramework"
         mc:Ignorable="d"
         Title="{Binding Title}" Width="800" Height="450"
         DataContext="{Binding MainWindowVM, Source={StaticResource Locator}}">
@@ -13,7 +15,8 @@
     </Window.DataContext>-->
     <Window.Resources>
         <cmd:CloseApplicationCommand x:Key="CloseApplicationCommand"/>
-        <Style TargetType="Button">
+        <controls:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+            <Style TargetType="Button">
             <Setter Property="Background" Value="White"/>
         </Style>
     </Window.Resources>
@@ -30,6 +33,24 @@
                     </MenuItem.Command>
                 </MenuItem>-->
                 <MenuItem Header="_Exit" Command="{StaticResource CloseApplicationCommand}"/>
+            </MenuItem>
+            <MenuItem Header="Service">
+                <MenuItem DataContext="{Binding WebServer}">
+                    <MenuItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <fa:ImageAwesome Name="WebServerIcon" Icon="Spinner" 
+                                             Spin="{Binding IsChecked, ElementName=WorkingMenuItem}" 
+                                             Height="12" Margin="3,3,9,3" 
+                                             Visibility="{Binding IsChecked, ElementName=WorkingMenuItem, 
+                                Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                            <TextBlock Text="Web Server"/>
+                        </StackPanel>
+                    </MenuItem.Header>
+                    <MenuItem Name="WorkingMenuItem" Header="Working" IsChecked="{Binding Enabled}"/>
+                    <Separator/>
+                    <MenuItem Header="Start" Command="{Binding StartWebServerCommand}"/>
+                    <MenuItem Header="Stop" Command="{Binding StopWebServerCommand}"/>
+                </MenuItem>
             </MenuItem>
             <MenuItem Header="_Help" Cursor="Help">
                 <MenuItem Header="About"/>
