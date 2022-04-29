@@ -6,9 +6,9 @@ namespace CV19.Web
 {
     public class WebServer
     {
-        private event EventHandler<RequestReceiverEventArgs> RequestReceiver;
-
         //private TcpListener _listener = new TcpListener(new IPEndPoint(IPAddress.Any, 8080));
+
+        public event EventHandler<RequestReceiverEventArgs> RequestReceiver;
 
         private HttpListener _listener;
 
@@ -53,9 +53,21 @@ namespace CV19.Web
                     return;
                 }
 
-                _listener = new HttpListener();
-                _listener.Prefixes.Add($"http://*:{_port}");
-                _listener.Prefixes.Add($"http://+:{_port}");
+                //string userName = Environment.UserName;
+                //var netshAddCommand = $"netsh http add urlacl url=http://*:{_port}/ user={userName}";
+
+                //var startInfo = new ProcessStartInfo
+                //{
+                //    UseShellExecute = true,
+                //    FileName = "cmd.exe",
+                //    Arguments = "/c " + netshAddCommand,
+                //    Verb = "runas"
+                //};
+
+                //Process.Start(startInfo);
+
+                _listener = new HttpListener(); 
+                _listener.Prefixes.Add($"http://localhost:{_port}/");
                 _isEnabled = true;
             }
 
@@ -68,7 +80,7 @@ namespace CV19.Web
             {
                 return;
             }
-            
+
             //lock(this)
             lock (_syncRoot)
             {

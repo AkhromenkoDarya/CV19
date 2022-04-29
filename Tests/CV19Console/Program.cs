@@ -11,6 +11,9 @@ namespace CV19Console
 
         static void Main(string[] args)
         {
+            WebServerTest.Run();
+            return;
+
             //Thread.CurrentThread.Name = "MainThread";
 
             //var clockThread = new Thread(ThreadMethod)
@@ -132,37 +135,37 @@ namespace CV19Console
 
             #region AutoResetEvent
 
-            var autoResetEvent = new AutoResetEvent(false);
-            EventWaitHandle threadGuidance = autoResetEvent;
+            //var autoResetEvent = new AutoResetEvent(false);
+            //EventWaitHandle threadGuidance = autoResetEvent;
 
-            var testThreads = new Thread[10];
+            //var testThreads = new Thread[10];
 
-            for (var i = 0; i < testThreads.Length; i++)
-            {
-                int localIndex = i;
+            //for (var i = 0; i < testThreads.Length; i++)
+            //{
+            //    int localIndex = i;
 
-                testThreads[i] = new Thread(() =>
-                {
-                    Console.WriteLine("Thread Id: {0} - started", Thread.CurrentThread
-                        .ManagedThreadId);
+            //    testThreads[i] = new Thread(() =>
+            //    {
+            //        Console.WriteLine("Thread Id: {0} - started", Thread.CurrentThread
+            //            .ManagedThreadId);
 
-                    threadGuidance.WaitOne();
+            //        threadGuidance.WaitOne();
 
-                    Console.WriteLine("Value {0}", localIndex);
-                    Console.WriteLine("Thread Id: {0} - terminated", Thread.CurrentThread
-                        .ManagedThreadId);
+            //        Console.WriteLine("Value {0}", localIndex);
+            //        Console.WriteLine("Thread Id: {0} - terminated", Thread.CurrentThread
+            //            .ManagedThreadId);
 
-                    threadGuidance.Set();
-                });
+            //        threadGuidance.Set();
+            //    });
 
-                testThreads[i].Start();
-            }
+            //    testThreads[i].Start();
+            //}
 
-            Console.WriteLine("Ready to start threads");
-            Console.ReadLine();
+            //Console.WriteLine("Ready to start threads");
+            //Console.ReadLine();
 
-            threadGuidance.Set();
-            Console.ReadLine();
+            //threadGuidance.Set();
+            //Console.ReadLine();
 
             #endregion
 
