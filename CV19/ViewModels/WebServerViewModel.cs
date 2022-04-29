@@ -1,4 +1,5 @@
 ﻿using CV19.Infrastructure.Commands;
+using CV19.Services.Interfaces;
 using CV19.ViewModels.Base;
 using System.Windows.Input;
 
@@ -6,6 +7,8 @@ namespace CV19.ViewModels
 {
     internal class WebServerViewModel : ViewModel
     {
+        private readonly IWebServerService _serverService;
+
         #region Enabled : bool - Доступность веб-сервера
 
         /// <summary>
@@ -84,5 +87,7 @@ namespace CV19.ViewModels
         #endregion
 
         #endregion
+
+        public WebServerViewModel(IWebServerService serverService) => _serverService = serverService;
     }
 }
