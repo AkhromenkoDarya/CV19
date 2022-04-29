@@ -75,6 +75,17 @@ namespace CV19Console
                 thread.Start();
             }
 
+            //clockThread.Join();
+
+            if (!clockThread.Join(100))
+            {
+                // Прерывает поток в любой точке процесса его выполнения.
+                //clockThread.Abort();
+
+                // Альтернативный вариант.
+                clockThread.Interrupt();
+            }
+
             Console.WriteLine(string.Join(",", values));
             Console.ReadLine();
         }
