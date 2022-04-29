@@ -1,9 +1,13 @@
-﻿using System.Net;
+﻿using CV19.Web.Events;
+using System;
+using System.Net;
 
 namespace CV19.Web
 {
     public class WebServer
     {
+        private event EventHandler<RequestReceiverEventArgs> RequestReceiver;
+
         //private TcpListener _listener = new TcpListener(new IPEndPoint(IPAddress.Any, 8080));
 
         private HttpListener _listener;
@@ -52,10 +56,10 @@ namespace CV19.Web
                 _listener = new HttpListener();
                 _listener.Prefixes.Add($"http://*:{_port}");
                 _listener.Prefixes.Add($"http://+:{_port}");
-                IsEnabled = true;
+                _isEnabled = true;
             }
 
-            Listen();
+            ListenAsync();
         }
 
         public void Stop()
@@ -74,13 +78,28 @@ namespace CV19.Web
                 }
 
                 _listener = null;
-                IsEnabled = false;
+                _isEnabled = false;
             }
         }
 
-        private void Listen()
+        private async void ListenAsync()
         {
+            HttpListener listener = _listener;
+            listener.Start();
 
+            while (_isEnabled)
+            {
+                HttpListenerContext listenerContext = await listener.GetContextAsync()
+                    .ConfigureAwait(false);
+                ProcessRequest(listenerContext);
+            }
+            
+            listener.Stop();
+        }
+
+        private void ProcessRequest(HttpListenerContext context)
+        {
+            RequestReceiver?.Invoke(this, new RequestReceiverEventArgs(context));
         }
     }
 }
