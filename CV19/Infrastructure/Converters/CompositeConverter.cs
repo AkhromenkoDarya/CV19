@@ -29,9 +29,9 @@ namespace CV19.Infrastructure.Converters
         public override object Convert(object value, Type targetType, object parameter, 
             CultureInfo culture)
         {
-            var firstConverterResult = FirstConverter?.Convert(value, targetType, parameter, 
+            object firstConverterResult = FirstConverter?.Convert(value, targetType, parameter, 
                 culture) ?? value;
-            var secondConverterResult = SecondConverter?.Convert(firstConverterResult, targetType, 
+            object secondConverterResult = SecondConverter?.Convert(firstConverterResult, targetType, 
                 parameter, culture) ?? firstConverterResult;
 
             return secondConverterResult;
@@ -40,9 +40,9 @@ namespace CV19.Infrastructure.Converters
         public override object ConvertBack(object value, Type targetType, object parameter, 
             CultureInfo culture)
         {
-            var secondConverterResult = SecondConverter?.ConvertBack(value, targetType, parameter, 
+            object secondConverterResult = SecondConverter?.ConvertBack(value, targetType, parameter, 
                 culture) ?? value;
-            var firstConverterResult = FirstConverter.ConvertBack(secondConverterResult, targetType,
+            object firstConverterResult = FirstConverter.ConvertBack(secondConverterResult, targetType,
                 parameter, culture) ?? secondConverterResult;
 
             return firstConverterResult;

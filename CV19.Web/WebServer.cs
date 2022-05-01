@@ -8,17 +8,15 @@ namespace CV19.Web
     {
         //private TcpListener _listener = new TcpListener(new IPEndPoint(IPAddress.Any, 8080));
 
-        public event EventHandler<RequestReceiverEventArgs> RequestReceiver;
+        public event EventHandler<RequestReceiverEventArgs> RequestReceived;
 
         private HttpListener _listener;
-
-        private readonly int _port;
 
         private bool _isEnabled;
 
         private readonly object _syncRoot = new object();
 
-        public int Port => _port;
+        public int Port { get; }
 
         public bool IsEnabled
         {
@@ -36,7 +34,7 @@ namespace CV19.Web
             }
         }
 
-        public WebServer(int port) => _port = port;
+        public WebServer(int port) => Port = port;
 
         public void Start()
         {
@@ -53,21 +51,15 @@ namespace CV19.Web
                     return;
                 }
 
-                //string userName = Environment.UserName;
-                //var netshAddCommand = $"netsh http add urlacl url=http://*:{_port}/ user={userName}";
+                _listener = new HttpListener();
 
-                //var startInfo = new ProcessStartInfo
-                //{
-                //    UseShellExecute = true,
-                //    FileName = "cmd.exe",
-                //    Arguments = "/c " + netshAddCommand,
-                //    Verb = "runas"
-                //};
+                // Выполнить в консоли команды с правами администратора:
+                //netsh http add urlacl url=http://*:{Port}/ user=user_name
+                //netsh http add urlacl url=http://+:{Port}/ user=user_name
 
-                //Process.Start(startInfo);
+                _listener.Prefixes.Add($"http://*:{Port}/");
+                _listener.Prefixes.Add($"http://+:{Port}/");
 
-                _listener = new HttpListener(); 
-                _listener.Prefixes.Add($"http://localhost:{_port}/");
                 _isEnabled = true;
             }
 
@@ -111,7 +103,7 @@ namespace CV19.Web
 
         private void ProcessRequest(HttpListenerContext context)
         {
-            RequestReceiver?.Invoke(this, new RequestReceiverEventArgs(context));
+            RequestReceived?.Invoke(this, new RequestReceiverEventArgs(context));
         }
     }
 }

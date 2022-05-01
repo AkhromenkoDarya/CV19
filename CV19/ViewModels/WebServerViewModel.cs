@@ -9,18 +9,18 @@ namespace CV19.ViewModels
     {
         private readonly IWebServerService _serverService;
 
-        #region Enabled : bool - Доступность веб-сервера
+        #region IsEnabled : bool - Доступность веб-сервера
 
         /// <summary>
         /// Доступность веб-сервера.
         /// </summary>
-        public bool Enabled
+        public bool IsEnabled
         {
-            get => _serverService.Enabled;
+            get => _serverService.IsEnabled;
 
             set
             {
-                _serverService.Enabled = value;
+                _serverService.IsEnabled = value;
                 OnPropertyChanged();
             }
         }
@@ -45,7 +45,7 @@ namespace CV19.ViewModels
         /// <summary>
         /// Проверка возможности выполнения - Запуск веб-сервера.
         /// </summary>
-        private bool CanStartWebServerCommandExecute(object p) => !Enabled;
+        private bool CanStartWebServerCommandExecute(object p) => !IsEnabled;
 
         /// <summary>
         /// Логика выполнения - Запуск веб-сервера.
@@ -53,7 +53,7 @@ namespace CV19.ViewModels
         private void OnStartWebServerCommandExecuted(object p)
         {
             _serverService.Start();
-            OnPropertyChanged(nameof(Enabled));
+            OnPropertyChanged(nameof(IsEnabled));
         }
 
         #endregion
@@ -74,7 +74,7 @@ namespace CV19.ViewModels
         /// <summary>
         /// Проверка возможности выполнения - Остановка веб-сервера.
         /// </summary>
-        private bool CanStopWebServerCommandExecute(object p) => Enabled;
+        private bool CanStopWebServerCommandExecute(object p) => IsEnabled;
 
         /// <summary>
         /// Логика выполнения - Остановка веб-сервера.
@@ -82,7 +82,7 @@ namespace CV19.ViewModels
         private void OnStopWebServerCommandExecuted(object p)
         {
             _serverService.Stop();
-            OnPropertyChanged(nameof(Enabled));
+            OnPropertyChanged(nameof(IsEnabled));
         }
 
         #endregion

@@ -24,12 +24,7 @@ namespace CV19.Infrastructure.Converters
         public override object[] ConvertBack(object value, Type[] targetTypes, object parameter,
             CultureInfo culture)
         {
-            IEnumerable enumerable = value as IEnumerable;
-
-            if (enumerable is null)
-            {
-                return null;
-            }
+            var enumerable = value as IEnumerable;
 
             return (object[])enumerable;
         }

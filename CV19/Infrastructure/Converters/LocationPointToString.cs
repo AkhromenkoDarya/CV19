@@ -30,12 +30,12 @@ namespace CV19.Infrastructure.Converters
                 return null;
             }
 
-            var components = str.Split(';');
-            var latitudeString = components[0].Split(':')[1];
-            var longitudeString = components[1].Split(':')[1];
+            string[] components = str.Split(';');
+            string latitudeString = components[0].Split(':')[1];
+            string longitudeString = components[1].Split(':')[1];
 
-            var latitude = double.Parse(latitudeString);
-            var longitude = double.Parse(longitudeString);
+            double latitude = double.Parse(latitudeString);
+            double longitude = double.Parse(longitudeString);
 
             return new Point(latitude, longitude);
         }

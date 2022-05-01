@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Windows.Markup;
 using System.Windows.Threading;
@@ -21,11 +22,13 @@ namespace CV19.ViewModels.Base
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        [SuppressMessage("ReSharper.DPA", "DPA0002: Excessive memory allocations in SOH", 
+            MessageId = "type: CV19.Models.ConfirmedCase[]")]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             //PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-            
-            var handlers = PropertyChanged;
+
+            PropertyChangedEventHandler handlers = PropertyChanged;
 
             if (handlers is null)
             {

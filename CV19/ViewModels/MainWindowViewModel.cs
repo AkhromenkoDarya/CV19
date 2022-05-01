@@ -252,6 +252,7 @@ namespace CV19.ViewModels
 
             StartProcessCommand = new RelayCommand(OnStartProcessCommandExecuted, 
                 CanStartProcessCommandExecute);
+
             StopProcessCommand = new RelayCommand(OnStopProcessCommandExecuted, 
                 CanStopProcessCommandExecute);
 

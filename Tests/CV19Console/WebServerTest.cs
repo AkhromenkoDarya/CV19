@@ -8,12 +8,12 @@ namespace CV19Console
 {
     internal static class WebServerTest
     {
-        private const int _defaultPort = 8080;
+        private const int DefaultPort = 8080;
 
         public static void Run()
         {
-            var server = new WebServer(_defaultPort);
-            server.RequestReceiver += OnRequestReceived;
+            var server = new WebServer(DefaultPort);
+            server.RequestReceived += OnRequestReceived;
 
             server.Start();
             Console.WriteLine("Test Web Server is started!");

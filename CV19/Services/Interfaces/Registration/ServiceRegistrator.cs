@@ -16,7 +16,7 @@ namespace CV19.Services.Interfaces.Registration
             //services.AddScoped<IDataService, DataService>();
 
             services.AddTransient<IAsyncDataService, AsyncDataService>();
-            services.AddTransient<IWebServerService, HttpListenerWebServer>();
+            services.AddTransient<IWebServerService, WebServerService>();
 
             return services;
         }

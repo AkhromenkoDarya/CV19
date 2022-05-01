@@ -7,7 +7,7 @@ namespace CV19Console
 {
     class Program
     {
-        private static bool _isClockThreadExecuted = true;
+        private const bool IsClockThreadExecuted = true;
 
         static void Main(string[] args)
         {
@@ -190,7 +190,7 @@ namespace CV19Console
 
             CheckThread();
 
-            while (_isClockThreadExecuted)
+            while (IsClockThreadExecuted)
             {
                 Thread.Sleep(100);
                 Console.Title = DateTime.Now.ToString();
