@@ -10,12 +10,12 @@ namespace CV19.Components
         /// <summary>
         /// Значение стрелки индикатора.
         /// </summary>
-        public static readonly DependencyProperty ValueProperty
+        public static readonly DependencyProperty ValueProperty 
             = DependencyProperty.Register(
-                nameof(Value),
-                typeof(double ),
+                nameof(Value), 
+                typeof(double), 
                 typeof(DialGauge),
-                new PropertyMetadata(default(double )));
+                new PropertyMetadata(default(double)));
 
         //private static void OnPropertyChanged(DependencyObject d, 
         //    DependencyPropertyChangedEventArgs e)
@@ -40,15 +40,14 @@ namespace CV19.Components
         /// </summary>
         [Description("Значение стрелки индикатора")]
         [Category("Моя категория")]
-        public double  Value
+        public double Value
         {
-            get => (double ) GetValue(ValueProperty);
+            get => (double)GetValue(ValueProperty);
 
             set => SetValue(ValueProperty, value);
         }
 
         #endregion
-
 
         public DialGauge() => InitializeComponent();
     }

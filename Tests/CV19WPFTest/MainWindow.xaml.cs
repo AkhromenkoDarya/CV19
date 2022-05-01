@@ -4,7 +4,7 @@ using System.Windows;
 
 namespace CV19WPFTest
 {
-    public partial class MainWindow : Window
+    public partial class MainWindow
     {
         public MainWindow()
         {
@@ -16,7 +16,7 @@ namespace CV19WPFTest
 
         private void ComputeValue()
         {
-            var value = LongProcess(DateTime.Now);
+            string value = LongProcess(DateTime.Now);
 
             if (ResultBlock.Dispatcher.CheckAccess())
             {

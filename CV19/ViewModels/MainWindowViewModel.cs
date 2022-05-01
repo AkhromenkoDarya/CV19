@@ -17,6 +17,8 @@ namespace CV19.ViewModels
     {
         private readonly IAsyncDataService _asyncDataService;
 
+        public WebServerViewModel WebServer { get; }
+
         public CountryStatisticsViewModel CountryStatistics { get; }
 
         #region StudentView
@@ -233,11 +235,13 @@ namespace CV19.ViewModels
         #endregion
 
         public MainWindowViewModel(CountryStatisticsViewModel countryStatistics, 
-            IAsyncDataService asyncDataService)
+            IAsyncDataService asyncDataService, WebServerViewModel webServer)
         {
-            _asyncDataService = asyncDataService;
             countryStatistics.MainWindowViewModel = this;
             CountryStatistics = countryStatistics;
+
+            _asyncDataService = asyncDataService;
+            WebServer = webServer;
 
             #region Команды
 
@@ -248,6 +252,7 @@ namespace CV19.ViewModels
 
             StartProcessCommand = new RelayCommand(OnStartProcessCommandExecuted, 
                 CanStartProcessCommandExecute);
+
             StopProcessCommand = new RelayCommand(OnStopProcessCommandExecuted, 
                 CanStopProcessCommandExecute);
 

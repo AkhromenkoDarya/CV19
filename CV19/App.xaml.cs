@@ -1,7 +1,4 @@
-﻿using CV19.Services;
-using CV19.Services.Interfaces;
-using CV19.Services.Interfaces.Registration;
-using CV19.ViewModels;
+﻿using CV19.Services.Interfaces.Registration;
 using CV19.ViewModels.Registration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -38,7 +35,7 @@ namespace CV19
         {
             base.OnExit(e);
 
-            var host = Host;
+            IHost host = Host;
             await host.StopAsync().ConfigureAwait(false);
             host.Dispose();
             _host = null;

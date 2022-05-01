@@ -8,6 +8,7 @@ namespace CV19.ViewModels.Registration
         {
             services.AddSingleton<MainWindowViewModel>();
             services.AddSingleton<CountryStatisticsViewModel>();
+            services.AddSingleton<WebServerViewModel>();
 
             return services;
         }

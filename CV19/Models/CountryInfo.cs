@@ -1,6 +1,5 @@
-﻿using CV19.Services;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Windows;
 
@@ -37,6 +36,8 @@ namespace CV19.Models
 
         public IEnumerable<PlaceInfo> Provinces { get; set; }
 
+        [SuppressMessage("ReSharper.DPA", "DPA0002: Excessive memory allocations in SOH", 
+            MessageId = "type: CV19.Models.ConfirmedCase[]")]
         public override IEnumerable<ConfirmedCase> ConfirmedCases
         {
             get
@@ -46,7 +47,7 @@ namespace CV19.Models
                     return _confirmedCases;
                 }
 
-                DateTime[] dates = Provinces
+                var dates = Provinces
                     .Select(x => x.ConfirmedCases)
                     .First()
                     .Select(x => x.Date)
@@ -54,13 +55,13 @@ namespace CV19.Models
 
                 int dateCount = dates.Count();
                 var sumByDate = new int[dates.Count()];
-                PlaceInfo[] provinceArray = Provinces.ToArray();
+                var provinceArray = Provinces.ToArray();
 
                 var resultArray = new ConfirmedCase[dateCount];
 
-                for (int i = 0; i < dateCount; i++)
+                for (var i = 0; i < dateCount; i++)
                 {
-                    for (int j = 0; j < provinceArray.Count(); j++)
+                    for (var j = 0; j < provinceArray.Count(); j++)
                     {
                         sumByDate[i] += provinceArray[j].ConfirmedCases.ToArray()[i].Count;
                     }

@@ -6,11 +6,11 @@ namespace CV19.Services
 {
     internal class AsyncDataService : IAsyncDataService
     {
-        private const int _sleepTime = 5000;
+        private const int SleepTime = 5000;
 
         public string GetResult(DateTime time)
         {
-            Thread.Sleep(_sleepTime);
+            Thread.Sleep(SleepTime);
 
             return $"Result value: {time}";
         }

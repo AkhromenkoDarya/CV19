@@ -15,19 +15,19 @@ namespace CV19.Services
 {
     internal class DataService : IDataService
     {
-        private const string _dataSourceAddress = @"https://raw.githubusercontent.com/"
+        private const string DataSourceAddress = @"https://raw.githubusercontent.com/"
             + @"CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/"
             + @"time_series_covid19_confirmed_global.csv";
 
-        private const int _columnCountBeforeDates = 4;
+        private const int ColumnCountBeforeDates = 4;
 
-        private const int _headerLineNumber = 1;
+        private const int HeaderLineNumber = 1;
 
-        private const string _regexPattern = "\\\"(.*?)\\\"";
+        private const string RegexPattern = "\\\"(.*?)\\\"";
 
-        private static readonly NumberStyles _style = NumberStyles.AllowDecimalPoint;
+        private const NumberStyles Style = NumberStyles.AllowDecimalPoint;
 
-        private static IFormatProvider _formatter = new NumberFormatInfo
+        private static readonly IFormatProvider Formatter = new NumberFormatInfo
         {
             NumberDecimalSeparator = "."
         };
@@ -35,8 +35,8 @@ namespace CV19.Services
         private static async Task<Stream> GetDataStream()
         {
             var client = new HttpClient();
-            var response = await client.GetAsync(_dataSourceAddress, HttpCompletionOption
-                .ResponseHeadersRead);
+            HttpResponseMessage response = await client.GetAsync(DataSourceAddress, 
+                HttpCompletionOption.ResponseHeadersRead);
             return await response.Content.ReadAsStreamAsync();
         }
 
@@ -51,17 +51,17 @@ namespace CV19.Services
 
             while (!dataReader.EndOfStream)
             {
-                var line = dataReader.ReadLine();
+                string line = dataReader.ReadLine();
 
                 if (string.IsNullOrWhiteSpace(line))
                 {
                     continue;
                 }
 
-                if (Regex.IsMatch(line, _regexPattern))
+                if (Regex.IsMatch(line, RegexPattern))
                 {
-                    line = Regex.Replace(line, _regexPattern, x => x.Value.Replace(",", "(")
-                        .Replace("( ", " (").Insert(x.Value.LastIndexOf("\""), ")"));
+                    line = Regex.Replace(line, RegexPattern, x => x.Value.Replace(",", "(")
+                        .Replace("( ", " (").Insert(x.Value.LastIndexOf("\"", StringComparison.Ordinal), ")"));
                 }
 
                 yield return line;
@@ -71,15 +71,15 @@ namespace CV19.Services
         public static DateTime[] GetDates() => GetDataLines()
             .First()
             .Split(',')
-            .Skip(_columnCountBeforeDates)
+            .Skip(ColumnCountBeforeDates)
             .Select(s => DateTime.Parse(s, CultureInfo.InvariantCulture))
             .ToArray();
 
         public static IEnumerable<(string country, string province, (double latitdue, 
             double longitude) location, int[] confirmedCases)> GetCountryData()
         {
-            IEnumerable<string[]> lines = GetDataLines()
-                .Skip(_headerLineNumber)
+            var lines = GetDataLines()
+                .Skip(HeaderLineNumber)
                 .Select(line => line.Split(','));
 
             foreach (string[] row in lines)
@@ -87,11 +87,11 @@ namespace CV19.Services
                 string province = row[0].Trim(' ', '"');
                 string country = row[1].Trim(' ', '"');
 
-                double.TryParse(row[2], _style, _formatter, out double latitude);
-                double.TryParse(row[3], _style, _formatter, out double longitude);
+                double.TryParse(row[2], Style, Formatter, out double latitude);
+                double.TryParse(row[3], Style, Formatter, out double longitude);
 
                 int[] confirmedCases = row
-                    .Skip(_columnCountBeforeDates)
+                    .Skip(ColumnCountBeforeDates)
                     .Select(s => int.TryParse(s, out int convertedToInt) ? convertedToInt : 0)
                     .ToArray();
 
@@ -101,7 +101,7 @@ namespace CV19.Services
 
         public IEnumerable<CountryInfo> GetData()
         {
-            DateTime[] dates = GetDates();
+            var dates = GetDates();
 
             var data = GetCountryData().GroupBy(x => x.country);
 
