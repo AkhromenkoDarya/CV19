@@ -19,5 +19,13 @@ namespace CV19.Services
         public void Start() => _server.Start();
 
         public void Stop() => _server.Stop();
+
+        public WebServerService() => _server.RequestReceived += OnRequestReceived;
+
+        private static void OnRequestReceived(object sender, RequestReceiverEventArgs e)
+        {
+            using var writer = new StreamWriter(e.Context.Response.OutputStream);
+            writer.WriteLine("CV19 Application");
+        }
     }
 }
