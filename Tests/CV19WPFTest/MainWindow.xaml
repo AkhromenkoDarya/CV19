@@ -1,14 +1,29 @@
 ﻿<Window x:Class="CV19WPFTest.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:b="clr-namespace:CV19WPFTest.Behaviors"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="224" Width="354">
     <Grid>
         <Button HorizontalAlignment="Center" VerticalAlignment="Center" Content="Start"
                 Padding="30,20" Click="StartButton_Click"/>
         <TextBlock Name="ResultBlock" HorizontalAlignment="Center" VerticalAlignment="Top"
-                   Text="None"/>
+                       Text="None">
+            <i:Interaction.Behaviors>
+                <!--<i:MouseDragElementBehavior/>-->
+
+            </i:Interaction.Behaviors>
+        </TextBlock>
+        <Canvas>
+            <Ellipse Canvas.Left="30" Canvas.Top="20" Stroke="Red" StrokeThickness="2"
+                     Fill="DarkBlue" Width="20" Height="20">
+                <i:Interaction.Behaviors>
+                    <i:MouseDragElementBehavior/>
+                </i:Interaction.Behaviors>
+            </Ellipse>
+        </Canvas>
     </Grid>
 </Window>
