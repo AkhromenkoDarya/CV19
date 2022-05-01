@@ -1,6 +1,7 @@
 ﻿using CV19.Web.Events;
 using System;
 using System.Net;
+using System.Threading.Tasks;
 
 namespace CV19.Web
 {
@@ -91,19 +92,26 @@ namespace CV19.Web
             HttpListener listener = _listener;
             listener.Start();
 
+            HttpListenerContext listenerContext = null;
+
             while (_isEnabled)
             {
-                HttpListenerContext listenerContext = await listener.GetContextAsync()
-                    .ConfigureAwait(false);
-                ProcessRequest(listenerContext);
+                Task<HttpListenerContext> listenerContextTask = listener.GetContextAsync();
+
+                if (listenerContext != null)
+                {
+                    ProcessRequestAsync(listenerContext);
+                }
+
+                listenerContext = await listenerContextTask.ConfigureAwait(false);
             }
             
             listener.Stop();
         }
 
-        private void ProcessRequest(HttpListenerContext context)
+        private async void ProcessRequestAsync(HttpListenerContext context)
         {
-            RequestReceived?.Invoke(this, new RequestReceiverEventArgs(context));
+            await Task.Run(() => RequestReceived?.Invoke(this, new RequestReceiverEventArgs(context)));
         }
     }
 }

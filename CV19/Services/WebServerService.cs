@@ -1,4 +1,5 @@
-﻿using CV19.Services.Interfaces;
+﻿using System;
+using CV19.Services.Interfaces;
 using CV19.Web;
 using CV19.Web.Events;
 using System.IO;
@@ -25,7 +26,7 @@ namespace CV19.Services
         private static void OnRequestReceived(object sender, RequestReceiverEventArgs e)
         {
             using var writer = new StreamWriter(e.Context.Response.OutputStream);
-            writer.WriteLine("CV19 Application");
+            writer.WriteLine("CV19 Application - " + DateTime.Now);
         }
     }
 }
