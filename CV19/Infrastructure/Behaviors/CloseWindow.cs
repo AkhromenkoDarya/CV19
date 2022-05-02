@@ -4,7 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
-namespace CV19WPFTest.Behaviors
+namespace CV19.Infrastructure.Behaviors
 {
     public class CloseWindow : Behavior<Button>
     {
