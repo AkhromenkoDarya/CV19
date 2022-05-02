@@ -39,8 +39,8 @@
     <Geometry x:Key="CloseButtonIconGeometry">M0,0 L8,8 M0,8 L8,0</Geometry>
 
     <ControlTemplate x:Key="CV19WindowTemplate" TargetType="{x:Type Window}">
-        <Grid>
-            <Border Name="PART_Border" Margin="7" BorderBrush="{TemplateBinding BorderBrush}" 
+        <Grid Background="Silver">
+            <Border Name="PART_Border" Margin="7" BorderBrush="{TemplateBinding BorderBrush}"
                     BorderThickness="{TemplateBinding BorderThickness}"/>
 
             <Grid Name="PART_MainGrid" Margin="7" Background="{TemplateBinding Background}"
@@ -91,7 +91,7 @@
         <Setter Property="WindowChrome.WindowChrome">
             <Setter.Value>
                 <WindowChrome CaptionHeight="35" CornerRadius="10" 
-                              GlassFrameThickness="0,0,0,-1" 
+                              GlassFrameThickness="0" 
                               NonClientFrameEdges="None" ResizeBorderThickness="5" 
                               UseAeroCaptionButtons="False"/>
             </Setter.Value>
