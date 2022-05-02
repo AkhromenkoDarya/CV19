@@ -1,4 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:b="clr-namespace:CV19.Infrastructure.Behaviors"
+                    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Style x:Key="CV19WindowHeaderButtonStyle" TargetType="{x:Type Button}">
@@ -34,8 +36,7 @@
 
     <Geometry x:Key="MinimizeButtonIconGeometry">M0,8 H8 M0,7 H8 M0,6 H8</Geometry>
     <Geometry x:Key="MaximizeButtonIconGeometry">M0,0 H8 V8 H0 V0 M0,1 H8 M0,2 H8</Geometry>
-    <Geometry x:Key="MaxToMinButtonIconGeometry">M0,3 H5 V8 H0 V3 M0,4 H5 M3,0 H8 V5 H7 M3,1 H8
-    </Geometry>
+    <Geometry x:Key="MaxToMinButtonIconGeometry">M0,3 H5 V8 H0 V3 M0,4 H5 M3,0 H8 V5 H7 M3,1 H8</Geometry>
     <Geometry x:Key="CloseButtonIconGeometry">M0,0 L8,8 M0,8 L8,0</Geometry>
 
     <ControlTemplate x:Key="CV19WindowTemplate" TargetType="{x:Type Window}">
@@ -64,12 +65,21 @@
                                 </StackPanel.Resources>
 
                                 <Button>
+                                    <i:Interaction.Behaviors>
+                                        <b:MinimizeWindow/>
+                                    </i:Interaction.Behaviors>
                                     <Path Data="{StaticResource MinimizeButtonIconGeometry}"/>
                                 </Button>
                                 <Button>
+                                    <i:Interaction.Behaviors>
+                                        <b:MaximizeWindow/>
+                                    </i:Interaction.Behaviors>
                                     <Path Data="{StaticResource MaxToMinButtonIconGeometry}"/>
                                 </Button>
                                 <Button Foreground="Red">
+                                    <i:Interaction.Behaviors>
+                                        <b:CloseWindow/>
+                                    </i:Interaction.Behaviors>
                                     <Path Data="{StaticResource CloseButtonIconGeometry}"/>
                                 </Button>
                             </StackPanel>
