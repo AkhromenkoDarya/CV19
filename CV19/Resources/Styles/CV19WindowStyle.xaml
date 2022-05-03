@@ -41,16 +41,17 @@
 
     <ControlTemplate x:Key="CV19WindowTemplate" TargetType="{x:Type Window}">
         <Grid Background="Silver">
-            <Border Name="PART_Border" Margin="7" BorderBrush="{TemplateBinding BorderBrush}"
-                    BorderThickness="{TemplateBinding BorderThickness}"/>
-
-            <Grid Name="PART_MainGrid" Margin="7" Background="{TemplateBinding Background}"
+            <Grid Name="PART_MainGrid" Margin="10" Background="{TemplateBinding Background}"
                   TextOptions.TextRenderingMode="ClearType"
                   TextOptions.TextFormattingMode="Display">
+                <Grid.Effect>
+                    <DropShadowEffect Opacity="0.5" BlurRadius="7" ShadowDepth="3" Color="BlueViolet"/>
+                </Grid.Effect>
                 <DockPanel>
                     <Grid Name="PART_TitleBar" DockPanel.Dock="Top" Background="WhiteSmoke">
                         <DockPanel Height="32">
-                            <Image Name="PART_Icon" DockPanel.Dock="Left" Source="{TemplateBinding Icon}"/>
+                            <Image Name="PART_Icon" DockPanel.Dock="Left" Margin="-5,-7,0,0" 
+                                   Source="{TemplateBinding Icon}"/>
 
                             <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
                                 <StackPanel.Resources>
@@ -106,10 +107,6 @@
                               UseAeroCaptionButtons="False"/>
             </Setter.Value>
         </Setter>
-        <Setter Property="Foreground" Value="{DynamicResource 
-            {x:Static SystemColors.WindowTextBrushKey}}"/>
-        <Setter Property="Background" Value="{DynamicResource 
-            {x:Static SystemColors.WindowBrushKey}}"/>
         <Setter Property="ResizeMode" Value="CanResizeWithGrip"/>
         <Setter Property="Template" Value="{StaticResource CV19WindowTemplate}"/>
     </Style>
