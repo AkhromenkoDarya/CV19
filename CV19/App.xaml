@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:l="clr-namespace:CV19"
              xmlns:loc="clr-namespace:CV19.ViewModels.Locator"
-             StartupUri="Views/Windows/TestWindow.xaml">
+             StartupUri="Views/Windows/MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

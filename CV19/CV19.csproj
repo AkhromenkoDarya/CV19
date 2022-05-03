@@ -15,7 +15,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="Resources\WindowIcon.png" />
+    <None Remove="Resources\ButterflyIcon.png" />
+    <None Remove="Resources\CoronavirusIcon.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -31,7 +32,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Resources\WindowIcon.png" />
+    <Resource Include="Resources\ButterflyIcon.png" />
+    <Resource Include="Resources\CoronavirusIcon.png" />
   </ItemGroup>
 
   <ItemGroup>
