@@ -20,11 +20,12 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="PART_Border" Property="Background" 
-                                    Value="LightSkyBlue"/>
+                                    Value="DarkRed"/>
                             <Setter TargetName="PART_Border" Property="Opacity" Value="0.7"/>
+                            <Setter Property="Foreground" Value="LightGray"/>
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="PART_Border" Property="Background" Value="Blue"/>
+                            <Setter TargetName="PART_Border" Property="Background" Value="Red"/>
                             <Setter TargetName="PART_Border" Property="Opacity" Value="1"/>
                             <Setter Property="Foreground" Value="White"/>
                         </Trigger>
@@ -32,6 +33,11 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+    </Style>
+
+    <Style x:Key="CloseButtonStyle" TargetType="Button" 
+           BasedOn="{StaticResource CV19WindowHeaderButtonStyle}">
+        <Setter Property="Foreground" Value="Red"/>
     </Style>
 
     <Geometry x:Key="MinimizeButtonIconGeometry">M0,8 H8 M0,7 H8 M0,6 H8</Geometry>
@@ -45,7 +51,7 @@
                   TextOptions.TextRenderingMode="ClearType"
                   TextOptions.TextFormattingMode="Display">
                 <Grid.Effect>
-                    <DropShadowEffect Opacity="0.5" BlurRadius="7" ShadowDepth="3" Color="BlueViolet"/>
+                    <DropShadowEffect Opacity="0.5" BlurRadius="7" ShadowDepth="3" Color="OrangeRed"/>
                 </Grid.Effect>
                 <DockPanel>
                     <Grid Name="PART_TitleBar" DockPanel.Dock="Top" Background="WhiteSmoke">
@@ -77,7 +83,7 @@
                                     </i:Interaction.Behaviors>
                                     <Path Data="{StaticResource MaxToMinButtonIconGeometry}"/>
                                 </Button>
-                                <Button Foreground="Red">
+                                <Button Style="{StaticResource CloseButtonStyle}">
                                     <i:Interaction.Behaviors>
                                         <b:CloseWindow/>
                                     </i:Interaction.Behaviors>
