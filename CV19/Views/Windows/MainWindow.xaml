@@ -9,11 +9,18 @@
         xmlns:fa5="clr-namespace:FontAwesome5;assembly=FontAwesome5.Net"
         xmlns:ctrls="clr-namespace:System.Windows.Controls;assembly=PresentationFramework"
         mc:Ignorable="d"
+        DataContext="{Binding MainWindowVM, Source={StaticResource Locator}}"
+        Style="{StaticResource CV19WindowStyle}"
         Title="{Binding Title}" Width="800" Height="450"
-        DataContext="{Binding MainWindowVM, Source={StaticResource Locator}}">
+        Icon="../../Resources/CoronavirusIcon.png">
     <!--<Window.DataContext>
         <vm:MainWindowViewModel/>
     </Window.DataContext>-->
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding CountryStatistics.RefreshDataCommand}"/>
+    </i:EventTrigger>
+    </i:Interaction.Triggers>
     <Window.Resources>
         <cmd:CloseApplicationCommand x:Key="CloseApplicationCommand"/>
         <ctrls:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>

@@ -9,8 +9,9 @@
             <ResourceDictionary.MergedDictionaries>
 
                 <ResourceDictionary Source="Resources/Base/Brushes.xaml"/>
-                <ResourceDictionary Source="Resources/Styles/Buttons.xaml"/>
-                <ResourceDictionary Source="Resources/Styles/GridSplitters.xaml"/>
+                <ResourceDictionary Source="Resources/Styles/ButtonStyle.xaml"/>
+                <ResourceDictionary Source="Resources/Styles/GridSplitterStyle.xaml"/>
+                <ResourceDictionary Source="Resources/Styles/CV19WindowStyle.xaml"/>
 
             </ResourceDictionary.MergedDictionaries>
 
