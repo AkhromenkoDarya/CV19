@@ -18,6 +18,9 @@ namespace CV19.Services.Interfaces.Registration
             services.AddTransient<IAsyncDataService, AsyncDataService>();
             services.AddTransient<IWebServerService, WebServerService>();
 
+            services.AddSingleton<StudentRepository>();
+            services.AddSingleton<GroupRepository>();
+
             return services;
         }
     }
