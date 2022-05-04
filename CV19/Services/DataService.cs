@@ -15,9 +15,9 @@ namespace CV19.Services
 {
     internal class DataService : IDataService
     {
-        private const string DataSourceAddress = @"https://raw.githubusercontent.com/"
-            + @"CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/"
-            + @"time_series_covid19_confirmed_global.csv";
+        private const string DataSourceAddress = @"https://raw.githubusercontent.com/" +
+            @"CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/" +
+            @"time_series_covid19_confirmed_global.csv";
 
         private const int ColumnCountBeforeDates = 4;
 
@@ -60,8 +60,9 @@ namespace CV19.Services
 
                 if (Regex.IsMatch(line, RegexPattern))
                 {
-                    line = Regex.Replace(line, RegexPattern, x => x.Value.Replace(",", "(")
-                        .Replace("( ", " (").Insert(x.Value.LastIndexOf("\"", StringComparison.Ordinal), ")"));
+                    line = Regex.Replace(line, RegexPattern, x => x.Value
+                        .Replace(",", "(").Replace("( ", " (")
+                        .Insert(x.Value.LastIndexOf("\"", StringComparison.Ordinal), ")"));
                 }
 
                 yield return line;
@@ -78,7 +79,7 @@ namespace CV19.Services
         public static IEnumerable<(string country, string province, (double latitdue, 
             double longitude) location, int[] confirmedCases)> GetCountryData()
         {
-            var lines = GetDataLines()
+            IEnumerable<string[]> lines = GetDataLines()
                 .Skip(HeaderLineNumber)
                 .Select(line => line.Split(','));
 
@@ -101,7 +102,7 @@ namespace CV19.Services
 
         public IEnumerable<CountryInfo> GetData()
         {
-            var dates = GetDates();
+            DateTime[] dates = GetDates();
 
             var data = GetCountryData().GroupBy(x => x.country);
 
@@ -114,8 +115,8 @@ namespace CV19.Services
                     {
                         Name = x.province,
                         Location = new Point(x.location.latitdue, x.location.longitude),
-                        ConfirmedCases = dates.Zip(x.confirmedCases, (date, count) 
-                            => new ConfirmedCase
+                        ConfirmedCases = dates.Zip(x.confirmedCases, (date, count) => 
+                            new ConfirmedCase
                             {
                                 Date = date,
                                 Count = count

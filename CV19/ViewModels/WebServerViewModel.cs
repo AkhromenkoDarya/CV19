@@ -39,8 +39,8 @@ namespace CV19.ViewModels
         /// <summary>
         /// Запуск веб-сервера.
         /// </summary>
-        public ICommand StartWebServerCommand => _startWebServerCommand ??= new RelayCommand(
-            OnStartWebServerCommandExecuted, CanStartWebServerCommandExecute);
+        public ICommand StartWebServerCommand => _startWebServerCommand ??= 
+            new RelayCommand(OnStartWebServerCommandExecuted, CanStartWebServerCommandExecute);
 
         /// <summary>
         /// Проверка возможности выполнения - Запуск веб-сервера.
@@ -68,8 +68,8 @@ namespace CV19.ViewModels
         /// <summary>
         /// Остановка веб-сервера.
         /// </summary>
-        public ICommand StopWebServerCommand => _stopWebServerCommand ??= new RelayCommand(
-            OnStopWebServerCommandExecuted, CanStopWebServerCommandExecute);
+        public ICommand StopWebServerCommand => _stopWebServerCommand ??= 
+            new RelayCommand(OnStopWebServerCommandExecuted, CanStopWebServerCommandExecute);
 
         /// <summary>
         /// Проверка возможности выполнения - Остановка веб-сервера.
@@ -89,6 +89,7 @@ namespace CV19.ViewModels
 
         #endregion
 
-        public WebServerViewModel(IWebServerService serverService) => _serverService = serverService;
+        public WebServerViewModel(IWebServerService serverService) => 
+            _serverService = serverService;
     }
 }

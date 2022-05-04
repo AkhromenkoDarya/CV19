@@ -25,8 +25,8 @@ namespace CV19WPFTest
             else
             {
                 //ResultBlock.Dispatcher.Invoke(() => ResultBlock.Text = value);
-                ResultBlock.Dispatcher.BeginInvoke(new Action(() => ResultBlock.Text 
-                    = value));
+                ResultBlock.Dispatcher.BeginInvoke(new Action(() => ResultBlock
+                    .Text = value));
             }
         }
 

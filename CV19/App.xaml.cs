@@ -25,7 +25,7 @@ namespace CV19
         protected override async void OnStartup(StartupEventArgs e)
         {
             IsDesignMode = false;
-            var host = Host;
+            IHost host = Host;
             base.OnStartup(e);
 
             await host.StartAsync().ConfigureAwait(false);
@@ -41,10 +41,10 @@ namespace CV19
             _host = null;
         }
 
-        public static void ConfigureServices(HostBuilderContext host, IServiceCollection services) 
-            => services
-                .RegisterServices()
-                .RegisterViewModels();
+        public static void ConfigureServices(HostBuilderContext host, 
+            IServiceCollection services) => services
+            .RegisterServices()
+            .RegisterViewModels();
 
         private static string GetSourceCodePath([CallerFilePath] string path = null) => path;
     }

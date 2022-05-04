@@ -1,6 +1,6 @@
-﻿using System;
-using CV19.Models.Interfaces;
+﻿using CV19.Models.Interfaces;
 using CV19.Services.Interfaces;
+using System;
 using System.Collections.Generic;
 
 namespace CV19.Services.Base
@@ -13,6 +13,7 @@ namespace CV19.Services.Base
         
         protected Repository()
         {
+
         }
 
         protected Repository(IEnumerable<T> items)
@@ -50,8 +51,8 @@ namespace CV19.Services.Base
 
             if (id <= 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(id), id, 
-                    "The item index cannot be less than 0.");
+                throw new ArgumentOutOfRangeException(nameof(id), id, @"The item index 
+                    cannot be less than 0.");
             }
 
             if (_items.Contains(item))
@@ -63,8 +64,8 @@ namespace CV19.Services.Base
 
             if (dbItem is null)
             {
-                throw new InvalidOperationException("The item being edited not found " 
-                                                    + "in the repository.");
+                throw new InvalidOperationException(@"The item being edited not found in 
+                    the repository.");
             }
 
             Update(item, dbItem);

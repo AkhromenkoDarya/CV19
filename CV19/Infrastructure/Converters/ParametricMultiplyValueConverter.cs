@@ -8,7 +8,7 @@ namespace CV19.Infrastructure.Converters
 {
     internal class ParametricMultiplyValueConverter : Freezable, IValueConverter
     {
-        private const double _defaultValue = 1d;
+        private const double DefaultValue = 1d;
 
         #region Value : double - Прибавляемое значение
 
@@ -20,7 +20,7 @@ namespace CV19.Infrastructure.Converters
                 nameof(Value),
                 typeof(double),
                 typeof(ParametricMultiplyValueConverter),
-                new PropertyMetadata(_defaultValue/*, (d, e) => {}*/));
+                new PropertyMetadata(DefaultValue/*, (d, e) => {}*/));
 
         /// <summary>
         /// Прибавляемое значение.

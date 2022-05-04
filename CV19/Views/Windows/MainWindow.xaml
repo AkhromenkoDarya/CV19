@@ -9,7 +9,7 @@
         xmlns:fa5="clr-namespace:FontAwesome5;assembly=FontAwesome5.Net"
         xmlns:ctrls="clr-namespace:System.Windows.Controls;assembly=PresentationFramework"
         mc:Ignorable="d"
-        DataContext="{Binding MainWindowVM, Source={StaticResource Locator}}"
+        DataContext="{Binding MainWindow, Source={StaticResource Locator}}"
         Style="{StaticResource CV19WindowStyle}"
         Title="{Binding Title}" Width="800" Height="450"
         Icon="../../Resources/CoronavirusIcon.png">

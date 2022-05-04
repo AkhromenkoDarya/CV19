@@ -12,7 +12,7 @@ namespace CV19.Infrastructure.Behaviors
 
         protected override void OnDetaching() => AssociatedObject.Click -= OnButtonClick;
 
-        private void OnButtonClick(object sender, RoutedEventArgs e) 
-            => (AssociatedObject.FindRoot(typeof(VisualTreeHelper)) as Window)?.Close();
+        private void OnButtonClick(object sender, RoutedEventArgs e) => (AssociatedObject
+            .FindRoot(typeof(VisualTreeHelper)) as Window)?.Close();
     }
 }
