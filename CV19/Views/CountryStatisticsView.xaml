@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="CV19.Views.Windows.CountryStatisticsView"
+﻿<UserControl x:Class="CV19.Views.CountryStatisticsView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:oxy="http://oxyplot.org/wpf"
              xmlns:fa5="http://schemas.fontawesome.com/icons/"

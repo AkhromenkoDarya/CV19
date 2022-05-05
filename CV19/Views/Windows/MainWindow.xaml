@@ -6,7 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:cmd="clr-namespace:CV19.Infrastructure.Commands"
         xmlns:deanery="clr-namespace:CV19.Infrastructure.Commands.Deanery"
-        xmlns:windows="clr-namespace:CV19.Views.Windows"
+        xmlns:views="clr-namespace:CV19.Views"
         xmlns:fa5="clr-namespace:FontAwesome5;assembly=FontAwesome5.Net"
         xmlns:controls="clr-namespace:System.Windows.Controls;assembly=PresentationFramework"
         mc:Ignorable="d"
@@ -80,7 +80,7 @@
         </StatusBar>
         <TabControl>
             <TabItem Header="Statistics">
-                <windows:CountryStatisticsView DataContext="{Binding CountryStatistics}"/>
+                <views:CountryStatisticsView DataContext="{Binding CountryStatistics}"/>
             </TabItem>
             <TabItem Header="Debugging">
                 <DockPanel>

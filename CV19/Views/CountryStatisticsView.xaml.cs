@@ -1,4 +1,4 @@
-﻿namespace CV19.Views.Windows
+﻿namespace CV19.Views
 {
     public partial class CountryStatisticsView
     {
