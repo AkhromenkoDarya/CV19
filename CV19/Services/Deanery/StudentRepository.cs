@@ -1,7 +1,7 @@
 ﻿using CV19.Models.Deanery;
 using CV19.Services.Base;
 
-namespace CV19.Services
+namespace CV19.Services.Deanery
 {
     internal class StudentRepository : Repository<Student>
     {

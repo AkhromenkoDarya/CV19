@@ -1,9 +1,9 @@
 ﻿using CV19.Infrastructure.Commands.Base;
-using CV19.Views.Windows;
+using CV19.Views.Windows.Deanery;
 using System;
 using System.Windows;
 
-namespace CV19.Infrastructure.Commands
+namespace CV19.Infrastructure.Commands.Deanery
 {
     internal class ManageStudentsCommand : Command
     {

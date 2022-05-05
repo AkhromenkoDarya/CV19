@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using CV19.Services.Deanery;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace CV19.Services.Interfaces.Registration
 {

@@ -5,9 +5,10 @@
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:cmd="clr-namespace:CV19.Infrastructure.Commands"
-        xmlns:wndws="clr-namespace:CV19.Views.Windows"
+        xmlns:deanery="clr-namespace:CV19.Infrastructure.Commands.Deanery"
+        xmlns:windows="clr-namespace:CV19.Views.Windows"
         xmlns:fa5="clr-namespace:FontAwesome5;assembly=FontAwesome5.Net"
-        xmlns:ctrls="clr-namespace:System.Windows.Controls;assembly=PresentationFramework"
+        xmlns:controls="clr-namespace:System.Windows.Controls;assembly=PresentationFramework"
         mc:Ignorable="d"
         DataContext="{Binding MainWindow, Source={StaticResource Locator}}"
         Style="{StaticResource CV19WindowStyle}"
@@ -23,7 +24,7 @@
     </i:Interaction.Triggers>
     <Window.Resources>
         <cmd:CloseApplicationCommand x:Key="CloseApplicationCommand"/>
-        <ctrls:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <controls:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
         <Style TargetType="Button">
             <Setter Property="Background" Value="White"/>
         </Style>
@@ -62,7 +63,7 @@
                 <Separator/>
                 <MenuItem Header="Student Management">
                     <MenuItem.Command>
-                        <cmd:ManageStudentsCommand/>
+                        <deanery:ManageStudentsCommand/>
                     </MenuItem.Command>
                 </MenuItem>
             </MenuItem>
@@ -80,7 +81,7 @@
         </StatusBar>
         <TabControl>
             <TabItem Header="Statistics">
-                <wndws:CountryStatisticsView DataContext="{Binding CountryStatistics}"/>
+                <windows:CountryStatisticsView DataContext="{Binding CountryStatistics}"/>
             </TabItem>
             <TabItem Header="Debugging">
                 <DockPanel>

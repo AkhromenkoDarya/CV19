@@ -1,6 +1,6 @@
 ﻿using CV19.ViewModels.Base;
 
-namespace CV19.ViewModels
+namespace CV19.ViewModels.Deanery
 {
     internal class StudentManagementViewModel : ViewModel
     {

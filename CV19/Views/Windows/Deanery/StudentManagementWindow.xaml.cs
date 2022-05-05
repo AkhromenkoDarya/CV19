@@ -1,4 +1,4 @@
-﻿namespace CV19.Views.Windows
+﻿namespace CV19.Views.Windows.Deanery
 {
     public partial class StudentManagementWindow
     {

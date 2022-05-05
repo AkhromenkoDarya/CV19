@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using CV19.ViewModels.Deanery;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace CV19.ViewModels.Registration
 {
