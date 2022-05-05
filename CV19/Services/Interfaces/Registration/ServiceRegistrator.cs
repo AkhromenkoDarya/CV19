@@ -21,6 +21,7 @@ namespace CV19.Services.Interfaces.Registration
 
             services.AddSingleton<StudentRepository>();
             services.AddSingleton<GroupRepository>();
+            services.AddSingleton<StudentManager>();
 
             return services;
         }

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace CV19.Services.Base
 {
-    abstract class Repository<T> : IRepository<T> where T : IEntity
+    internal abstract class Repository<T> : IRepository<T> where T : IEntity
     {
         private readonly List<T> _items = new List<T>();
 
