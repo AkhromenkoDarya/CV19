@@ -59,6 +59,12 @@
                     <MenuItem Header="Start" Command="{Binding StartWebServerCommand}"/>
                     <MenuItem Header="Stop" Command="{Binding StopWebServerCommand}"/>
                 </MenuItem>
+                <Separator/>
+                <MenuItem Header="Student Management">
+                    <MenuItem.Command>
+                        <cmd:ManageStudentsCommand/>
+                    </MenuItem.Command>
+                </MenuItem>
             </MenuItem>
             <MenuItem Header="_Help" Cursor="Help">
                 <MenuItem Header="About"/>
