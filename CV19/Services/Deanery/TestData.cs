@@ -34,7 +34,7 @@ namespace CV19.Services.Deanery
                         Patronymic = $"Patronymic {index++}",
                         Birthday = DateTime.Now.Subtract(TimeSpan.FromDays(300 * random
                             .Next(19, 30))),
-                        Rating = random.Next() * 100
+                        Rating = random.NextDouble() * 100
                     });
                 }
             }

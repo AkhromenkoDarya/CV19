@@ -11,7 +11,6 @@
         xmlns:controls="clr-namespace:System.Windows.Controls;assembly=PresentationFramework"
         mc:Ignorable="d"
         DataContext="{Binding MainWindow, Source={StaticResource Locator}}"
-        Style="{StaticResource CV19WindowStyle}"
         Title="{Binding Title}" Width="800" Height="450"
         Icon="../../Resources/CoronavirusIcon.png">
     <!--<Window.DataContext>

@@ -105,10 +105,10 @@
     </ControlTemplate>
 
     <Style x:Key="CV19WindowStyle" TargetType="{x:Type Window}">
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="WindowChrome.WindowChrome">
             <Setter.Value>
-                <WindowChrome CaptionHeight="35" CornerRadius="10" 
-                              GlassFrameThickness="0" 
+                <WindowChrome CaptionHeight="35" CornerRadius="10" GlassFrameThickness="0" 
                               NonClientFrameEdges="None" ResizeBorderThickness="5" 
                               UseAeroCaptionButtons="False"/>
             </Setter.Value>
