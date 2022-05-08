@@ -11,6 +11,7 @@
         xmlns:controls="clr-namespace:System.Windows.Controls;assembly=PresentationFramework"
         mc:Ignorable="d"
         DataContext="{Binding MainWindow, Source={StaticResource Locator}}"
+        Style="{StaticResource CV19WindowStyle}"
         Title="{Binding Title}" Width="800" Height="450"
         Icon="../../Resources/CoronavirusIcon.png">
     <!--<Window.DataContext>
@@ -70,12 +71,15 @@
                 <MenuItem Header="About"/>
             </MenuItem>
         </Menu>
-        <StatusBar DockPanel.Dock="Bottom">
+        <StatusBar DockPanel.Dock="Bottom" Padding="5,3">
             <StatusBarItem MaxWidth="350" MinWidth="150">
                 <TextBlock Text="{Binding Status}"/>
             </StatusBarItem>
             <StatusBarItem>
                 <ProgressBar Width="120" Height="14" Value="30"/>
+            </StatusBarItem>
+            <StatusBarItem HorizontalContentAlignment="Right">
+                <ResizeGrip Width="10" Height="10"/>
             </StatusBarItem>
         </StatusBar>
         <TabControl>
