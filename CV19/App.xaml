@@ -1,7 +1,6 @@
 ﻿<Application x:Class="CV19.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:l="clr-namespace:CV19"
              xmlns:loc="clr-namespace:CV19.ViewModels.Locator"
              StartupUri="Views/Windows/MainWindow.xaml">
     <Application.Resources>
