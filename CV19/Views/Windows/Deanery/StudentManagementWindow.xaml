@@ -41,8 +41,8 @@
                     <Button fa:Awesome.Content="Solid_UserEdit" Foreground="Blue" Padding="0,5" 
                             Margin="3,0,0,0"/>
                 </UniformGrid>
-                <ListBox ItemsSource="{Binding SelectedStudentGroup.Students}" 
-                         HorizontalContentAlignment="Stretch">
+                <ListBox HorizontalContentAlignment="Stretch" ItemsSource="{Binding 
+                    SelectedStudentGroup.Students}" SelectedItem="{Binding SelectedStudent}">
                     <ListBox.ItemTemplate>
                         <DataTemplate DataType="deanery:Student">
                             <TextBlock>
@@ -58,8 +58,46 @@
                 </ListBox>
             </DockPanel>
         </GroupBox>
-        <GroupBox Grid.Column="2" Header="Info">
+        <GroupBox Grid.Column="2" Header="Info" DataContext="{Binding SelectedStudent}">
+            <Grid Margin="3">
+                <Grid.Resources>
+                    <Style TargetType="TextBlock">
+                        <Style.Triggers>
+                            <Trigger Property="Grid.Column" Value="0">
+                                <Setter Property="HorizontalAlignment" Value="Right"/>
+                                <Setter Property="Margin" Value="0,0,3,0"/>
+                                <Setter Property="FontWeight" Value="Bold"/>
+                            </Trigger>
+                            <Trigger Property="Grid.Column" Value="1">
+                                <Setter Property="Margin" Value="3,0,0,0"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Resources>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="Surname:"/>
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="Name:"/>
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="Patronymic:"/>
+                <TextBlock Grid.Row="3" Grid.Column="0" Text="Rating:"/>
+                <TextBlock Grid.Row="4" Grid.Column="0" Text="Birthday:"/>
 
+                <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Surname}"/>
+                <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Name}"/>
+                <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Patronymic}"/>
+                <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding Rating, StringFormat=0.##}"/>
+                <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding Birthday, 
+                    StringFormat=dd.MM.yyyy}"/>
+            </Grid>
         </GroupBox>
         <GridSplitter Grid.Column="0" HorizontalAlignment="Right" Width="3"/>
         <GridSplitter Grid.Column="1" HorizontalAlignment="Right" Width="3"/>

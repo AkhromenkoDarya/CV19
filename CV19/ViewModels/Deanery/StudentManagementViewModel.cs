@@ -51,6 +51,25 @@ namespace CV19.ViewModels.Deanery
 
         #endregion
 
+        #region SelectedStudent : Student - Выбранный студент
+
+        /// <summary>
+        /// Выбранный студент.
+        /// </summary>
+        private Student _selectedStudent;
+
+        /// <summary>
+        /// Выбранный студент.
+        /// </summary>
+        public Student SelectedStudent
+        {
+            get => _selectedStudent;
+
+            set => Set(ref _selectedStudent, value);
+        }
+
+        #endregion
+
         public StudentManagementViewModel(StudentManager studentManager) => 
             _studentManager = studentManager;
     }
