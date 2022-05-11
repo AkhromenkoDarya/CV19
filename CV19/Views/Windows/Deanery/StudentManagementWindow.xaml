@@ -1,5 +1,6 @@
 ﻿<Window x:Class="CV19.Views.Windows.Deanery.StudentManagementWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:fa="http://schemas.fontawesome.com/icons/"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -33,21 +34,29 @@
             </ListBox>
         </GroupBox>
         <GroupBox Grid.Column="1" Header="Students">
-            <ListBox ItemsSource="{Binding SelectedStudentGroup.Students}" 
-                     HorizontalContentAlignment="Stretch">
-                <ListBox.ItemTemplate>
-                    <DataTemplate DataType="deanery:Student">
-                        <TextBlock>
-                            <TextBlock.ToolTip>
-                                <TextBlock Text="{Binding Rating, StringFormat=Rating: {0}}"/>
-                            </TextBlock.ToolTip>
-                            <TextBlock Text="{Binding Surname}"/>
-                            <TextBlock Text="{Binding Name}"/>
-                            <TextBlock Text="{Binding Patronymic}"/>
-                        </TextBlock>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
+            <DockPanel>
+                <UniformGrid DockPanel.Dock="Bottom" Rows="1" Margin="0,3">
+                    <Button fa:Awesome.Content="Solid_UserPlus" Foreground="Green" Padding="0,5" 
+                            Margin="0,0,3,0"/>
+                    <Button fa:Awesome.Content="Solid_UserEdit" Foreground="Blue" Padding="0,5" 
+                            Margin="3,0,0,0"/>
+                </UniformGrid>
+                <ListBox ItemsSource="{Binding SelectedStudentGroup.Students}" 
+                         HorizontalContentAlignment="Stretch">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate DataType="deanery:Student">
+                            <TextBlock>
+                                <TextBlock.ToolTip>
+                                    <TextBlock Text="{Binding Rating, StringFormat=Rating: {0}}"/>
+                                </TextBlock.ToolTip>
+                                <TextBlock Text="{Binding Surname}"/>
+                                <TextBlock Text="{Binding Name}"/>
+                                <TextBlock Text="{Binding Patronymic}"/>
+                            </TextBlock>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </DockPanel>
         </GroupBox>
         <GroupBox Grid.Column="2" Header="Info">
 
