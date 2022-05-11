@@ -7,7 +7,8 @@
         xmlns:deanery="clr-namespace:CV19.Models.Deanery"
         mc:Ignorable="d"
         DataContext="{Binding StudentManagement, Source={StaticResource Locator}}"
-        Title="{Binding Title}" Height="450" Width="800">
+        Title="{Binding Title}" 
+        Width="800" Height="450">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200" MinWidth="200"/>
@@ -37,9 +38,11 @@
             <DockPanel>
                 <UniformGrid DockPanel.Dock="Bottom" Rows="1" Margin="0,3">
                     <Button fa:Awesome.Content="Solid_UserPlus" Foreground="Green" Padding="0,5" 
-                            Margin="0,0,3,0" Command="{Binding AddStudentCommand}"/>
+                            Margin="0,0,3,0" Command="{Binding AddStudentCommand}" 
+                            CommandParameter="{Binding SelectedStudent}"/>
                     <Button fa:Awesome.Content="Solid_UserEdit" Foreground="Blue" Padding="0,5" 
-                            Margin="3,0,0,0" Command="{Binding EditStudentCommand}"/>
+                            Margin="3,0,0,0" Command="{Binding EditStudentCommand}" 
+                            CommandParameter="{Binding SelectedStudent}"/>
                 </UniformGrid>
                 <ListBox ItemsSource="{Binding SelectedGroup.Students}" SelectedItem="{Binding 
                     SelectedStudent}" HorizontalContentAlignment="Stretch">

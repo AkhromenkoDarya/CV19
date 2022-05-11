@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Windows.Input;
-using CV19.Infrastructure.Commands;
+﻿using CV19.Infrastructure.Commands;
 using CV19.Models.Deanery;
 using CV19.Services.Deanery;
 using CV19.ViewModels.Base;
+using CV19.Views.Windows.Deanery;
+using System.Collections.Generic;
+using System.Windows;
+using System.Windows.Input;
 
 namespace CV19.ViewModels.Deanery
 {
@@ -129,6 +131,22 @@ namespace CV19.ViewModels.Deanery
         {
             var student = (Student)p;
 
+            var dialog = new StudentEditingWindow
+            {
+                Surname = student.Surname,
+                Name = student.Name,
+                Patronymic = student.Patronymic,
+                Rating = student.Rating,
+                Birthday = student.Birthday
+            };
+
+            if (dialog.ShowDialog() == true)
+            {
+                MessageBox.Show("The user saved changes.");
+                return;
+            }
+
+            MessageBox.Show("The user refused to save changes.");
         }
 
         #endregion
