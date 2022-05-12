@@ -1,4 +1,5 @@
-﻿using CV19.Infrastructure.Commands;
+﻿using System.Buffers;
+using CV19.Infrastructure.Commands;
 using CV19.Models.Deanery;
 using CV19.Services.Deanery;
 using CV19.Services.Interfaces;
@@ -152,6 +153,36 @@ namespace CV19.ViewModels.Deanery
             }
 
             _userDialog.ShowWarning("Denial to edit", "Student Manager");
+        }
+
+        #endregion
+
+        #region Command TestCommand - Тестовая команда
+
+        /// <summary>
+        /// Тестовая команда.
+        /// </summary>
+        private ICommand _testCommand;
+
+        /// <summary>
+        /// Тестовая команда.
+        /// </summary>
+        public ICommand TestCommand => _testCommand ??=
+            new RelayCommand(OnTestCommandExecuted, CanTestCommandExecute);
+
+        /// <summary>
+        /// Проверка возможности выполнения - Тестовая команда.
+        /// </summary>
+        private bool CanTestCommandExecute(object p) => true;
+
+        /// <summary>
+        /// Логика выполнения - Тестовая команда.
+        /// </summary>
+        private void OnTestCommandExecuted(object p)
+        {
+            string value = _userDialog.GetStringValue("Enter the string:", 
+                "Window for entering a string value", "Default Value");
+            _userDialog.ShowInformation($"You entered string \"{value}\"", "Information Window");
         }
 
         #endregion

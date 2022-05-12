@@ -16,23 +16,27 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <GroupBox Grid.Column="0" Header="Groups">
-            <ListBox ItemsSource="{Binding Groups}" SelectedItem="{Binding SelectedGroup}" 
-                     HorizontalContentAlignment="Stretch">
-                <!--<ListBox.ItemContainerStyle>
+            <DockPanel>
+                <Button DockPanel.Dock="Bottom" Content="Test Button" Margin="5" 
+                        Command="{Binding TestCommand}"/>
+                <ListBox ItemsSource="{Binding Groups}" SelectedItem="{Binding SelectedGroup}" 
+                         HorizontalContentAlignment="Stretch">
+                    <!--<ListBox.ItemContainerStyle>
                     <Style TargetType="ListBoxItem">
                         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
                     </Style>
                 </ListBox.ItemContainerStyle>-->
-                <ListBox.ItemTemplate>
-                    <DataTemplate DataType="deanery:Group">
-                        <DockPanel>
-                            <TextBlock DockPanel.Dock="Right" Text="{Binding Students.Count, 
+                    <ListBox.ItemTemplate>
+                        <DataTemplate DataType="deanery:Group">
+                            <DockPanel>
+                                <TextBlock DockPanel.Dock="Right" Text="{Binding Students.Count, 
                                 StringFormat=({0})}"/>
-                            <TextBlock Text="{Binding Name}"/>
-                        </DockPanel>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
+                                <TextBlock Text="{Binding Name}"/>
+                            </DockPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </DockPanel>
         </GroupBox>
         <GroupBox Grid.Column="1" Header="Students">
             <DockPanel>

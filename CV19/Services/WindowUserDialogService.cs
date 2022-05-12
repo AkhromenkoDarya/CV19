@@ -1,13 +1,18 @@
 ﻿using CV19.Models.Deanery;
 using CV19.Services.Interfaces;
+using CV19.Views.Windows;
 using CV19.Views.Windows.Deanery;
 using System;
+using System.Linq;
 using System.Windows;
 
 namespace CV19.Services
 {
     internal class WindowUserDialogService : IUserDialogService
     {
+        private static readonly Window ActiveWindow = Application.Current.Windows.OfType<Window>()
+            .FirstOrDefault(w => w.IsActive);
+
         public bool Edit(object item)
         {
             if (item is null)
@@ -54,6 +59,19 @@ namespace CV19.Services
                 exclamation ? MessageBoxImage.Exclamation : MessageBoxImage.Question)
             == MessageBoxResult.Yes;
 
+        public string GetStringValue(string message, string caption, string defaultValue = null)
+        {
+            var valueDialog = new StringValueDialogWindow
+            {
+                Title = caption,
+                Message = message,
+                Value = defaultValue ?? string.Empty,
+                Owner = ActiveWindow
+            };
+
+            return valueDialog.ShowDialog() == true ? valueDialog.Value : defaultValue;
+        }
+
         private static bool EditStudent(Student student)
         {
             var dialog = new StudentEditingWindow
@@ -62,7 +80,8 @@ namespace CV19.Services
                 FirstName = student.Name,
                 Patronymic = student.Patronymic,
                 Rating = student.Rating,
-                Birthday = student.Birthday
+                Birthday = student.Birthday,
+                Owner = ActiveWindow
             };
 
             if (dialog.ShowDialog() != true)

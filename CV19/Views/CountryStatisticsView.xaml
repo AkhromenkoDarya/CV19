@@ -10,8 +10,7 @@
              xmlns:vms="clr-namespace:CV19.ViewModels"
              xmlns:map="clr-namespace:MapControl;assembly=MapControl.WPF"
              xmlns:sys="clr-namespace:System;assembly=System.Runtime"
-             d:DataContext="{d:DesignInstance 
-                Type=vms:CountryStatisticsViewModel}"
+             d:DataContext="{d:DesignInstance Type=vms:CountryStatisticsViewModel}"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
