@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using CV19.Services.Deanery;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace CV19.Services.Interfaces.Registration
 {
@@ -17,6 +18,12 @@ namespace CV19.Services.Interfaces.Registration
 
             services.AddTransient<IAsyncDataService, AsyncDataService>();
             services.AddTransient<IWebServerService, WebServerService>();
+
+            services.AddSingleton<StudentRepository>();
+            services.AddSingleton<GroupRepository>();
+            services.AddSingleton<StudentManager>();
+
+            services.AddTransient<IUserDialogService, WindowUserDialogService>();
 
             return services;
         }

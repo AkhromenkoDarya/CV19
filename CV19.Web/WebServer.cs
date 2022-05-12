@@ -111,7 +111,8 @@ namespace CV19.Web
 
         private async void ProcessRequestAsync(HttpListenerContext context)
         {
-            await Task.Run(() => RequestReceived?.Invoke(this, new RequestReceiverEventArgs(context)));
+            await Task.Run(() => RequestReceived?.Invoke(this, 
+                new RequestReceiverEventArgs(context)));
         }
     }
 }

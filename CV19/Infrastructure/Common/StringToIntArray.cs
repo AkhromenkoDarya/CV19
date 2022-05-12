@@ -17,14 +17,15 @@ namespace CV19.Infrastructure.Common
 
         public StringToIntArray()
         {
+
         }
 
         public StringToIntArray(string inputString) => InputString = inputString;
 
-        public override object ProvideValue(IServiceProvider serviceProvider)
-            => InputString.Split(new[] { Separator }, StringSplitOptions.RemoveEmptyEntries)
-            .DefaultIfEmpty()
-            .Select(int.Parse)
-            .ToArray();
+        public override object ProvideValue(IServiceProvider serviceProvider) => 
+            InputString.Split(new[] { Separator }, StringSplitOptions.RemoveEmptyEntries)
+                .DefaultIfEmpty()
+                .Select(int.Parse)
+                .ToArray();
     }
 }

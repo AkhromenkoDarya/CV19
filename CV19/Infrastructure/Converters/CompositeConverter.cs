@@ -17,6 +17,7 @@ namespace CV19.Infrastructure.Converters
 
         public CompositeConverter()
         {
+
         }
 
         public CompositeConverter(IValueConverter firstConverter) 

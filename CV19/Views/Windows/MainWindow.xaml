@@ -5,12 +5,14 @@
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:cmd="clr-namespace:CV19.Infrastructure.Commands"
-        xmlns:wndws="clr-namespace:CV19.Views.Windows"
+        xmlns:deanery="clr-namespace:CV19.Infrastructure.Commands.Deanery"
+        xmlns:views="clr-namespace:CV19.Views"
         xmlns:fa5="clr-namespace:FontAwesome5;assembly=FontAwesome5.Net"
-        xmlns:ctrls="clr-namespace:System.Windows.Controls;assembly=PresentationFramework"
+        xmlns:controls="clr-namespace:System.Windows.Controls;assembly=PresentationFramework"
         mc:Ignorable="d"
-        DataContext="{Binding MainWindowVM, Source={StaticResource Locator}}"
+        DataContext="{Binding MainWindow, Source={StaticResource Locator}}"
         Style="{StaticResource CV19WindowStyle}"
+        WindowStartupLocation="CenterScreen"
         Title="{Binding Title}" Width="800" Height="450"
         Icon="../../Resources/CoronavirusIcon.png">
     <!--<Window.DataContext>
@@ -23,7 +25,7 @@
     </i:Interaction.Triggers>
     <Window.Resources>
         <cmd:CloseApplicationCommand x:Key="CloseApplicationCommand"/>
-        <ctrls:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <controls:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
         <Style TargetType="Button">
             <Setter Property="Background" Value="White"/>
         </Style>
@@ -59,22 +61,31 @@
                     <MenuItem Header="Start" Command="{Binding StartWebServerCommand}"/>
                     <MenuItem Header="Stop" Command="{Binding StopWebServerCommand}"/>
                 </MenuItem>
+                <Separator/>
+                <MenuItem Header="Student Management">
+                    <MenuItem.Command>
+                        <deanery:ManageStudentsCommand/>
+                    </MenuItem.Command>
+                </MenuItem>
             </MenuItem>
             <MenuItem Header="_Help" Cursor="Help">
                 <MenuItem Header="About"/>
             </MenuItem>
         </Menu>
-        <StatusBar DockPanel.Dock="Bottom">
+        <StatusBar DockPanel.Dock="Bottom" Padding="5,3">
             <StatusBarItem MaxWidth="350" MinWidth="150">
                 <TextBlock Text="{Binding Status}"/>
             </StatusBarItem>
             <StatusBarItem>
                 <ProgressBar Width="120" Height="14" Value="30"/>
             </StatusBarItem>
+            <StatusBarItem HorizontalContentAlignment="Right">
+                <ResizeGrip Width="10" Height="10"/>
+            </StatusBarItem>
         </StatusBar>
         <TabControl>
             <TabItem Header="Statistics">
-                <wndws:CountryStatisticsView DataContext="{Binding CountryStatistics}"/>
+                <views:CountryStatisticsView DataContext="{Binding CountryStatistics}"/>
             </TabItem>
             <TabItem Header="Debugging">
                 <DockPanel>

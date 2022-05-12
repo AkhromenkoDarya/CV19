@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using CV19.ViewModels.Deanery;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace CV19.ViewModels.Registration
 {
@@ -9,6 +10,8 @@ namespace CV19.ViewModels.Registration
             services.AddSingleton<MainWindowViewModel>();
             services.AddSingleton<CountryStatisticsViewModel>();
             services.AddSingleton<WebServerViewModel>();
+
+            services.AddTransient<StudentManagementViewModel>();
 
             return services;
         }

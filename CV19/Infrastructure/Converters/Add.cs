@@ -13,6 +13,7 @@ namespace CV19.Infrastructure.Converters
 
         public Add()
         {
+
         }
 
         public Add(double coefficient) => Coefficient = coefficient;

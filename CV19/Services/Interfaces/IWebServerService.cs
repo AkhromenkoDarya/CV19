@@ -2,10 +2,10 @@
 {
     internal interface IWebServerService
     {
-        public bool IsEnabled { get; set; }
+        bool IsEnabled { get; set; }
 
-        public void Start();
+        void Start();
 
-        public void Stop();
+        void Stop();
     }
 }
