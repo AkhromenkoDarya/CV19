@@ -23,6 +23,8 @@ namespace CV19.Services.Interfaces.Registration
             services.AddSingleton<GroupRepository>();
             services.AddSingleton<StudentManager>();
 
+            services.AddTransient<IUserDialogService, WindowUserDialogService>();
+
             return services;
         }
     }

@@ -24,11 +24,11 @@
                         <deanery:CloseDialogWindowCommand DialogResult="True"/>
                     </Button.Command>
                 </Button>
-                <Button Content="Cancel" Margin="6,0" Padding="35,5" IsCancel="True" 
+                <Button Content="Cancel" Margin="6,0" Padding="35,5" IsCancel="True"
                         CommandParameter="{Binding RelativeSource={RelativeSource 
                             AncestorType=l:StudentEditingWindow}}">
                     <Button.Command>
-                        <deanery:CloseDialogWindowCommand DialogResult="True"/>
+                        <deanery:CloseDialogWindowCommand DialogResult="False"/>
                     </Button.Command>
                 </Button>
             </UniformGrid>

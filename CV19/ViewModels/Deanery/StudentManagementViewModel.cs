@@ -1,10 +1,9 @@
 ﻿using CV19.Infrastructure.Commands;
 using CV19.Models.Deanery;
 using CV19.Services.Deanery;
+using CV19.Services.Interfaces;
 using CV19.ViewModels.Base;
-using CV19.Views.Windows.Deanery;
 using System.Collections.Generic;
-using System.Windows;
 using System.Windows.Input;
 
 namespace CV19.ViewModels.Deanery
@@ -12,6 +11,8 @@ namespace CV19.ViewModels.Deanery
     internal class StudentManagementViewModel : ViewModel
     {
         private readonly StudentManager _studentManager;
+
+        private readonly IUserDialogService _userDialog;
 
         public IEnumerable<Group> Groups => _studentManager.Groups;
 
@@ -94,14 +95,27 @@ namespace CV19.ViewModels.Deanery
         /// <summary>
         /// Проверка возможности выполнения - Команда добавления нового студента.
         /// </summary>
-        private bool CanAddStudentCommandExecute(object p) => SelectedGroup != null;
+        private bool CanAddStudentCommandExecute(object p) => p is Group;
 
         /// <summary>
         /// Логика выполнения - Команда добавления нового студента.
         /// </summary>
         private void OnAddStudentCommandExecuted(object p)
         {
-            var student = (Student)p;
+            var group = (Group)p;
+            var student = new Student();
+
+            if (!_userDialog.Edit(student) || _studentManager.Add(student, group.Name))
+            {
+                OnPropertyChanged(nameof(Students));
+                return;
+            }
+
+            if (_userDialog.Confirm("Failed to add a new student. Do you want to try again?", 
+                    "Student Manager"))
+            {
+                OnAddStudentCommandExecuted(p);
+            }
         }
 
         #endregion
@@ -122,38 +136,33 @@ namespace CV19.ViewModels.Deanery
         /// <summary>
         /// Проверка возможности выполнения - Команда редактирования студента.
         /// </summary>
-        private bool CanEditStudentCommandExecute(object p) => SelectedStudent != null;
+        private bool CanEditStudentCommandExecute(object p) => p is Student;
 
         /// <summary>
         /// Логика выполнения - Команда редактирования студента.
         /// </summary>
         private void OnEditStudentCommandExecuted(object p)
         {
-            var student = (Student)p;
-
-            var dialog = new StudentEditingWindow
+            if (_userDialog.Edit(p))
             {
-                Surname = student.Surname,
-                Name = student.Name,
-                Patronymic = student.Patronymic,
-                Rating = student.Rating,
-                Birthday = student.Birthday
-            };
-
-            if (dialog.ShowDialog() == true)
-            {
-                MessageBox.Show("The user saved changes.");
+                _studentManager.Update((Student) p);
+                _userDialog.ShowInformation("Student is edited", "Student Manager");
+                OnPropertyChanged(nameof(Students));
                 return;
             }
 
-            MessageBox.Show("The user refused to save changes.");
+            _userDialog.ShowWarning("Denial to edit", "Student Manager");
         }
 
         #endregion
 
         #endregion
 
-        public StudentManagementViewModel(StudentManager studentManager) => 
+        public StudentManagementViewModel(StudentManager studentManager, 
+            IUserDialogService userDialog)
+        {
             _studentManager = studentManager;
+            _userDialog = userDialog;
+        }
     }
 }
