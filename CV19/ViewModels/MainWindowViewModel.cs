@@ -149,8 +149,8 @@ namespace CV19.ViewModels
                 : 100000)
             .Select(i => new Student
             {
-                Name = $"Name {i}",
-                Surname = $"Surname {i}"
+                Name = $"FirstName {i}",
+                Surname = $"LastName {i}"
             });
 
         #region Команды
@@ -272,14 +272,14 @@ namespace CV19.ViewModels
         //        return;
         //    }
 
-        //    if (student.Name is null || student.Surname is null)
+        //    if (student.FirstName is null || student.LastName is null)
         //    {
         //        e.Accepted = false;
         //        return;
         //    }
 
-        //    if (student.Name.Contains(_studentFilterText, StringComparison.OrdinalIgnoreCase) 
-        //        || student.Surname.Contains(_studentFilterText, StringComparison.OrdinalIgnoreCase)
+        //    if (student.FirstName.Contains(_studentFilterText, StringComparison.OrdinalIgnoreCase) 
+        //        || student.LastName.Contains(_studentFilterText, StringComparison.OrdinalIgnoreCase)
         //        || student.Patronymic.Contains(_studentFilterText, StringComparison.OrdinalIgnoreCase))
         //    {
         //        return;

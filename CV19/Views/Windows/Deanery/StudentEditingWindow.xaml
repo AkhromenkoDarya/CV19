@@ -7,7 +7,6 @@
         xmlns:l="clr-namespace:CV19.Views.Windows.Deanery"
         mc:Ignorable="d"
         DataContext="{Binding RelativeSource={RelativeSource Self}}"
-        WindowStyle="ToolWindow"
         ResizeMode="NoResize"
         ShowInTaskbar="False"
         Title="Student Editing"
@@ -29,7 +28,7 @@
                         CommandParameter="{Binding RelativeSource={RelativeSource 
                             AncestorType=l:StudentEditingWindow}}">
                     <Button.Command>
-                        <deanery:CloseDialogWindowCommand DialogResult="False"/>
+                        <deanery:CloseDialogWindowCommand DialogResult="True"/>
                     </Button.Command>
                 </Button>
             </UniformGrid>
@@ -63,8 +62,8 @@
                 <TextBlock Grid.Row="3" Grid.Column="0" Text="Rating:"/>
                 <TextBlock Grid.Row="4" Grid.Column="0" Text="Birthday:"/>
 
-                <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Surname}"/>
-                <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Name}"/>
+                <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding LastName}"/>
+                <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding FirstName}"/>
                 <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Patronymic}"/>
                 <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Rating, StringFormat=0.##}"/>
                 <DatePicker Grid.Row="4" Grid.Column="1" VerticalContentAlignment="Center" 

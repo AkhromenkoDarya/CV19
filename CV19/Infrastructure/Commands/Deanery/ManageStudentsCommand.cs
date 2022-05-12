@@ -15,7 +15,7 @@ namespace CV19.Infrastructure.Commands.Deanery
         {
             _window = new StudentManagementWindow
             {
-                Owner = Application.Current.MainWindow
+                Owner = Application.Current.MainWindow,
             };
 
             _window.Closed += OnWindowClosed;

@@ -3,7 +3,7 @@ using System.Windows;
 
 namespace CV19.Infrastructure.Commands.Deanery
 {
-    class CloseDialogWindowCommand : Command
+    internal class CloseDialogWindowCommand : Command
     {
         public bool? DialogResult { get; set; }
 

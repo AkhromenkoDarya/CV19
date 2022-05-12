@@ -79,10 +79,10 @@ namespace CV19.ViewModels
         //    _countries = Enumerable.Range(1, 10)
         //        .Select(i => new CountryInfo
         //        {
-        //            Name = $"Country {i}",
+        //            FirstName = $"Country {i}",
         //            Provinces = Enumerable.Range(1, 10).Select(j => new PlaceInfo
         //            {
-        //                Name = $"Province {j}",
+        //                FirstName = $"Province {j}",
         //                Location = new Point(i, j),
         //                ConfirmedCases = Enumerable.Range(1, 10).Select(k => new ConfirmedCase
         //                {

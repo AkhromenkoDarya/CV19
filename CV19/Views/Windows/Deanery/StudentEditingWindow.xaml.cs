@@ -6,14 +6,14 @@ namespace CV19.Views.Windows.Deanery
 {
     public partial class StudentEditingWindow
     {
-        #region Name : string - Имя студента
+        #region FirstName : string - Имя студента
 
         /// <summary>
         /// Имя студента.
         /// </summary>
-        public static readonly DependencyProperty NameProperty
+        public static readonly DependencyProperty FirstNameProperty
             = DependencyProperty.Register(
-                nameof(Name),
+                nameof(FirstName),
                 typeof(string),
                 typeof(StudentEditingWindow),
                 new PropertyMetadata(default(string)));
@@ -23,22 +23,22 @@ namespace CV19.Views.Windows.Deanery
         /// </summary>
         [Description("Имя студента")]
         // [Category("")]
-        public string Name
+        public string FirstName
         {
-            get => (string)GetValue(NameProperty);
-            set => SetValue(NameProperty, value);
+            get => (string)GetValue(FirstNameProperty);
+            set => SetValue(FirstNameProperty, value);
         }
 
         #endregion
 
-        #region Surname : string - Фамилия студента
+        #region LastName : string - Фамилия студента
 
         /// <summary>
         /// Фамилия студента.
         /// </summary>
-        public static readonly DependencyProperty SurnameProperty
+        public static readonly DependencyProperty LastNameProperty
             = DependencyProperty.Register(
-                nameof(Surname),
+                nameof(LastName),
                 typeof(string),
                 typeof(StudentEditingWindow),
                 new PropertyMetadata(default(string)));
@@ -48,10 +48,10 @@ namespace CV19.Views.Windows.Deanery
         /// </summary>
         [Description("Фамилия студента")]
         // [Category("")]
-        public string Surname
+        public string LastName
         {
-            get => (string)GetValue(SurnameProperty);
-            set => SetValue(SurnameProperty, value);
+            get => (string)GetValue(LastNameProperty);
+            set => SetValue(LastNameProperty, value);
         }
 
         #endregion
@@ -81,10 +81,10 @@ namespace CV19.Views.Windows.Deanery
 
         #endregion
 
-        #region Rating : double - Рейтинг студента
+        #region Rating : double - Оценка студента
 
         /// <summary>
-        /// Рейтинг студента.
+        /// Оценка студента.
         /// </summary>
         public static readonly DependencyProperty RatingProperty
             = DependencyProperty.Register(
@@ -94,7 +94,7 @@ namespace CV19.Views.Windows.Deanery
                 new PropertyMetadata(default(double)));
 
         /// <summary>
-        /// Рейтинг студента.
+        /// Оценка студента.
         /// </summary>
         [Description("Рейтинг студента")]
         // [Category("")]

@@ -3,7 +3,7 @@ using System.Windows;
 
 namespace CV19.Infrastructure.Commands.Deanery
 {
-    class CloseWindowCommand : Command
+    internal class CloseWindowCommand : Command
     {
         public override bool CanExecute(object parameter) => parameter is Window;
 
